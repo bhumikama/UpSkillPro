@@ -26,6 +26,7 @@ const Sidebar = () => {
           isOpen ? "w-64" : "wd-20"
         }`}
       >
+        
         <div className="flex items-center justify-center p-4">
           <h2
             className={`text-xl font-bold md:block ${
