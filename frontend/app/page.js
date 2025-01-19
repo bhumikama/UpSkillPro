@@ -1,7 +1,9 @@
-import HomePage from "@/components/HomePage/HomePage";
+import ClientLogoCarousel from "../components/ClientLogo/ClientLogoCarousel";
 
 export default function Home() {
   return (
-    <HomePage />
+    <main>
+      <ClientLogoCarousel />
+    </main>
   );
 }

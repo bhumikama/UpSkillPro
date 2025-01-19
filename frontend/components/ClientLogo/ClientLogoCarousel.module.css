@@ -1,0 +1,33 @@
+/* ClientLogoCarousel.module.css */
+/* Center and style the heading */
+.heading {
+  text-align: center; /* Center the text horizontally */
+  font-family: Arial, Helvetica, sans-serif; /* Set the font family */
+  color: gray; /* Set the text color to gray */
+  font-size: 1.5rem; /* Adjust the font size as needed */
+  margin-bottom: 2rem; /* Add space below the heading */
+}
+/* Flex container with gap */
+.container {
+  display: flex;
+  gap: 4rem; /* Adjust gap as needed */
+  animation: marquee 30s linear infinite; /* Increase duration for slower speed */
+}
+
+/* Marquee animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Style for gray PNG icons */
+.icon {
+  height: 3rem; /* Set icon height */
+  margin: 0 2rem; /* Add spacing between icons */
+  filter: grayscale(-50%); /* Make the icons gray */
+  transition: filter 0.3s ease;
+}
