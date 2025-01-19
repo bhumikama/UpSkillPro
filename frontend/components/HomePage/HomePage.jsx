@@ -1,17 +1,6 @@
 import HYFLogo from "@/assets/hyf.svg";
 import Image from "next/image";
 import "./HomePage.css";
-<<<<<<< HEAD
-import Navbar from "../Navbar/Navbar";
-
-function HomePage() {
-  return (
-    <>
-        <Navbar /> 
-
-       
-         </>
-=======
 
 // Feel free to replace the content of this component with your own
 function HomePage() {
@@ -24,12 +13,7 @@ function HomePage() {
         <span className="message">Go to the nested page</span>
       </a>
     </>
->>>>>>> origin/main
   );
 }
 
 export default HomePage;
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/main

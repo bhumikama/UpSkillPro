@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Navbar from "@/components/Navbar/Navbar";
+import OurLocation from "@/components/OurLocation/OurLocation"; 
 
 const ContactUs = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,7 +12,7 @@ const ContactUs = () => {
       <Navbar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
 
       <div
-        className={`min-h-screen bg-gray-100 flex justify-center items-center pt-[80px] transition-all duration-300 ${
+        className={`min-h-screen bg-gray-100 flex flex-col justify-center items-center pt-[80px] transition-all duration-300 ${
           isMenuOpen ? "mt-[250px]" : "mt-[80px]"
         }`}
       >
@@ -59,9 +60,17 @@ const ContactUs = () => {
             </button>
           </form>
         </div>
+
+          <div className="mt-8 w-full max-w-4xl mx-auto mb-12">
+          <h3 className="text-center text-xl font-semibold text-gray-800 mb-4">
+            </h3>
+          <OurLocation />
+        </div>
       </div>
     </>
   );
 };
 
 export default ContactUs;
+
+
