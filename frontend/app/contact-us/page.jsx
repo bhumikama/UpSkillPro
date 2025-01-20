@@ -1,16 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import Navbar from "@/components/Navbar/Navbar";
 import OurLocation from "@/components/OurLocation/OurLocation"; 
 
 const ContactUs = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <>
-      <Navbar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
-
+        
       <div
         className={`min-h-screen bg-gray-100 flex flex-col justify-center items-center pt-[80px] transition-all duration-300 ${
           isMenuOpen ? "mt-[250px]" : "mt-[80px]"
@@ -67,8 +64,7 @@ const ContactUs = () => {
           <OurLocation />
         </div>
       </div>
-    </>
-  );
+      );
 };
 
 export default ContactUs;

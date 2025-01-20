@@ -16,16 +16,16 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="relative bg-white border-b-2 border-black">
+    <nav className="container mx-auto bg-white border-b-2 border-black">
       <div className="flex items-center justify-between px-6 py-4">
         <div className="flex items-center">
           <Link href="/" passHref>
-          <Image src="/images/Logo.png" alt="Logo" width={150} height={40} priority />
+          <Image src="/Logo.png" alt="Logo" width={150} height={40} priority />
 
           </Link>
         </div>
 
-        <ul className="hidden md:flex flex-1 justify-evenly items-center">
+        <ul className="hidden md:flex flex-1  justify-center items-center gap-6">
           <li><a href="#home" className="text-gray-700 hover:text-blue-500 font-semibold">Home</a></li>
           <li><a href="#explore" className="text-gray-700 hover:text-blue-500 font-semibold">Explore</a></li>
           <li><a href="#courses" className="text-gray-700 hover:text-blue-500 font-semibold">Courses</a></li>
@@ -33,7 +33,7 @@ const Navbar = () => {
           <li><a href="#contact" className="text-gray-700 hover:text-blue-500 font-semibold">Contact Us</a></li>
         </ul>
 
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-2">
           <button className="bg-gray-500 text-white px-4 py-2 rounded-full hover:bg-gray-600">Sign Up</button>
           <button className="bg-black text-white px-4 py-2 rounded-full hover:bg-gray-800">Log In</button>
         </div>
