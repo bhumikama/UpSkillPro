@@ -49,7 +49,7 @@ const ContactUs = () => {
                 className="w-full p-3 sm:p-4 border border-black rounded-xl text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400"
                 rows="4"
               />
-            </div>
+           </div>
 
             <button
               type="submit"
