@@ -14,28 +14,27 @@ import {
 } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 
-const CreateCourse = () => {
+const CreateLecture = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [image, setImage] = useState(null);
+  const [video, setVideo] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
-  const [imagePreview, setImagePreview] = useState(null);
+  const [videoPreview, setVideoPreview] = useState(null);
 
-  const handleImageChange = (event) => {
-    const selectedImage = event.target.files[0];
-    if (selectedImage && selectedImage.size / (1024 * 1024) > 500) {
+  const handleVideoChange = (event) => {
+    const selectedVideo = event.target.files[0];
+    if (selectedVideo && selectedVideo.size / (1024 * 1024) > 200) {
       setErrors((prevState) => ({
         ...prevState,
-        image: "File size exceeds 500MB limit",
+        video: "File size exceeds 200MB limit",
       }));
-      setImagePreview(null);
+      setVideoPreview(null);
       event.target.value = "";
     } else {
-      setImage(selectedImage);
-      setImagePreview(URL.createObjectURL(selectedImage));
-      setErrors((prevState) => ({ ...prevState, image: null }));
+      setVideo(selectedVideo);
+      setVideoPreview(URL.createObjectURL(selectedVideo));
+      setErrors((prevState) => ({ ...prevState, video: null }));
     }
   };
   const checkForErrors = () => {
@@ -43,16 +42,13 @@ const CreateCourse = () => {
     if (!title || title.trim() === "") {
       errors.title = "Please provide valid title";
     } else if (!/^[a-zA-Z\s]+$/.test(title.trim())) {
-      errors.title = "Title should contain only letters";
+      errors.title = "Title should contain only letters and spaces";
     }
     if (!description || description.trim() === "") {
       errors.description = "Please provide valid description";
     }
-    if (isNaN(price) || price < 0) {
-      errors.price = "Please provide valid price";
-    }
-    if (!image || image.size === 0) {
-      errors.image = "Please upload an image";
+    if (!video || video.size === 0) {
+      errors.video = "Please upload a video";
     }
     return errors;
   };
@@ -84,10 +80,10 @@ const CreateCourse = () => {
             align="center"
             sx={{ color: "black" }}
           >
-            Create a new course
+            Create a new lecture
           </Typography>
           <Typography variant="body1" align="center">
-            Add title ,description to create a new course
+            Add title ,description , video to add a new lecture to the course
           </Typography>
         </Box>
         <Container maxWidth="sm">
@@ -121,34 +117,13 @@ const CreateCourse = () => {
                 required
               />
               {errors.description && <span>{errors.description}</span>}
-              <TextField
-                fullWidth
-                label="Price"
-                name="price"
-                type="number"
-                value={price}
-                margin="normal"
-                size="small"
-                slotProps={{
-                  input: {
-                    startAdornment: (
-                      <InputAdornment position="start">DKK</InputAdornment>
-                    ),
-                    inputProps: {
-                      min: 0,
-                    },
-                  },
-                }}
-                onChange={(e) => setPrice(e.target.value)}
-                required
-              />
-              {errors.price && <span>{errors.price}</span>}
 
-              {imagePreview && (
+              {videoPreview && (
                 <Box sx={{ mt: 2, textAlign: "center" }}>
-                  <img
-                    src={imagePreview}
+                  <video
+                    src={videoPreview}
                     alt="Uploaded Preview"
+                    controls
                     style={{
                       maxWidth: "100%",
                       maxHeight: "200px",
@@ -157,23 +132,23 @@ const CreateCourse = () => {
                   />
                 </Box>
               )}
-              {/* <ImagePicker */}
+              {/* VideoPicker */}
               <label
-                htmlFor="image-upload"
-                className="flex items-center justify-center w-full px-4 py-2 text-white bg-black rounded-md cursor-pointer hover:bg-blue-600 focus:ring-2 focus:ring-blue-300 focus:outline-none"
+                htmlFor="video-upload"
+                className="flex items-center justify-center w-full px-4 py-2 mt-2 text-white bg-black rounded-md cursor-pointer hover:bg-gray-700 focus:ring-2 focus:ring-blue-300 focus:outline-none"
               >
-                Upload an image
+                Upload a video
               </label>
               <input
                 type="file"
-                id="image-upload"
-                name="image"
-                accept="image/png, image/jpeg"
+                id="video-upload"
+                name="video"
+                accept="video/*"
                 hidden
-                onChange={handleImageChange}
+                onChange={handleVideoChange}
               />
 
-              {errors.image && <span>{errors.image}</span>}
+              {errors.video && <span>{errors.video}</span>}
               <Button
                 type="submit"
                 variant="contained"
@@ -181,15 +156,15 @@ const CreateCourse = () => {
                 size="small"
                 sx={{
                   mt: 2,
-                  backgroundColor: "black", 
+                  backgroundColor: "black",
                   color: "#fff", // Text color
                   "&:hover": {
-                    backgroundColor: "#e64a19", 
+                    backgroundColor: "#374151",
                   },
                 }}
                 disabled={isLoading}
               >
-                {isLoading ? "Submitting..." : "Add your course"}
+                {isLoading ? "Submitting..." : "Add your lecture"}
               </Button>
             </form>
           </Paper>
@@ -199,4 +174,4 @@ const CreateCourse = () => {
   );
 };
 
-export default CreateCourse;
+export default CreateLecture;
