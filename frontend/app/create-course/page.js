@@ -25,10 +25,10 @@ const CreateCourse = () => {
 
   const handleImageChange = (event) => {
     const selectedImage = event.target.files[0];
-    if (selectedImage && selectedImage.size / (1024 * 1024) > 500) {
+    if (selectedImage && selectedImage.size / (1024 * 1024) > 10) {
       setErrors((prevState) => ({
         ...prevState,
-        image: "File size exceeds 500MB limit",
+        image: "File size exceeds 10MB limit",
       }));
       setImagePreview(null);
       event.target.value = "";
@@ -160,7 +160,7 @@ const CreateCourse = () => {
               {/* <ImagePicker */}
               <label
                 htmlFor="image-upload"
-                className="flex items-center justify-center w-full px-4 py-2 text-white bg-black rounded-md cursor-pointer hover:bg-blue-600 focus:ring-2 focus:ring-blue-300 focus:outline-none"
+                className="flex items-center justify-center w-full px-4 py-2 mt-2 text-white bg-black rounded-md cursor-pointer hover:bg-blue-600 focus:ring-2 focus:ring-blue-300 focus:outline-none"
               >
                 Upload an image
               </label>
@@ -181,10 +181,10 @@ const CreateCourse = () => {
                 size="small"
                 sx={{
                   mt: 2,
-                  backgroundColor: "black", 
+                  backgroundColor: "black",
                   color: "#fff", // Text color
                   "&:hover": {
-                    backgroundColor: "#e64a19", 
+                    backgroundColor: "#374151",
                   },
                 }}
                 disabled={isLoading}
