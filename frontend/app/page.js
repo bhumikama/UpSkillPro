@@ -1,6 +1,6 @@
 import HeroSection from "./_components/HomePageComponents/Hero";
 import CategorySection from "./_components/HomePageComponents/CategorySection";
-import CoursesGrid from "./components/HomePageComponents/CoursesGrid";
+import CoursesGrid from "../components/CoursesGrid";
 export default function Home() {
   return (
     <div>

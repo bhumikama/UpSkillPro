@@ -1,4 +1,4 @@
-import "./_styles/global.css";
+import "./_styles/globals.css";
 export const metadata = {
   title: "SkillUpPro",
 };
