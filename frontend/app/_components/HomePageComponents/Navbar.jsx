@@ -21,7 +21,7 @@ const Navbar = () => {
       <div className="flex items-center justify-between px-6 py-4">
          <div className="flex items-center">
           <Link href="/" passHref>
-            <Image src="/Logo.png" alt="Logo" width={150} height={40} priority />
+            <Image src="/upskillpro_logo.png" alt="Logo" width={150} height={40} priority />
           </Link>
         </div>
 
