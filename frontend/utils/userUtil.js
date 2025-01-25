@@ -6,8 +6,8 @@ export function returnPathByRole(role) {
   switch (role) {
     case "instructor":
       return "/instructor-dashboard";
-    case "student":
-      return "/student-dashboard";
+    // case "student":
+    //   return "/student-dashboard";
     default:
       return "/";
   }
