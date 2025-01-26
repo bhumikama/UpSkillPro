@@ -208,6 +208,7 @@ export const recommend = [
   },
 ];
 
+
 export const completeCourse = [
   {
     id: 1,
@@ -245,3 +246,32 @@ export const completeCourse = [
     ],
   },
 ];
+
+  export const clientTestimonials = [
+    {
+      image: "/jack.jpg",
+      name: "John Done",
+      description:
+        "This platform has completely changed how I learn. The interactive content keeps me engaged, and I love the focus on practical skills Gen Z truly values",
+    },
+    {
+      image: "/ryan.jpg",
+      name: "Ryan Zuckerberg",
+      description:
+        "Easily the best eLearning experience I’ve had! The courses are fun, modern, and speak to me. It's like they know what we need to thrive in the digital age",
+    },
+    {
+      image: "/linkedin.jpg",
+      name: "Tim Cook",
+      description:
+        "I never thought learning could be this exciting! The tools, community, and relatable vibe make it the ultimate platform for our generation to learn new skills",
+    },
+    {
+      image: "/annika.jpg",
+      name: "Annika Gate",
+      description:
+        " game-changer for anyone looking to grow. The courses are concise, insightful, and packed with knowledge that feels tailored to Gen Z. I love it! I Recommend",
+      
+    },
+  ];
+
