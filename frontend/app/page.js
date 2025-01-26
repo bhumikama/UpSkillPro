@@ -13,6 +13,7 @@ export default function Home() {
     <div>
        <HeroSection />
         <CategoryTabs />
+         <CategoryTabs />
      <CoursesGrid />
      <InstructorSection />
       <InvestSection />     
