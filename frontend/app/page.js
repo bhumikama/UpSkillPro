@@ -13,10 +13,9 @@ import CoursesGrid from "./_components/HomePageComponents/CoursesGrid";
 export default function Home() {
   return (
     <div>
-  
-       <HeroSection />
-         <CategoryTabs />
-     <CoursesGrid />
+      <HeroSection />
+      <CategoryTabs />
+      <CoursesGrid />
        <InvestSection />
      <InstructorSection />
          <ClientLogo />
