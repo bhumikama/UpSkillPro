@@ -4,6 +4,9 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./_components/HomePageComponents/Navbar";
 import Footer from "./_components/HomePageComponents/Footer";
+
+
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -24,6 +27,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Navbar />
         <ToastContainer
           position="bottom-left"
           autoClose={5000}
@@ -36,9 +40,11 @@ export default function RootLayout({ children }) {
           pauseOnHover
           theme="colored"
         />
-        <Navbar/>
         {children}
-        <Footer/>
+
+        <Footer />
+
+       
       </body>
     </html>
   );
