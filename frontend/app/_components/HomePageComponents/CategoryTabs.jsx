@@ -19,22 +19,19 @@ const CategorySection = () => {
       <div>
         <div>
           <div className=" container mx-auto py-10 px-10 md:py-10  ">
-            <h2 className=" text-5xl text-center font-bold leading-tight	 text-gray-500 lg:text-7xl">
+            <h2 className=" text-5xl text-center font-bold leading-snug py-8 text-gray-500 lg:text-7xl">
               Study Smarter, Dream
               <br /> Bigger, Achieve More.
             </h2>
           </div>
-          <div className="flex items-center justify-center flex-wrap my-5 gap-2 ">
+          <div className="container mx-auto flex items-center justify-center  flex-wrap my-5 gap-7 ">
             <h2 className="mr-5 font-semibold">Top Categories</h2>
             {categoryList.map((item) => (
               <div key={item.name} className="mb-4">
                 <Link
                   href={item.path}
-                  className={
-                    pathname === item.name
-                      ? "border border-gray-700 bg-black text-white py-2 px-5"
-                      : "border border-gray-700 py-2 px-5 hover:bg-slate-950 hover:text-white transition ease-in-out delay-150"
-                  }
+                  className=" text-xl border border-gray-700 py-2 px-5 hover:bg-slate-950 hover:text-white transition ease-in-out delay-150"
+                  
                 >
                   {item.name}
                 </Link>

@@ -27,10 +27,13 @@ const CoursePage = () => {
       <div className="container mx-auto">
         <div className="leading-loose grid lg:grid-cols-3 md:gap-3">
           <div className="p-3 col-span-2 px-4 border">
-            <div className="p-4">
+            <div className="relative pt-[56.25%]">
               <ReactPlayer
                 url="https://youtu.be/lELqghacmuE?si=v3JQhKVt5Z6_Z9n6"
                 controls={true}
+                width="100%"
+                height="100%"
+                className="absolute top-0 left-0"
               />
             </div>
             <div className="bg-white p-5 rounded-lg shadow-md mb-5">
