@@ -2,8 +2,8 @@ import Image from "next/image";
 
 export default function HeroSection() {
   return (
-    <section className="relative bg-black text-white ">
-      <div className=" mx-auto flex flex-col md:flex-row justify-center items-center gap-20 ">
+    <section className=" bg-black text-white ">
+      <div className="  flex flex-col md:flex-row justify-center items-center gap-20  ">
         <div className="text-center md:text-left  h-auto ">
           <h1 className="text-4xl md:text-6xl font-bold md:leading-normal mb-4 ">
             Learn, Grow, Slay. <br /> Your Future Starts Here.
@@ -19,7 +19,7 @@ export default function HeroSection() {
             Become An Instructor
           </button>
         </div>
-        <div className="relative ">
+        <div className=" ">
           <Image src="/hero-image.png" alt="Hero" width="500" height="500" />
         </div>
       </div>
