@@ -78,7 +78,7 @@ const AuthNavbar = () => {
             <Play size={30} />
             <h3 className="font-bold text-lg">My Courses</h3>
           </Link>
-          {/* <ProfileDropdownMenu /> */}
+          <ProfileDropdownMenu />
         </div>
         <div className="md:hidden flex items-center gap-2">
           <Link href="/dashboard" className="flex items-center gap-2">
