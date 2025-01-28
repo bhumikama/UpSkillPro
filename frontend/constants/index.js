@@ -275,3 +275,12 @@ export const completeCourse = [
     },
   ];
 
+ export const categoryList = [
+   { name: "Programming", path: "/" },
+   { name: "Web Design", path: "/" },
+   { name: "User Experience", path: "/" },
+   { name: "Design", path: "/" },
+   { name: "Data Analysis", path: "/" },
+   { name: "Data Engineering", path: "/" },
+   { name: "View All", path: "/" },
+ ];

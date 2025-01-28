@@ -1,19 +1,11 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { categoryList } from "@/constants";
+
 
 const CategorySection = () => {
-  const pathname = usePathname();
-  const categoryList = [
-    { name: "Programming", path: "/" },
-    { name: "Web Design", path: "/" },
-    { name: "User Experience", path: "/" },
-    { name: "Design", path: "/" },
-    { name: "Data Analysis", path: "/" },
-    { name: "Data Engineering", path: "/" },
-    { name: "View All", path: "/" },
-  ];
+ 
   return (
     <div className="w-full h-auto">
       <div>
