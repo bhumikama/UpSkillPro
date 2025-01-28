@@ -39,7 +39,7 @@
     "sequelize-cli": "^6.6.2",
     "socket.io": "^4.8.1",
     "sqlite3": "^5.1.7",
-    "swagger-test-templates": "^0.1.1",
+    "swagger-test-templates": "^1.6.0",
     "swagger-ui-dist": "^5.18.2"
   },
   "devDependencies": {
