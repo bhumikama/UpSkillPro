@@ -7,25 +7,45 @@ const features = [
     title: "Bite-Sized Learning for Big Results",
     description:
       "Whether you have 10 minutes or an hour, you’ll always make progress.",
-    icon: "💡",
+    details: [
+      "We know attention spans are short—that's why our",
+      "lessons are designed to be quick, impactful, and easy to",
+      "fit into your day.",
+    ],
+    icon: "/bite-sized.png",
   },
   {
     title: "Earn Certifications That Matter",
     description:
       "Showcase your achievements with certifications recognized by industry leaders.",
-    icon: "📜",
+    details: [
+      "Certifications from UpSkillPro demonstrate your skills to ",
+      "employers—helping you stand out in the job market and",
+      "advance your career with confidence.",
+    ],
+    icon: "/earn-certification.png",
   },
   {
     title: "A Thriving Community of Learners",
     description:
       "Connect, collaborate, and grow with a global community of learners who share your passions and ambitions.",
-    icon: "👥",
+    details: [
+      "Join forums and attend virtual events—collaborate ",
+      " on group projects, and grow alongside",
+      " like-minded peers.",
+    ],
+    icon: "/thriving-community.png",
   },
   {
     title: "Learn Anywhere, Anytime",
     description:
       "Our mobile-friendly design means you can learn on the go, whether you’re at home, on the bus, or waiting for coffee.",
-    icon: "📱",
+    details: [
+      "Access lessons and resources anytime—whether ",
+      "you're at home, commuting, or waiting for",
+      " coffee on the go.",
+    ],
+    icon: "/learn-anywhere.png",
   },
 ];
 
@@ -36,42 +56,65 @@ const FeaturesSection = () => {
     <section className="bg-gray-50 py-16">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Heading */}
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
-          Unique Features of <span className="text-indigo-600">UpSkillPro</span>
+        <h1 className="text-3xl font-bold text-center text-gray-600 mb-12">
+          Unique Features of <span className="text-black">UpSkillPro</span>
         </h1>
 
         {/* Content Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Left Side: Tabs */}
-          <div className="space-y-4">
-            {features.map((feature, index) => (
-              <div
-                key={index}
-                className={`flex items-center p-4 rounded-lg shadow-md cursor-pointer transition ${
-                  activeIndex === index
-                    ? "bg-gray-800 text-white"
-                    : "bg-gray-200 text-gray-800 hover:bg-gray-300"
-                }`}
-                onClick={() => setActiveIndex(index)}
-              >
-                <div className="text-3xl mr-4">{feature.icon}</div>
-                <h3 className="text-lg font-semibold">{feature.title}</h3>
-              </div>
-            ))}
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-24 gap-y-8">
 
+  {/* Left Side: Tabs */}
+  <div className="flex flex-col space-y-1">
+    {features.map((feature, index) => (
+      <div
+        key={index}
+        className={`p-4 rounded-lg shadow-md cursor-pointer flex items-center space-x-4 transition ${
+          activeIndex === index
+            ? "bg-gray-400 text-white" // Selected tab is gray
+            : "bg-black text-white hover:bg-gray-600" // Unselected tabs are black
+        }`}
+        onClick={() => setActiveIndex(index)}
+      >
+        {/* Image Div */}
+        <div className="flex-shrink-0">
+          <Image
+            src={feature.icon} // Icon source
+            alt={feature.title} // Accessible alt text
+            width={40}
+            height={40}
+            className="rounded-lg"
+          />
+        </div>
+
+        {/* Text Content */}
+        <div className="flex flex-col">
+          <h3 className="text-lg font-semibold">{feature.title}</h3>
+          <p
+            className={`text-sm mt-2 transition ${
+              activeIndex === index ? "text-gray-300" : "text-gray-500"
+            }`}
+          >
+            {feature.description}
+          </p>
+        </div>
+      </div>
+    ))}
+  </div>
           {/* Right Side: Active Feature Details */}
-          <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-gray-800">
-              {features[activeIndex].title}
-            </h2>
-            <p className="text-base text-gray-600">
-              {features[activeIndex].description}
-            </p>
+          <div className="flex flex-col items-start justify-between space-y-6">
+            {/* Details Text */}
+            <div className="text-base text-gray-600 space-y-2 text-left">
+              {features[activeIndex].details.map((line, idx) => (
+                <p key={idx}>{line}</p>
+              ))}
+            </div>
+            {/* Image */}
             <Image
               src="/upskillpro.png"
-              alt="Illustration"
-              className="w-full max-w-sm mx-auto rounded-lg shadow-lg"
+              alt="upskillpro"
+              width={400}
+              height={300}
+              className="w-full max-w-sm rounded-lg shadow-lg"
             />
           </div>
         </div>

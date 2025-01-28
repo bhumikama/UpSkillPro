@@ -1,5 +1,6 @@
 // components/ClientLogoCarousel.js
 import React from "react";
+import Image from "next/image";
 
 const ClientLogoCarousel = () => {
   return (
@@ -9,45 +10,61 @@ const ClientLogoCarousel = () => {
       </h2>
       <div className="overflow-hidden">
         <div className="flex animate-marquee gap-x-8 md:gap-x-16">
-          <img
+          <Image
             src="/vw.png"
             alt="Logo 1"
-            className="h-12 w-12 object-contain"
+            width={48}
+            height={48}
+            className="object-contain"
           />
-          <img
+          <Image
             src="/Samsung.png"
             alt="Logo 2"
-            className="h-12 w-12 object-contain"
+            width={48}
+            height={48}
+            className="object-contain"
           />
-          <img
+          <Image
             src="/Cisco.png"
             alt="Logo 3"
-            className="h-16 w-16 object-contain"
+            width={64}
+            height={64}
+            className="object-contain"
           />
-          <img
+          <Image
             src="/Vimeo.png"
             alt="Logo 4"
-            className="h-12 w-12 object-contain"
+            width={48}
+            height={48}
+            className="object-contain"
           />
-          <img
+          <Image
             src="/P&G.png"
             alt="Logo 5"
-            className="h-12 w-12 object-contain"
+            width={48}
+            height={48}
+            className="object-contain"
           />
-          <img
+          <Image
             src="/HPE.png"
             alt="Logo 6"
-            className="h-12 w-12 object-contain"
+            width={48}
+            height={48}
+            className="object-contain"
           />
-          <img
+          <Image
             src="/Citi.png"
             alt="Logo 7"
-            className="h-12 w-12 object-contain"
+            width={48}
+            height={48}
+            className="object-contain"
           />
-          <img
+          <Image
             src="/Ericsson.png"
             alt="Logo 8"
-            className="h-12 w-12 object-contain"
+            width={48}
+            height={48}
+            className="object-contain"
           />
         </div>
       </div>
