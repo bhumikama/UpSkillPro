@@ -1,13 +1,16 @@
 import React from "react";
 import Image from "next/image";
 import { courses } from "../../../constants";
+import Link from "next/link";
+import Skeleton from '@mui/material/Skeleton';
+
 
 const CourseGrid = () => {
   
   return (
     <div className="container my-10 mx-auto">
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-10">
-        {courses.map((course, index) => (
+        {courses.slice(0, 4).map((course, index) => (
           <div
             key={index}
             className=" relative border  border-gray-300 rounded-md shadow-md  leading-loose 	"
@@ -42,6 +45,9 @@ const CourseGrid = () => {
           </div>
         ))}
       </div>
+      <Link href="/courses">
+      <button type="submit" className="mt-10 py-4 px-12 border border-black text-2xl font-medium">Explore All Courses</button>
+      </Link>
     </div>
   );
 };
