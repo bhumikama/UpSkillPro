@@ -7,18 +7,16 @@ import CategoryTabs from "./_components/HomePageComponents/CategoryTabs";
 import CoursesGrid from "./_components/HomePageComponents/CoursesGrid";
 import Navbar from "./_components/HomePageComponents/Navbar";
 
-
 export default function Home() {
   return (
     <div>
-       <HeroSection />
-      <CategorySection />
+      <HeroSection />
       <CategoryTabs />
-     <CoursesGrid />
-     <InstructorSection />
-      <InvestSection />     
-     <Testimonial />
- <FAQ />
+      <CoursesGrid />
+      <InstructorSection />
+      <InvestSection />
+      <Testimonial />
+      <FAQ />
     </div>
   );
 }
