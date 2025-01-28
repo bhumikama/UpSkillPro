@@ -10,7 +10,7 @@ const generateS3Url = (fileKey) => {
 const createCourse = async (req, res) => {
   const instructorId = req.user.sub;
   const { title, description, price, imageKey } = req.body;
-
+  const createdAt = new Date();
   try {
     // Ensure the instructor exists and is valid
     const instructor = await User.findOne({
@@ -29,6 +29,7 @@ const createCourse = async (req, res) => {
       instructorId,
       imageKey,
       price,
+      createdAt
     });
 
     res.status(201).json(course);
@@ -47,14 +48,26 @@ const getAllCourses = async (req, res) => {
         as: "instructor",
         attributes: ["id", "name", "email"], // Select specific fields for the instructor
       },
-      attributes: ["id", "title", "description", "imageKey", "createdAt"], // Select specific fields for the course
+      attributes: [
+        "id",
+        "title",
+        "description",
+        "imageKey",
+        "createdAt",
+        "price",
+      ], // Select specific fields for the course
     });
 
     if (!courses.length) {
       return res.status(404).json({ message: "No courses found" });
     }
 
-    res.status(200).json(courses);
+    // Add full S3 URL for each course
+    const coursesWithUrls = courses.map((course) => ({
+      ...course.dataValues, // using the datValues to get all the fields
+      imageUrl: generateS3Url(course.imageKey),
+    }));
+    res.status(200).json(coursesWithUrls);
   } catch (error) {
     console.error("Error fetching courses:", error);
     res.status(500).json({ error: "Failed to fetch courses" });
@@ -98,7 +111,6 @@ const getCoursesByInstructor = async (req, res) => {
 const getCourseById = async (req, res) => {
   try {
     const { id } = req.params;
-
     const course = await Course.findByPk(id, {
       include: [
         {
@@ -109,16 +121,29 @@ const getCourseById = async (req, res) => {
         {
           model: Lecture,
           as: "lectures",
-          attributes: ["id", "title", "videoKey", "createdAt"],
+          attributes: ["id", "title", "videoUrl", "createdAt"],
         },
       ],
-      attributes: ["id", "title", "description", "imageKey", "createdAt"],
+      attributes: [
+        "id",
+        "title",
+        "description",
+        "imageKey",
+        "createdAt",
+        "price",
+      ],
     });
 
     if (!course) {
       return res.status(404).json({ message: "Course not found" });
     }
-    res.status(200).json(course);
+
+    // Add full S3 URL for each course
+    const courseWithUrl = {
+      ...course.toJSON(),
+      imageUrl: generateS3Url(course.imageKey),
+    };
+    res.status(200).json(courseWithUrl);
   } catch (error) {
     console.error("Error fetching course by ID:", error);
     res
