@@ -8,11 +8,12 @@ const generateS3Url = (fileKey) => {
 
 const createLecture = async (req, res) => {
   const courseId = req.params.id;
-  console.log("Course Id lecture:", courseId);
+  const createdAt = new Date();
+
   if (!courseId) {
     return res.status(404).json({ message: "courseID is not found" });
   }
-  const { title, videoKey } = req.body;
+  const { title, videoUrl } = req.body;
 
   try {
     // Ensure the course exists
@@ -25,7 +26,8 @@ const createLecture = async (req, res) => {
     const lecture = await Lecture.create({
       courseId,
       title,
-      videoKey,
+      videoUrl,
+      createdAt,
     });
     res.status(201).json(lecture);
   } catch (error) {
@@ -55,7 +57,7 @@ const getLecturesByCourseId = async (req, res) => {
     // Add full S3 URL for each lecture
     const lecturesWithUrls = lectures.map((lecture) => ({
       ...lecture.dataValues, // using the datValues to get all the fields
-      videoUrl: generateS3Url(lecture.videoKey),
+      videoURL: generateS3Url(lecture.videoUrl),
     }));
 
     res.status(200).json(lecturesWithUrls);

@@ -15,12 +15,7 @@ import { Slider } from "@/components/ui/Slider";
 import { Button } from "@mui/material";
 import Image from "next/image";
 
-function VideoPlayer({
-  width = "100%",
-  height = "100%",
-  url,
-  onVideoEnd, // Callback function to be called when the video ends
-}) {
+function VideoPlayer({ width = "100%", height = "100%", url, onVideoEnd }) {
   const [playing, setPlaying] = useState(false);
   const [volume, setVolume] = useState(0.5);
   const [muted, setMuted] = useState(false);
@@ -116,6 +111,13 @@ function VideoPlayer({
     };
   }, []);
 
+  // Call onVideoEnd when the video ends
+  const handleEnded = () => {
+    if (onVideoEnd) {
+      onVideoEnd();
+    }
+  };
+
   return (
     <div
       ref={playerContainerRef}
@@ -135,7 +137,8 @@ function VideoPlayer({
         playing={playing}
         volume={volume}
         muted={muted}
-        onEnded={onVideoEnd}
+        onProgress={handleProgress}
+        onEnded={handleEnded}
       />
       {showControls && (
         <div
@@ -213,9 +216,9 @@ function VideoPlayer({
                 onClick={handleFullScreen}
               >
                 {isFullScreen ? (
-                  <Minimize className="30-6 w-6" />
+                  <Minimize className="h-6 w-6" />
                 ) : (
-                  <Maximize className="h-30 w-6" />
+                  <Maximize className="h-6 w-6" />
                 )}
               </Button>
               <div>

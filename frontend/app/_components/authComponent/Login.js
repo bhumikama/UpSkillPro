@@ -8,6 +8,9 @@ import { motion } from "framer-motion";
 import { ArrowBigLeftIcon, Loader, Lock, Mail } from "lucide-react";
 import Link from "next/link";
 import Input from "@/components/ui/input";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "@/features/auth/authSlice";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -15,7 +18,8 @@ const Login = () => {
     password: "",
   });
   const [isLoading, setIsLoading] = useState(false);
-
+  const router = useRouter();
+  const dispatch = useDispatch();
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
@@ -24,22 +28,24 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+
     try {
       const userInfo = await makePostRequest("api/login", formData, {
         credentials: "include",
       });
-      const { user } = userInfo;
+      const { user, token } = userInfo;
 
       // Set cookies
       Cookies.set("userName", user.name);
       Cookies.set("userRole", user.role);
       Cookies.set("userEmail", user.email);
 
+      dispatch(loginSuccess({ user, token }));
       toast.success("Logged in successfully! 🎉");
 
       // Redirect based on role
       const dashboardPath = returnPathByRole(user.role);
-      window.location.replace(dashboardPath);
+      router.push(dashboardPath);
     } catch (error) {
       console.error("Error during login process:", error);
       toast.error("Login failed. Please try again.");

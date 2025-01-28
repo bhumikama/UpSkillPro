@@ -94,13 +94,13 @@ const CreateLecture = ({ params }) => {
       return;
     }
     try {
-      const videoKey = await handleFileUpload(video);
+      const videoUrl = await handleFileUpload(video);
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/courses/${id}/lectures`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ title, videoKey }),
+          body: JSON.stringify({ title, videoUrl }),
           credentials: "include",
         }
       );

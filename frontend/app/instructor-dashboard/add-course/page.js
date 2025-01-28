@@ -6,6 +6,8 @@ import { handleFileUpload } from "@/utils/handleFileUpload";
 import { toast } from "react-toastify";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { addCourse } from "@/features/course/courseSlice";
 import {
   Alert,
   AlertTitle,
@@ -26,6 +28,7 @@ const CreateCourse = () => {
   const [errors, setErrors] = useState({});
   const [imagePreview, setImagePreview] = useState(null);
   const router = useRouter();
+  const dispatch = useDispatch();
   const handleImageChange = (event) => {
     const selectedImage = event.target.files[0];
 
@@ -95,6 +98,7 @@ const CreateCourse = () => {
       );
       if (apiResponse.ok) {
         const result = await apiResponse.json();
+        dispatch(addCourse(result));
         toast.success("Created new course");
         setTitle("");
         setDescription("");

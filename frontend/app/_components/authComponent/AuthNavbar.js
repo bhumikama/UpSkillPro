@@ -5,7 +5,7 @@ import Image from "next/image";
 import ProfileDropdownMenu from "../HomePageComponents/ProfileAvatar";
 import { Play } from "lucide-react";
 
-const Navbar = () => {
+const AuthNavbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -33,7 +33,7 @@ const Navbar = () => {
         <ul className="hidden md:hidden lg:flex flex-1  justify-center items-center gap-6">
           <li>
             <a
-              href="#home"
+              href="/"
               className="text-gray-700 hover:text-blue-500 font-semibold"
             >
               Home
@@ -57,7 +57,7 @@ const Navbar = () => {
           </li>
           <li>
             <a
-              href="#instructor"
+              href="/signup?role=instructor"
               className="text-gray-700 hover:text-blue-500 font-semibold"
             >
               Become an Instructor
@@ -73,17 +73,17 @@ const Navbar = () => {
           </li>
         </ul>
         <div className="hidden md:flex items-center gap-2">
-          <Link href="/dashboard" className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
             <Play size={30} />
             <h3 className="font-bold text-lg">My Courses</h3>
-            <ProfileDropdownMenu />
           </Link>
+          <ProfileDropdownMenu />
         </div>
         <div className="md:hidden flex items-center gap-2">
-            <Link href="/dashboard" className="flex items-center gap-2">
-          <h3 className="font-bold text-lg">My Courses</h3>
+          <Link href="/dashboard" className="flex items-center gap-2">
+            <h3 className="font-bold text-lg">My Courses</h3>
+          </Link>
           <ProfileDropdownMenu />
-</Link>
           <div
             className=" flex flex-col space-y-1 cursor-pointer"
             onClick={toggleMenu}
@@ -110,7 +110,7 @@ const Navbar = () => {
 
           <div className="flex flex-col items-center gap-6 text-lg">
             <a
-              href="#home"
+              href="/"
               onClick={closeMenu}
               className="text-gray-700 hover:text-blue-500 font-semibold"
             >
@@ -124,14 +124,14 @@ const Navbar = () => {
               Explore
             </a>
             <a
-              href="#courses"
+              href="/courses"
               onClick={closeMenu}
               className="text-gray-700 hover:text-blue-500 font-semibold"
             >
               Courses
             </a>
             <a
-              href="#instructor"
+              href="/signup?role=instructor"
               onClick={closeMenu}
               className="text-gray-700 hover:text-blue-500 font-semibold"
             >
@@ -151,4 +151,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default AuthNavbar;

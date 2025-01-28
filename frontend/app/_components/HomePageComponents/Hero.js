@@ -1,5 +1,5 @@
 import Image from "next/image";
-
+import Link from "next/link";
 export default function HeroSection() {
   return (
     <section className="relative bg-black text-white ">
@@ -16,7 +16,7 @@ export default function HeroSection() {
             Explore Courses
           </button>
           <button className="border border-gray-500 ml-6 text-white px-6 py-3 text rounded-full font-medium hover:bg-gray-200 hover:text-black  transition">
-            Become An Instructor
+            <Link href="/signup?role=instructor">Become An Instructor</Link>
           </button>
         </div>
         <div className="relative ">

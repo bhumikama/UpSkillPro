@@ -14,7 +14,7 @@ const Lecture = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: Course,
+        model: Course, // Reference the Course table
         key: "id",
       },
       onDelete: "CASCADE",
@@ -23,7 +23,7 @@ const Lecture = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    videoKey: {
+    videoUrl: {
       type: DataTypes.STRING,
       allowNull: true,
     },
@@ -35,6 +35,7 @@ const Lecture = sequelize.define(
   },
   {
     tableName: "Lectures",
+    timestamps: false,
   }
 );
 
@@ -42,7 +43,7 @@ Lecture.belongsTo(Course, { foreignKey: "courseId" });
 Course.hasMany(Lecture, { as: "lectures", foreignKey: "courseId" });
 
 sequelize
-  .sync({ force: false })
+  .sync({ alter: false })
   .then(() => {
     console.log("Lecture model is synchronized.");
   })
