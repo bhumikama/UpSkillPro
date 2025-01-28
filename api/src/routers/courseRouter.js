@@ -34,4 +34,6 @@ courseRouter.post(
 );
 courseRouter.get("/:id/lectures", authenticateToken, getLecturesByCourseId);
 
+
+
 export default courseRouter;
