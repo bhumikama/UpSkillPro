@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -31,7 +30,7 @@ const AuthNavbar = () => {
             />
           </Link>
         </div>
-        <ul className="hidden md:flex flex-1  justify-center items-center gap-6">
+        <ul className="hidden md:hidden lg:flex flex-1  justify-center items-center gap-6">
           <li>
             <a
               href="/"

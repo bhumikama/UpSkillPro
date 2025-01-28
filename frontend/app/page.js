@@ -1,5 +1,6 @@
 import InvestSection from "@/components/InvestSection";
 import HeroSection from "./_components/HomePageComponents/Hero";
+import ClientLogo from "./_components/HomePageComponents/ClientLogo";
 import InstructorSection from "./_components/HomePageComponents/InstructorSection";
 import FAQ from "./_components/HomePageComponents/FAQ";
 import Testimonial from "./_components/HomePageComponents/Testimonial";
@@ -14,8 +15,9 @@ export default function Home() {
       <HeroSection />
       <CategoryTabs />
       <CoursesGrid />
-      <InstructorSection />
       <InvestSection />
+      <InstructorSection />
+      <ClientLogo />
       <Testimonial />
       <FAQ />
     </div>
