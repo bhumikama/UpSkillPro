@@ -34,6 +34,7 @@ const InvestSection = () => {
               src={invests.icon}
               width={30}
               height={30}
+              alt={`invest image of ${invests.title}`}
               className="mx-auto mb-3 "
             />
             <h2 className="font-bold text-xl mb-3">{invests.title}</h2>

@@ -207,3 +207,71 @@ export const recommend = [
     path: "/take-a-quiz",
   },
 ];
+
+
+export const completeCourse = [
+  {
+    id: 1,
+    image: "/js.png",
+    name: "Introduction to Javascript",
+    description:
+      "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-character",
+    instructor: "HackYourFuture",
+    price: "20.00",
+    sellingprice: "10.00",
+    lectures: [
+      {
+        id: 1,
+        videoUrl: "/vid2.mp4",
+        title: "Introduction to JavaScript",
+        duration: "10:00",
+        content: "An overview of JavaScript and its history.",
+      },
+      {
+        id: 2,
+        videoUrl: "/SQL Injection.mp4",
+        title: "JavaScript Basics",
+        duration: "20:00",
+        content:
+          "Learn the basics of JavaScript, including variables, data types, and operators.",
+      },
+      {
+        id: 3,
+        title: "Functions and Scope",
+        videoUrl: "/api.mp4",
+        duration: "15:00",
+        content:
+          "Understand functions, scope, and how to use them in JavaScript.",
+      },
+    ],
+  },
+];
+
+  export const clientTestimonials = [
+    {
+      image: "/jack.jpg",
+      name: "John Done",
+      description:
+        "This platform has completely changed how I learn. The interactive content keeps me engaged, and I love the focus on practical skills Gen Z truly values",
+    },
+    {
+      image: "/ryan.jpg",
+      name: "Ryan Zuckerberg",
+      description:
+        "Easily the best eLearning experience I’ve had! The courses are fun, modern, and speak to me. It's like they know what we need to thrive in the digital age",
+    },
+    {
+      image: "/linkedin.jpg",
+      name: "Tim Cook",
+      description:
+        "I never thought learning could be this exciting! The tools, community, and relatable vibe make it the ultimate platform for our generation to learn new skills",
+    },
+    {
+      image: "/annika.jpg",
+      name: "Annika Gate",
+      description:
+        " game-changer for anyone looking to grow. The courses are concise, insightful, and packed with knowledge that feels tailored to Gen Z. I love it! I Recommend",
+      
+    },
+  ];
+

@@ -43,6 +43,7 @@ const Course = sequelize.define(
   },
   {
     tableName: "Courses",
+    timestamps: false,
   }
 );
 
@@ -50,7 +51,7 @@ Course.belongsTo(User, { as: "instructor", foreignKey: "instructorId" });
 User.hasMany(Course, { as: "courses", foreignKey: "instructorId" });
 
 sequelize
-  .sync({ force: false })
+  .sync({ alter: false })
   .then(() => {
     console.log("Course model is synchronized.");
   })

@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/db.js";
-
+import Sequelize from "sequelize";
 const User = sequelize.define(
   "User",
   {
@@ -26,10 +26,12 @@ const User = sequelize.define(
       allowNull: false,
     },
     role: {
-      type: DataTypes.ENUM("student", "instructor"),
+      type: Sequelize.ENUM("student", "instructor"),
       allowNull: false,
-      defaultValue: "student",
+      field: "role",
+      enumName: "UsersRoleEnum",
     },
+
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
@@ -38,11 +40,12 @@ const User = sequelize.define(
   },
   {
     tableName: "Users",
+    timestamps: false,
   }
 );
 
 sequelize
-  .sync({ force: false })
+  .sync({ alter: true })
   .then(() => {
     console.log("user model is synchronized.");
   })
