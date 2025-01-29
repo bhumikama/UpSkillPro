@@ -1,24 +1,26 @@
 "use client";
-import Button from "@mui/material/Button";
-import { Card, CardContent } from "@/components/ui/card";
+
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { handleFileUpload } from "@/utils/handleFileUpload";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useRouter } from "next/navigation";
+import Button from '@mui/material/Button'; 
+import { Upload } from "@mui/icons-material";
+import { Save } from "@mui/icons-material";
+import { handleFileUpload } from "@/utils/handleFileUpload"; 
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../../_components/ui/tabs";
 import {
-  Alert,
-  AlertTitle,
-  Box,
-  Container,
-  Paper,
-  TextField,
-  Typography,
+    Alert,
+    AlertTitle,
+    Box,
+    Container,
+    Paper,
+    TextField,
+    Typography,
 } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
-import { useRouter } from "next/navigation";
 
 const CreateLecture = ({ params }) => {
-  const { id } = React.use(params);
+  const { id } = params;
   const [title, setTitle] = useState("");
   const [video, setVideo] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -26,7 +28,7 @@ const CreateLecture = ({ params }) => {
   const [videoPreview, setVideoPreview] = useState(null);
   const router = useRouter();
 
-  const MAX_FILE_SIZE_MB = 100; //maximum file size limit
+  const MAX_FILE_SIZE_MB = 100;
 
   const handleVideoChange = (event) => {
     try {
@@ -40,7 +42,7 @@ const CreateLecture = ({ params }) => {
         return;
       }
 
-      const fileSizeMB = selectedVideo.size / (1024 * 1024); // Converting file size to MB
+      const fileSizeMB = selectedVideo.size / (1024 * 1024); 
       if (fileSizeMB > MAX_FILE_SIZE_MB) {
         setErrors((prevState) => ({
           ...prevState,
@@ -48,16 +50,14 @@ const CreateLecture = ({ params }) => {
         }));
         setVideoPreview(null);
         setVideo(null);
-        event.target.value = ""; // Clearing input value
+        event.target.value = ""; 
         return;
       }
 
-      // Revoke any existing video preview URL to avoid memory leaks
       if (videoPreview) {
         URL.revokeObjectURL(videoPreview);
       }
 
-      // Set the new video and preview URL
       setVideo(selectedVideo);
       setVideoPreview(URL.createObjectURL(selectedVideo));
       setErrors((prevState) => ({
@@ -76,7 +76,7 @@ const CreateLecture = ({ params }) => {
   const checkForErrors = () => {
     const errors = {};
     if (!title || title.trim() === "") {
-      errors.title = "Please provide valid title";
+      errors.title = "Please provide a valid title";
     }
 
     if (!video || video.size === 0) {
@@ -84,6 +84,7 @@ const CreateLecture = ({ params }) => {
     }
     return errors;
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -93,21 +94,22 @@ const CreateLecture = ({ params }) => {
       setIsLoading(false);
       return;
     }
+
     try {
-      const videoUrl = await handleFileUpload(video);
+      const videoKey = await handleFileUpload(video);
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/courses/${id}/lectures`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ title, videoUrl }),
+          body: JSON.stringify({ title, videoKey }),
           credentials: "include",
         }
       );
 
       if (response.ok) {
         const result = await response.json();
-        toast.success("Created new lecture ! 🎉");
+        toast.success("Created new lecture! 🎉");
         setTitle("");
         setVideo(null);
         setVideoPreview(null);
@@ -122,93 +124,96 @@ const CreateLecture = ({ params }) => {
       setIsLoading(false);
     }
   };
+
   return (
-    <>
-      <Container maxWidth="md" sx={{ mt: 14, mb: 4 }}>
-        <Box sx={{ my: 4 }}>
-          <Typography
-            variant="h4"
-            component="h2"
-            align="center"
-            sx={{ color: "black" }}
+    <div className="container mx-auto mt-16 mb-12 px-4 sm:px-6 md:px-8">
+      <div className="text-center">
+        <h2 className="text-4xl font-extrabold text-gray-900 tracking-wide leading-tight mb-8">
+          Create a New Lecture
+        </h2>
+        <p className="text-2xl font-bold text-gray-700 mb-8">
+          <span className="font-bold">
+            Add a title and video to create a new lecture for your course.
+          </span>
+        </p>
+      </div>
+      <div className="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label className="text-2xl font-bold text-gray-800">
+              Lecture Title
+            </label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+              className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            {errors.title && (
+              <p className="text-red-500 text-sm mt-2">{errors.title}</p>
+            )}
+          </div>
+
+          {videoPreview && (
+            <div className="mb-8 text-center">
+              <video
+                src={videoPreview}
+                controls
+                className="mx-auto rounded-lg max-w-full max-h-48 mb-4"
+              />
+            </div>
+          )}
+
+          <div className="mb-4">
+            <label
+              htmlFor="video-upload"
+              className="w-full px-4 py-2 bg-gray-500 text-white text-xl font-bold rounded-md cursor-pointer hover:bg-gray-600 focus:ring-2 focus:ring-gray-300"
+            >
+              <Upload className="mr-2" />
+              Upload a Video
+            </label>
+            <input
+              type="file"
+              id="video-upload"
+              name="video"
+              accept="video/*"
+              hidden
+              onChange={handleVideoChange}
+            />
+            {errors.video && (
+              <p className="text-red-500 text-sm mt-2">{errors.video}</p>
+            )}
+          </div>
+
+          <Button
+            type="submit"
+            variant="contained"
+            fullWidth
+            size="large"
+            sx={{
+              mt: 3,
+              backgroundColor: "#333",
+              color: "#fff",
+              "&:hover": {
+                backgroundColor: "#555",
+              },
+            }}
+            disabled={isLoading}
+            startIcon={<Save />}
+            className={`w-full py-3 mt-6 text-white text-xl font-bold rounded-md ${
+              isLoading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-gray-800 hover:bg-gray-900"
+            } focus:ring-2 focus:ring-blue-500 focus:outline-none`}
           >
-            Create a new lecture
-          </Typography>
-          <Typography variant="body1" align="center">
-            Add title , video to add a new lecture to the course
-          </Typography>
-        </Box>
-        <Container maxWidth="sm">
-          <Paper elevation={4} sx={{ p: 3 }}>
-            <form onSubmit={handleSubmit}>
-              <TextField
-                fullWidth
-                type="text"
-                label="Course Title"
-                name="title"
-                value={title}
-                margin="normal"
-                size="small"
-                onChange={(e) => setTitle(e.target.value)}
-                required
-              />
-              {errors.title && (
-                <span style={{ color: "red" }}>{errors.title}</span>
-              )}
-
-              {videoPreview && (
-                <Box sx={{ mt: 2, textAlign: "center" }}>
-                  <video
-                    src={videoPreview}
-                    alt="Uploaded Preview"
-                    controls
-                    style={{
-                      maxWidth: "100%",
-                      maxHeight: "200px",
-                      borderRadius: "8px",
-                    }}
-                  />
-                </Box>
-              )}
-              {/* VideoPicker */}
-              <label
-                htmlFor="video-upload"
-                className="flex items-center justify-center w-full px-4 py-2 mt-2 text-white bg-black rounded-md cursor-pointer hover:bg-gray-700 focus:ring-2 focus:ring-blue-300 focus:outline-none"
-              >
-                Upload a video
-              </label>
-              <input
-                type="file"
-                id="video-upload"
-                name="video"
-                accept="video/*"
-                hidden
-                onChange={handleVideoChange}
-              />
-
-              {errors.video && <span>{errors.video}</span>}
-              <Button
-                type="submit"
-                variant="contained"
-                fullWidth
-                size="small"
-                sx={{
-                  mt: 2,
-                  backgroundColor: "black",
-                  color: "#fff", // Text color
-                  "&:hover": {
-                    backgroundColor: "#374151",
-                  },
-                }}
-                disabled={isLoading}
-              >
-                {isLoading ? "Submitting..." : "Add your lecture"}
-              </Button>
-            </form>
-          </Paper>
-        </Container>
-      </Container>
-    </>
+            {isLoading ? "Submitting..." : "Create Lecture"}
+          </Button>
+        </form>
+      </div>
+    </div>
   );
 };
 
