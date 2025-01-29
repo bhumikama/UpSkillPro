@@ -6,6 +6,8 @@ import { Button } from "@mui/material";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useSelector } from "react-redux";
+import ReactConfetti from "react-confetti";
+import { useWindowSize } from "react-use";
 
 const CourseProgress = () => {
   const { id } = useParams();
@@ -14,6 +16,7 @@ const CourseProgress = () => {
   const [completedLectures, setCompletedLectures] = useState({});
   const [error, setError] = useState(null);
   const { isAuthenticated } = useSelector((state) => state.auth);
+  const { width, height } = useWindowSize();
 
   useEffect(() => {
     // Fetch the lectures and progress data
@@ -161,8 +164,24 @@ const CourseProgress = () => {
     }
   };
 
+  const allLecturesCompleted =
+    lectures.length > 0 &&
+    Object.values(completedLectures).length === lectures.length &&
+    Object.values(completedLectures).every((val) => val);
+
   return (
     <div className="bg-white w-full h-full">
+      {allLecturesCompleted && (
+        <ReactConfetti
+          width={width}
+          height={height}
+          numberOfPieces={200}
+          wind={0}
+          gravity={0.5}
+          origin={{ x: 0.5, y: 1 }}
+          tweenDuration={5000}
+        />
+      )}
       <div className="container mx-auto bg-white p-5">
         <div className="w-full bg-green-100 py-2 px-5 rounded-lg ">
           <Link href="/" className="flex gap-2 text-green-600 font-semibold">
@@ -209,14 +228,7 @@ const CourseProgress = () => {
                 <h2 className="text-3xl font-semibold my-3">
                   {selectedLecture?.title}
                 </h2>
-                <Button
-                  disabled={
-                    !Object.values(completedLectures).every(
-                      (val) => val === true
-                    )
-                  }
-                  variant="contained"
-                >
+                <Button disabled={!allLecturesCompleted} variant="contained">
                   Download Certificate
                 </Button>
               </div>
