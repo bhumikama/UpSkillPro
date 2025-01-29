@@ -36,7 +36,7 @@ const createEnrollment = async (req, res) => {
     }
 
     // Ensure progress is an array of integers
-    let progress = req.body.progress || [0]; 
+    let progress = req.body.progress || [0];
     if (!Array.isArray(progress) || !progress.every(Number.isInteger)) {
       return res
         .status(400)
@@ -47,7 +47,7 @@ const createEnrollment = async (req, res) => {
     const enrollment = await Enrollment.create({
       userId,
       courseId,
-      progress, 
+      progress,
       createdAt,
     });
 
@@ -61,6 +61,34 @@ const createEnrollment = async (req, res) => {
   }
 };
 
+const getNumberOfEnrolledStudents = async (req, res) => {
+  const courseId = req.params.id;
+
+  if (!courseId || isNaN(courseId)) {
+    return res.status(400).json({ message: "Invalid or missing courseId." });
+  }
+
+  try {
+    // Fetch enrolled courses by userId
+    const count = await Enrollment.count({
+      where: { courseId },
+    });
+
+    if (!count || count === 0) {
+      return res
+        .status(404)
+        .json({ error: "No students are enrolled for this course" });
+    }
+
+    res.status(200).json({
+      courseId,
+      enrolledStudents: count,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error fetching enrolled students" });
+  }
+};
 
 const getEnrolledCourses = async (req, res) => {
   const userId = req.user.sub; // userId from the JWT token
@@ -85,8 +113,8 @@ const getEnrolledCourses = async (req, res) => {
 
     // Generate the course data with image URL
     const coursesWithUrls = courses.map((course) => ({
-      ...course.dataValues, 
-      imageUrl: generateS3Url(course.imageKey), 
+      ...course.dataValues,
+      imageUrl: generateS3Url(course.imageKey),
     }));
 
     // Extract just the courseIds
@@ -102,4 +130,4 @@ const getEnrolledCourses = async (req, res) => {
   }
 };
 
-export { createEnrollment, getEnrolledCourses };
+export { createEnrollment, getEnrolledCourses, getNumberOfEnrolledStudents };

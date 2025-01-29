@@ -34,6 +34,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function InstructorContent() {
   const [courses, setCourses] = useState([]);
   const router = useRouter();
+  const [enrollments, setEnrollments] = useState({});
+
   useEffect(() => {
     const fetchProjectsByInstructor = async () => {
       try {
@@ -52,6 +54,29 @@ export default function InstructorContent() {
           const courses = await apiResponse.json();
           console.log("API Response Body:", courses);
           setCourses(courses);
+
+          // Fetch enrollment count for each course
+          courses.forEach(async (course) => {
+            const response = await fetch(
+              `${process.env.NEXT_PUBLIC_API_URL}/api/courses/${course.id}/enrolled-count`,
+              {
+                method: "GET",
+                credentials: "include", // This ensures cookies are sent with the request
+              }
+            );
+            if (response.ok) {
+              const result = await response.json();
+              setEnrollments((prev) => ({
+                ...prev,
+                [course.id]: result.enrolledStudents,
+              }));
+            } else {
+              setEnrollments((prev) => ({
+                ...prev,
+                [course.id]: 0, // Default to 0 if request fails
+              }));
+            }
+          });
         } else {
           const errorText = await apiResponse.json();
           console.error("Error details :", errorText.message);
@@ -88,8 +113,11 @@ export default function InstructorContent() {
                 <StyledTableCell align="right">
                   {dateFormat(course.createdAt)}
                 </StyledTableCell>
-                <StyledTableCell align="right">{2}</StyledTableCell>{" "}
-                {/*dummy data*/}
+                <StyledTableCell align="right">
+                  {enrollments[course.id] !== undefined
+                    ? enrollments[course.id]
+                    : 0}
+                </StyledTableCell>
                 <StyledTableCell align="right">
                   <IconButton
                     color="primary"
