@@ -1,9 +1,10 @@
 "use client";
-import React from "react";
-import { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Button from "@mui/material/Button";
 import { useRouter } from "next/navigation";
+import { Box, Container, Paper, TextField, Typography } from "@mui/material";
+import EditCourseForm from "../../../_components/instructor-dashboard-components/EditCourseForm";
 import {
   Alert,
   AlertTitle,
@@ -13,10 +14,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import EditCourseForm from "@/app/_components/instructor-dashboard-components/EditCourseForm";
 const EditPage = ({ params }) => {
-  const resolvedParams = use(params);
-  const { id } = resolvedParams;
+  const { id } = params;
   const router = useRouter();
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -38,7 +37,7 @@ const EditPage = ({ params }) => {
         `${process.env.NEXT_PUBLIC_API_URL}/api/courses/${id}`,
         {
           method: "GET",
-          credentials: "include", // This ensures cookies are sent with the request
+          credentials: "include",
         }
       );
       if (apiResponse.ok) {
@@ -53,7 +52,7 @@ const EditPage = ({ params }) => {
         console.error("Error fetching the course", error);
       }
     } catch (error) {
-      console.error("error while submitting data", error.message);
+      console.error("Error while fetching data", error.message);
     } finally {
       setLoading(false);
     }
@@ -67,7 +66,6 @@ const EditPage = ({ params }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      // Send course details to the backend
       const apiResponse = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/courses/${id}`,
         {
@@ -88,7 +86,7 @@ const EditPage = ({ params }) => {
         console.error("Error modifying the course", error);
       }
     } catch (error) {
-      console.error("error while submitting data", error.message);
+      console.error("Error while submitting data", error.message);
     } finally {
       setLoading(false);
     }
@@ -98,16 +96,61 @@ const EditPage = ({ params }) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
+
   return (
-    <>
-      <EditCourseForm
-        formData={formData}
-        onSubmit={handleSubmit}
-        onInputChange={handleInputChange}
-        loading={loading}
-        error={error}
-      />
-    </>
+    <Container className="max-w-2xl mx-auto py-10">
+      <Typography
+        variant="h4"
+        className="text-center font-extrabold text-3xl mb-6 text-gray-900"
+      >
+        Edit the Course
+      </Typography>
+      <Typography
+        variant="h6"
+        className="text-center text-2xl font-bold text-gray-800 mb-6 tracking-wide"
+      >
+        Edit title, description of a course
+      </Typography>
+      <Paper className="p-6 shadow-lg rounded-lg">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <TextField
+            label="Course Title"
+            name="title"
+            value={formData.title}
+            onChange={handleInputChange}
+            fullWidth
+            variant="outlined"
+            size="medium"
+            className="rounded-md"
+          />
+          <TextField
+            label="Description"
+            name="description"
+            value={formData.description}
+            onChange={handleInputChange}
+            fullWidth
+            variant="outlined"
+            size="medium"
+            multiline
+            rows={4}
+            className="rounded-md"
+          />
+          <div className="text-center">
+            <Button
+              type="submit"
+              variant="contained"
+              color="default"
+              className="w-full py-3 text-white bg-black rounded-md transition duration-200 ease-in-out transform hover:bg-gray-900 hover:scale-105 disabled:opacity-50"
+              disabled={loading}
+            >
+              <span className="text-lg font-bold">
+                {loading ? "Updating..." : "Save Changes"}
+              </span>
+            </Button>
+          </div>
+        </form>
+      </Paper>
+    </Container>
   );
 };
 
