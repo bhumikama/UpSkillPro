@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import { persistStore } from "redux-persist";
 const initialState = {
   user: null,
   token: null,
@@ -19,6 +19,7 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;
+      // persistStore(store).purge();
     },
     updateUserInfo: (state, action) => {
       state.user = {
@@ -29,7 +30,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { loginSuccess, logout, updateUserInfo } =
-  authSlice.actions;
+export const { loginSuccess, logout, updateUserInfo } = authSlice.actions;
 
 export default authSlice.reducer;
