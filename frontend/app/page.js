@@ -5,6 +5,7 @@ import FAQ from "./_components/HomePageComponents/FAQ";
 import Testimonial from "./_components/HomePageComponents/Testimonial";
 import CategoryTabs from "./_components/HomePageComponents/CategoryTabs";
 import CoursesGrid from "./_components/HomePageComponents/CoursesGrid";
+import Tabselector from "./_components/HomePageComponents/Tabselector";
 import Navbar from "./_components/HomePageComponents/Navbar";
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
       <CategoryTabs />
       <CoursesGrid />
       <InstructorSection />
+      <Tabselector />
       <InvestSection />
       <Testimonial />
       <FAQ />
