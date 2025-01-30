@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import CourseCard from "./CourseCard";
+import Skeleton from "@mui/material/Skeleton";
 import {
   fetchCoursesStart,
   fetchCoursesSuccess,
@@ -38,7 +39,7 @@ const CourseGrid = () => {
               fetchCoursesFailure("You don't have permission to view courses")
             );
           } else {
-            dispatch(fetchCoursesFailure(error.message)); 
+            dispatch(fetchCoursesFailure(error.message));
           }
         }
       };
@@ -47,7 +48,7 @@ const CourseGrid = () => {
     }
   }, [dispatch, courses]);
 
-  if (loading) return <p>Loading courses...</p>;
+ 
   if (error) return <p>Error: {error}</p>;
 
   return (
@@ -55,14 +56,14 @@ const CourseGrid = () => {
       <div className="max-w-7xl mx-auto p-6">
         <h2 className="font-bold text-3xl text-center mb-10">Our Courses</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {loading ? (
-            <p>Loading courses...</p>
-          ) : (
-            courses &&
-            courses.map((course, index) => (
-              <CourseCard key={index} course={course} />
-            ))
-          )}
+          {loading
+            ? Array.from({ length: 8 }).map((_, index) => (
+                <CourseSkeleton key={index} />
+              ))
+            : courses &&
+              courses.map((course, index) => (
+                <CourseCard key={index} course={course} />
+              ))}
         </div>
       </div>
     </div>
@@ -70,3 +71,22 @@ const CourseGrid = () => {
 };
 
 export default CourseGrid;
+
+const CourseSkeleton = () => {
+  return (
+    <div className="bg-white shadow-md hover:shadow-lg transition-shadow rounded-lg overflow-hidden">
+      <Skeleton className="w-full h-36" />
+      <div className="px-5 py-4 space-y-3">
+        <Skeleton className="h-6 w-3/4" />
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Skeleton className="h-6 w-6 rounded-full" />
+            <Skeleton className="h-4 w-20" />
+          </div>
+          <Skeleton className="h-4 w-16" />
+        </div>
+        <Skeleton className="h-4 w-1/4" />
+      </div>
+    </div>
+  );
+}
