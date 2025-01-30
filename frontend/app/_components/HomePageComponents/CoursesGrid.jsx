@@ -76,7 +76,15 @@ const CourseGrid = () => {
                 <CourseCard key={index} course={course} />
               ))}
         </div>
-        
+        {isHome && (
+          <div className="flex justify-center my-10">
+            <Link href="/courses">
+              <button className="px-9 py-4  border border-black text-lg md:text-xl font-roboto font-bold shadow-lg hover:bg-gray-100 transition duration-300">
+                Explore All Courses
+              </button>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
