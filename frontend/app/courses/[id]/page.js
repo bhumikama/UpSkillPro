@@ -88,13 +88,15 @@ const CoursePage = () => {
       <div className="container mx-auto">
         <div className="leading-loose grid lg:grid-cols-3 md:gap-3">
           <div className="p-3 col-span-2 px-4 border">
-            <div className="p-4">
+            <div
+              className="bg-white p-5 rounded-lg shadow-md mb-5 flex justify-center"
+            >
               <VideoPlayer
                 url="/api.mp4"
                 onProgressUpdate={() => {}}
                 progressData={{}}
-                width={800}
-                height={500}
+                width={900}
+                height={600}
                 showControls={true}
               />
             </div>
