@@ -6,6 +6,8 @@ import Image from "next/image";
 import EnrollButton from "@/app/_components/HomePageComponents/EnrollButton";
 import { useDispatch } from "react-redux";
 import { setUserEnrolledCourses } from "@/features/course/courseSlice";
+import { Avatar } from "@mui/material";
+import { CastForEducation } from "@mui/icons-material";
 const CoursePage = () => {
   const { id } = useParams(); 
   const [course, setCourse] = useState({}); 
@@ -84,13 +86,25 @@ const CoursePage = () => {
   }
   const isEnrolled = enrolledCourses.includes(Number(id));
   return (
-    <div className="bg-slate-50">
+    <div className="bg-gray-100 ">
+      <div className="width-full bg-gradient-to-r from-black to-gray-500 shadow-lg ">
+        <div className="container mx-auto px-5 py-3 ">
+          <h3 className="text-gray-100 text-5xl font-medium mb-3 lg:text-6xl">
+            <CastForEducation /> {course.title}
+          </h3>
+          <p className=" flex items-center gap-2">
+            <span className="text-yellow-200 font-medium text-3xl">Instructor:</span>{" "}
+            <span className="text-white text-2xl">
+              {course.instructor?.name}
+            </span>
+          </p>
+        </div>
+      </div>
+
       <div className="container mx-auto">
         <div className="leading-loose grid lg:grid-cols-3 md:gap-3">
           <div className="p-3 col-span-2 px-4 border">
-            <div
-              className="bg-white p-5 rounded-lg shadow-md mb-5 flex justify-center"
-            >
+            <div className="bg-white p-5 rounded-lg shadow-md mb-5 flex justify-center">
               <VideoPlayer
                 url="/api.mp4"
                 onProgressUpdate={() => {}}
@@ -101,14 +115,6 @@ const CoursePage = () => {
               />
             </div>
             <div className="bg-white p-5 rounded-lg shadow-md mb-5">
-              <h2 className="text-4xl font-semibold mb-3">{course.title}</h2>
-              <h3 className="text-lg font-medium mb-3">
-                Course By:
-                <span className="text-xl font-normal">
-                  {course.instructor?.name || "Unknown Instructor"}{" "}
-                  {/* Safely access the name */}
-                </span>
-              </h3>
               <p className="text-gray-400 mb-3">{course.description}</p>
             </div>
             <div className="bg-white p-5 rounded-lg shadow-md">
