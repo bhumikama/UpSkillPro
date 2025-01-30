@@ -12,6 +12,7 @@ import {
   fetchCoursesSuccess,
   fetchCoursesFailure,
 } from "@/features/course/courseSlice";
+import Link from "next/link";
 const CourseGrid = () => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
   const { courses, loading, error } = useSelector((state) => state.courses);
@@ -61,9 +62,11 @@ const CourseGrid = () => {
 
   return (
     <div className="bg-gray-50 dark:bg-[#141414]">
-      <div className="max-w-7xl mx-auto p-6">
-        <h2 className="font-bold text-3xl text-center mb-10">{isHome? " " : "Our Courses"}</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="max-w-7xl mx-auto p-2">
+        <h2 className="font-bold text-3xl text-center mb-10">
+          {isHome ? " " : "Our Courses"}
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
           {loading
             ? Array.from({ length: 8 }).map((_, index) => (
                 <CourseSkeleton key={index} />
@@ -73,6 +76,7 @@ const CourseGrid = () => {
                 <CourseCard key={index} course={course} />
               ))}
         </div>
+        
       </div>
     </div>
   );
