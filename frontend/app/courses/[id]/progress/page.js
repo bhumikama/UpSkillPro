@@ -13,6 +13,8 @@ const CourseProgress = () => {
   const [selectedLecture, setSelectedLecture] = useState(null);
   const [completedLectures, setCompletedLectures] = useState({});
   const [error, setError] = useState(null);
+  const user = useSelector((state) => state.auth.user);
+  const [selectedCourse, setSelectedCourse] = useState([])
   const { isAuthenticated } = useSelector((state) => state.auth);
 
   useEffect(() => {
@@ -160,7 +162,69 @@ const CourseProgress = () => {
       }
     }
   };
+useEffect(() => {
+ const fetchCourseData = async ()=>{
+  try{
+    const courseResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/courses/${id}`,
+     { method: "GET",
+      credentials: "include",
+    }
+       );
+       if(courseResponse.ok){
+        const courseData = await courseResponse.json();
+        setSelectedCourse(courseData);
+       }else{
+        setError("Erro fetching course data")
+       }
+  }catch(error){
+    setError("Error fecthing course data: ", error.message);
+  }
+ }
+ fetchCourseData();
+}, [id])
 
+const handleGenerateCertificate= async ()=>{
+  try {
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"
+    if (!user || !selectedCourse?.title){
+      throw new Error("Invalid user or course data");
+    }
+
+    const certificateData = {
+      name:user.name,
+      course:selectedCourse.title,
+      date:new Date().toLocaleDateString()
+    };
+
+    const response = await fetch(`${API_URL}/api/certificate/generate-certificate`, {
+      method:"POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "include",
+      body: JSON.stringify(certificateData)
+    });
+    if(response.ok){
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${certificateData.name}-${certificateData.course}-certificate.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    }else{
+      const errorResponse = await response.json();
+      console.error("Server response:", errorResponse);
+      setError("Failed to generate certificate. Please try again.");
+    }
+    
+  } catch (error) {
+        console.error("Error generating certificate:", error);
+        setError("Error generating certificate: " + error.message);
+  }
+}
   return (
     <div className="bg-white w-full h-full">
       <div className="container mx-auto bg-white p-5">
@@ -216,6 +280,7 @@ const CourseProgress = () => {
                     )
                   }
                   variant="contained"
+                  onClick={handleGenerateCertificate}
                 >
                   Download Certificate
                 </Button>

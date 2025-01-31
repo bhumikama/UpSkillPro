@@ -9,6 +9,7 @@ import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import multer from "multer";
 import multerS3 from "multer-s3";
 import enrollRouter from "./routers/enrollRouter.js";
+import certificateRouter from "./routers/certificate.js";
 const app = express();
 
 app.use(
@@ -70,6 +71,7 @@ app.post("/upload", upload.single("file"), async (req, res, next) => {
 apiRouter.use("/", authRouter);
 apiRouter.use("/courses", courseRouter);
 apiRouter.use("/enroll", enrollRouter);
+apiRouter.use("/certificate", certificateRouter)
 app.use("/api", apiRouter);
 
 //middleware for handling errors
