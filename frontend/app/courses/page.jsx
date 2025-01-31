@@ -23,8 +23,9 @@ import {
 } from "@/features/course/courseSlice";
 import { useDispatch } from "react-redux";
 import CourseCard from "../_components/HomePageComponents/CourseCard";
-import SearchBar from "../_components/HomePageComponents/SearchBar";
 import { Search, X } from "lucide-react";
+import Skeleton from "@mui/material/Skeleton";
+
 
 const CoursesPage = () => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
@@ -123,7 +124,7 @@ const CoursesPage = () => {
   }
 
   return (
-    <div>
+    <div className="mb-10">
       <div className="w-full bg-gradient-to-r from-gray-500 to-gray-300 py-16">
         <div className="container mx-auto max-w-3xl	">
           <form className="relative">
@@ -151,17 +152,19 @@ const CoursesPage = () => {
         </div>
       </div>
       <div className=" items-center my-[5px] px-[160px] gap-[40px]">
-        <h2 className=" font-medium text-[35px] text-[#00000] text-center">Explore Courses</h2>
+        <h2 className=" font-medium text-[35px] text-[#00000] text-center">
+          Explore Courses
+        </h2>
         <div className="flex  gap-5 mb-5">
-                   <Box sx={{ display: "flex", gap: 2 }}>
-            <FormControl size="small" sx={{ minWidth: 120, }}>
+          <Box sx={{ display: "flex", gap: 2 }}>
+            <FormControl size="small" sx={{ minWidth: 120 }}>
               <InputLabel className="text-lg">Sort By</InputLabel>
               <Select
                 value={searchParams.get("sortKey") || ""}
                 label="Sort By"
                 onChange={(e) => handleChange("sortKey", e.target.value)}
               >
-                <MenuItem value="price" >Price</MenuItem>
+                <MenuItem value="price">Price</MenuItem>
                 <MenuItem value="createdAt">Created At</MenuItem>
               </Select>
             </FormControl>
@@ -180,14 +183,14 @@ const CoursesPage = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {allCourses.length === 0 ? (
-            <p>No Courses found</p>
-          ) : (
-            allCourses &&
-            allCourses.map((course, index) => (
-              <CourseCard key={index} course={course} />
-            ))
-          )}
+          {loading
+            ? Array.from({ length: 8 }).map((_, index) => (
+                <CourseSkeleton key={index} />
+              ))
+            : allCourses &&
+              allCourses.map((course, index) => (
+                <CourseCard key={index} course={course} />
+              ))}
         </div>
       </div>
     </div>
@@ -195,3 +198,22 @@ const CoursesPage = () => {
 };
 
 export default CoursesPage;
+
+const CourseSkeleton = () => {
+  return (
+    <div className="bg-white shadow-md hover:shadow-lg transition-shadow rounded-lg overflow-hidden">
+      <Skeleton className="w-full h-36" />
+      <div className="px-5 py-4 space-y-3">
+        <Skeleton className="h-6 w-3/4" />
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Skeleton className="h-6 w-6 rounded-full" />
+            <Skeleton className="h-4 w-20" />
+          </div>
+          <Skeleton className="h-4 w-16" />
+        </div>
+        <Skeleton className="h-4 w-1/4" />
+      </div>
+    </div>
+  );
+};
