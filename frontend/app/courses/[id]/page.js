@@ -6,8 +6,9 @@ import Image from "next/image";
 import EnrollButton from "@/app/_components/HomePageComponents/EnrollButton";
 import { useDispatch } from "react-redux";
 import { setUserEnrolledCourses } from "@/features/course/courseSlice";
-import { Avatar } from "@mui/material";
-import { CastForEducation } from "@mui/icons-material";
+import { FaChalkboardTeacher } from "react-icons/fa";
+import { DollarSign } from "lucide-react";
+import SocialButtons from "@/app/_components/HomePageComponents/SocialButtons"
 const CoursePage = () => {
   const { id } = useParams(); 
   const [course, setCourse] = useState({}); 
@@ -88,12 +89,16 @@ const CoursePage = () => {
   return (
     <div className="bg-gray-100 ">
       <div className="width-full bg-gradient-to-r from-black to-gray-500 shadow-lg ">
-        <div className="container mx-auto px-5 py-3 ">
-          <h3 className="text-gray-100 text-5xl font-medium mb-3 lg:text-6xl">
-            <CastForEducation /> {course.title}
+        <div className="container mx-auto px-5 py-3 shadow-xl ">
+          <h3 className="text-gray-100 text-xl font-bold mb-4 lg:text-4xl">
+            {course.title}
           </h3>
           <p className=" flex items-center gap-2">
-            <span className="text-yellow-200 font-medium text-3xl">Instructor:</span>{" "}
+            <span className="text-gray-300 font-medium text-xl flex items-center gap-2">
+              {" "}
+              <FaChalkboardTeacher />
+              Course by:
+            </span>{" "}
             <span className="text-white text-2xl">
               {course.instructor?.name}
             </span>
@@ -138,8 +143,9 @@ const CoursePage = () => {
                 height={500}
                 className="object-contain"
               />
-              <h3 className="text-4xl font-bold text-gray-600 my-4">
-                {course.price} Kr
+              <h3 className="text-4xl font-bold text-green-700 my-4 flex items-center">
+                <DollarSign size={30} className="text-gray-600" />{" "}
+                {course.price} Dkk
               </h3>
               {/* <button className="rounded-md text-xl font-semibold bg-black text-white w-full py-5">
                 Enroll
@@ -149,6 +155,9 @@ const CoursePage = () => {
                 setLoading={setLoading}
                 isEnrolled={isEnrolled}
               />
+            </div>
+            <div>
+              <SocialButtons/>
             </div>
           </div>
         </div>
