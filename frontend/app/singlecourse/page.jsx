@@ -58,15 +58,15 @@ const CourseGrid = () => {
                   width={800}
                   height={500}
                   showControls={true}
-                              />
+                />
               </div>
               <div className="bg-white p-5 rounded-lg shadow-md mb-5">
                 <h2 className="text-4xl font-semibold mb-3">{course.name}</h2>
                 <h3 className="text-lg font-medium mb-3">
-                  Course By:{" "}
+                  Course By:
                   <span className="text-xl font-normal">
                     {course.instructor}
-                  </span>{" "}
+                  </span>
                 </h3>
                 <p className="text-gray-400 mb-3">{course.description}</p>
               </div>
