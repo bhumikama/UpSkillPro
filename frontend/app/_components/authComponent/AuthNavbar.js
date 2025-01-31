@@ -32,36 +32,36 @@ const AuthNavbar = () => {
         </div>
         <ul className="hidden md:hidden lg:flex flex-1  justify-center items-center gap-6">
           <li>
-            <a
+            <Link
               href="/"
               className="text-gray-700 hover:text-blue-500 font-semibold"
             >
               Home
-            </a>
+            </Link>
           </li>
           <li>
-            <a
-              href="#explore"
+            <Link
+              href="#courses"
               className="text-gray-700 hover:text-blue-500 font-semibold"
             >
               Explore
-            </a>
+            </Link>
           </li>
           <li>
-            <a
+            <Link
               href="/courses"
               className="text-gray-700 hover:text-blue-500 font-semibold"
             >
               Courses
-            </a>
+            </Link>
           </li>
           <li>
-            <a
-              href="#contact"
+            <Link
+              href="contact-us"
               className="text-gray-700 hover:text-blue-500 font-semibold"
             >
               Contact Us
-            </a>
+            </Link>
           </li>
         </ul>
         <div className="hidden md:flex items-center gap-2">
@@ -101,41 +101,41 @@ const AuthNavbar = () => {
           </div>
 
           <div className="flex flex-col items-center gap-6 text-lg">
-            <a
+            <Link
               href="/"
               onClick={closeMenu}
               className="text-gray-700 hover:text-blue-500 font-semibold"
             >
               Home
-            </a>
-            <a
+            </Link>
+            <Link
               href="#explore"
               onClick={closeMenu}
               className="text-gray-700 hover:text-blue-500 font-semibold"
             >
               Explore
-            </a>
-            <a
+            </Link>
+            <Link
               href="/courses"
               onClick={closeMenu}
               className="text-gray-700 hover:text-blue-500 font-semibold"
             >
               Courses
-            </a>
-            <a
+            </Link>
+            <Link
               href="/signup?role=instructor"
               onClick={closeMenu}
               className="text-gray-700 hover:text-blue-500 font-semibold"
             >
               Become an Instructor
-            </a>
-            <a
-              href="#contact"
+            </Link>
+            <Link
+              href="/contact-us"
               onClick={closeMenu}
               className="text-gray-700 hover:text-blue-500 font-semibold"
             >
               Contact Us
-            </a>
+            </Link>
           </div>
         </div>
       )}
