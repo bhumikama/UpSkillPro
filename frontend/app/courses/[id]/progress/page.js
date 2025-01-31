@@ -13,6 +13,7 @@ const CourseProgress = () => {
   const [selectedLecture, setSelectedLecture] = useState(null);
   const [completedLectures, setCompletedLectures] = useState({});
   const [error, setError] = useState(null);
+  const [selectedCourse, setSelectedCourse] = useState([])
   const { isAuthenticated } = useSelector((state) => state.auth);
 
   useEffect(() => {
@@ -160,6 +161,26 @@ const CourseProgress = () => {
       }
     }
   };
+useEffect(() => {
+ const fetchCourseData = async ()=>{
+  try{
+    const courseResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/courses/${id}`,
+     { method: "GET",
+      credentials: "include",
+    }
+       );
+       if(courseResponse.ok){
+        const courseData = await courseResponse.json();
+        setSelectedCourse(courseData);
+       }else{
+        setError("Erro fetching course data")
+       }
+  }catch(error){
+    setError("Error fecthing course data: ", error.message);
+  }
+ }
+ fetchCourseData();
+}, [id])
 
   return (
     <div className="bg-white w-full h-full">
