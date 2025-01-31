@@ -1,22 +1,28 @@
 "use client";
 import DashboardContent from "./DashboardContent";
 import React, { useState } from "react";
+import { SiGoogleanalytics } from "react-icons/si";
 import { FaBars, FaHome, FaSignOutAlt, FaUserAlt } from "react-icons/fa";
 import { MdOutlineCastForEducation } from "react-icons/md";
 import { IoCloseCircleSharp } from "react-icons/io5";
 import LogOutButton from "../authComponent/LogOutButton";
 import InstructorContent from "./InstructorContent";
+import BarChart from "@/app/student-dashboard/components/Analytics";
+
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("Home");
+
   const renderContent = () => {
     switch (activeTab) {
       case "dashboard":
-        return < InstructorContent/>;
+        return <InstructorContent />;
       case "course":
         return <DashboardContent />;
       case "logout":
         return <LogOutButton />;
+      case "analytics":
+        return <BarChart />;
       default:
         return <DashboardContent />;
     }
@@ -68,6 +74,15 @@ const Sidebar = () => {
             </li>
             <li
               className="flex items-center p-4 hover:bg-gray-700 cursor-pointer"
+              onClick={() => setActiveTab("analytics")}
+            >
+              <SiGoogleanalytics size={24} />
+              <span className={`ml-4 md:block ${isOpen ? "block" : "hidden"}`}>
+                Analytics
+              </span>
+            </li>
+            <li
+              className="flex items-center p-4 hover:bg-gray-700 cursor-pointer"
               onClick={() => setActiveTab("logout")}
             >
               <FaSignOutAlt size={24} />
@@ -78,7 +93,6 @@ const Sidebar = () => {
           </ul>
         </nav>
       </div>
-
       <div className="ml-20 md:ml-64 p-8 bg-gray-100 min-h-screen flex-1">
         <div className="p-4 bg-white shadow rounded">{renderContent()}</div>
       </div>
