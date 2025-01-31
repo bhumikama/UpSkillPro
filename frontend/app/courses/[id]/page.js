@@ -145,7 +145,8 @@ const CoursePage = () => {
                 className="object-contain"
               />
               <h3 className="text-4xl font-bold text-green-700 my-4 flex items-center">
-              <DollarSign size={30} className="text-gray-600"/>  {course.price} Dkk
+                <DollarSign size={30} className="text-gray-600" />{" "}
+                {course.price} Dkk
               </h3>
               {/* <button className="rounded-md text-xl font-semibold bg-black text-white w-full py-5">
                 Enroll
@@ -156,6 +157,7 @@ const CoursePage = () => {
                 isEnrolled={isEnrolled}
               />
             </div>
+            <h1>hello</h1>
           </div>
         </div>
       </div>
