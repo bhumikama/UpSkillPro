@@ -11,7 +11,7 @@ import HomePageNavbar from "./_components/HomePageComponents/HomePageNavbar";
 export default function Home() {
   return (
     <div>
-      <HomePageNavbar />
+      <HomePageNavbar/>
       <HeroSection />
       <CategoryTabs />
       <CoursesGrid />
