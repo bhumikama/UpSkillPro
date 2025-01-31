@@ -10,6 +10,7 @@ import { Avatar } from "@mui/material";
 import { CastForEducation } from "@mui/icons-material";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { DollarSign } from "lucide-react";
+import SocialButtons from "@/app/_components/HomePageComponents/SocialButtons"
 const CoursePage = () => {
   const { id } = useParams(); 
   const [course, setCourse] = useState({}); 
@@ -157,7 +158,9 @@ const CoursePage = () => {
                 isEnrolled={isEnrolled}
               />
             </div>
-            <h1>hello</h1>
+            <div>
+              <SocialButtons/>
+            </div>
           </div>
         </div>
       </div>
