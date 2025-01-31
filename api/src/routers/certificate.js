@@ -27,13 +27,56 @@ certificateRouter.post("/generate-certificate", async (req, res) => {
 
     //Draw border
     page.drawRectangle({
-      y: 50,
+      x: 50,
       y: 50,
       width: width - 100,
       height: height - 100,
-      borderColor: rgb(0.8, 0.6, 0),
-      borderWidth: 2,
+      borderColor: rgb(115 / 255, 115 / 255, 115 / 255),
+      borderWidth: 5,
       color: rgb(1, 1, 1, 0),
+    });
+
+    // Inner border
+    page.drawRectangle({
+      x: 60,
+      y: 60,
+      width: width - 120,
+      height: height - 120,
+      borderColor: rgb(0, 0, 0), // Gold color
+      borderWidth: 1,
+      color: rgb(1, 1, 1, 0), // Transparent fill
+    });
+
+    // Draw corner decorations
+    const cornerSize = 20;
+    // Top left corner
+    page.drawLine({
+      start: { x: 50, y: 70 },
+      end: { x: 70, y: 50 },
+      thickness: 2,
+      color: rgb(115 / 255, 115 / 255, 115 / 255),
+    });
+
+    // Top right corner
+    page.drawLine({
+      start: { x: width - 50, y: 70 },
+      end: { x: width - 70, y: 50 },
+      thickness: 2,
+      color: rgb(0, 0, 0),
+    });
+    // Bottom left corner
+    page.drawLine({
+      start: { x: 50, y: height - 70 },
+      end: { x: 70, y: height - 50 },
+      thickness: 2,
+      color: rgb(0, 0, 0),
+    });
+    // Bottom right corner
+    page.drawLine({
+      start: { x: width - 50, y: height - 70 },
+      end: { x: width - 70, y: height - 50 },
+      thickness: 2,
+      color: rgb(115 / 255, 115 / 255, 115 / 255),
     });
 
     //insert the logo
