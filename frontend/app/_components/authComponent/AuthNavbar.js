@@ -49,18 +49,10 @@ const AuthNavbar = () => {
           </li>
           <li>
             <a
-              href="#courses"
+              href="/courses"
               className="text-gray-700 hover:text-blue-500 font-semibold"
             >
               Courses
-            </a>
-          </li>
-          <li>
-            <a
-              href="/signup?role=instructor"
-              className="text-gray-700 hover:text-blue-500 font-semibold"
-            >
-              Become an Instructor
             </a>
           </li>
           <li>
@@ -73,14 +65,14 @@ const AuthNavbar = () => {
           </li>
         </ul>
         <div className="hidden md:flex items-center gap-2">
-          <Link href="/" className="flex items-center gap-2">
+          <Link href="/my-learning" className="flex items-center gap-2">
             <Play size={30} />
             <h3 className="font-bold text-lg">My Courses</h3>
           </Link>
           <ProfileDropdownMenu />
         </div>
         <div className="md:hidden flex items-center gap-2">
-          <Link href="/dashboard" className="flex items-center gap-2">
+          <Link href="/my-learning" className="flex items-center gap-2">
             <h3 className="font-bold text-lg">My Courses</h3>
           </Link>
           <ProfileDropdownMenu />
