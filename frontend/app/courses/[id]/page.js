@@ -6,6 +6,9 @@ import Image from "next/image";
 import EnrollButton from "@/app/_components/HomePageComponents/EnrollButton";
 import { useDispatch } from "react-redux";
 import { setUserEnrolledCourses } from "@/features/course/courseSlice";
+import { FaChalkboardTeacher } from "react-icons/fa";
+import { DollarSign } from "lucide-react";
+import SocialButtons from "@/app/_components/HomePageComponents/SocialButtons"
 const CoursePage = () => {
   const { id } = useParams(); 
   const [course, setCourse] = useState({}); 
@@ -84,29 +87,39 @@ const CoursePage = () => {
   }
   const isEnrolled = enrolledCourses.includes(Number(id));
   return (
-    <div className="bg-slate-50">
+    <div className="bg-gray-100 ">
+      <div className="width-full bg-gradient-to-r from-black to-gray-500 shadow-lg ">
+        <div className="container mx-auto px-5 py-3 shadow-xl ">
+          <h3 className="text-gray-100 text-xl font-bold mb-4 lg:text-4xl">
+            {course.title}
+          </h3>
+          <p className=" flex items-center gap-2">
+            <span className="text-gray-300 font-medium text-xl flex items-center gap-2">
+              {" "}
+              <FaChalkboardTeacher />
+              Course by:
+            </span>{" "}
+            <span className="text-white text-2xl">
+              {course.instructor?.name}
+            </span>
+          </p>
+        </div>
+      </div>
+
       <div className="container mx-auto">
         <div className="leading-loose grid lg:grid-cols-3 md:gap-3">
           <div className="p-3 col-span-2 px-4 border">
-            <div className="p-4">
+            <div className="bg-white p-5 rounded-lg shadow-md mb-5 flex justify-center">
               <VideoPlayer
                 url="/api.mp4"
                 onProgressUpdate={() => {}}
                 progressData={{}}
-                width={800}
-                height={500}
+                width={900}
+                height={600}
                 showControls={true}
               />
             </div>
             <div className="bg-white p-5 rounded-lg shadow-md mb-5">
-              <h2 className="text-4xl font-semibold mb-3">{course.title}</h2>
-              <h3 className="text-lg font-medium mb-3">
-                Course By:
-                <span className="text-xl font-normal">
-                  {course.instructor?.name || "Unknown Instructor"}{" "}
-                  {/* Safely access the name */}
-                </span>
-              </h3>
               <p className="text-gray-400 mb-3">{course.description}</p>
             </div>
             <div className="bg-white p-5 rounded-lg shadow-md">
@@ -130,8 +143,9 @@ const CoursePage = () => {
                 height={500}
                 className="object-contain"
               />
-              <h3 className="text-4xl font-bold text-gray-600 my-4">
-                {course.price} Kr
+              <h3 className="text-4xl font-bold text-green-700 my-4 flex items-center">
+                <DollarSign size={30} className="text-gray-600" />{" "}
+                {course.price} Dkk
               </h3>
               {/* <button className="rounded-md text-xl font-semibold bg-black text-white w-full py-5">
                 Enroll
@@ -141,6 +155,9 @@ const CoursePage = () => {
                 setLoading={setLoading}
                 isEnrolled={isEnrolled}
               />
+            </div>
+            <div>
+              <SocialButtons/>
             </div>
           </div>
         </div>
