@@ -12,7 +12,7 @@ const features = [
       "lessons are designed to be quick, impactful, and easy to",
       "fit into your day.",
     ],
-    icon: "/bite-sized.png",
+    icon: "/Learning.png",
   },
   {
     title: "Earn Certifications That Matter",
@@ -23,7 +23,7 @@ const features = [
       "employers—helping you stand out in the job market and",
       "advance your career with confidence.",
     ],
-    icon: "/earn-certification.png",
+    icon: "/certificate.png",
   },
   {
     title: "A Thriving Community of Learners",
@@ -34,7 +34,7 @@ const features = [
       " on group projects, and grow alongside",
       " like-minded peers.",
     ],
-    icon: "/thriving-community.png",
+    icon: "/community.png",
   },
   {
     title: "Learn Anywhere, Anytime",
@@ -45,7 +45,7 @@ const features = [
       "you're at home, commuting, or waiting for",
       " coffee on the go.",
     ],
-    icon: "/learn-anywhere.png",
+    icon: "/time.png",
   },
 ];
 
@@ -53,10 +53,10 @@ const FeaturesSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <section className="bg-gray-50 py-16">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <section className="py-16 my-5 ">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8" >
         {/* Heading */}
-        <h1 className="text-3xl font-bold text-center text-gray-600 mb-12">
+        <h1 className="text-3xl font-bold text-center text-gray-600 mb-5">
           Unique Features of <span className="text-black">UpSkillPro</span>
         </h1>
 
@@ -82,7 +82,7 @@ const FeaturesSection = () => {
             alt={feature.title} // Accessible alt text
             width={40}
             height={40}
-            className="rounded-lg"
+            
           />
         </div>
 
@@ -101,7 +101,7 @@ const FeaturesSection = () => {
     ))}
   </div>
           {/* Right Side: Active Feature Details */}
-          <div className="flex flex-col items-start justify-between space-y-6">
+          <div className="flex flex-col items-start justify-between space-y-6 ">
             {/* Details Text */}
             <div className="text-base text-gray-600 space-y-2 text-left">
               {features[activeIndex].details.map((line, idx) => (
@@ -110,7 +110,7 @@ const FeaturesSection = () => {
             </div>
             {/* Image */}
             <Image
-              src="/upskillpro.png"
+              src="/illustration.png"
               alt="upskillpro"
               width={400}
               height={300}
