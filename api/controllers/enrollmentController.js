@@ -1,6 +1,7 @@
 import Enrollment from "../models/enrolment-model.js";
 import Course from "../models/course-model.js";
 import User from "../models/user-model.js";
+import { Sequelize } from "sequelize";
 
 const generateS3Url = (fileKey) => {
   const baseUrl = process.env.AWS_S3_BASE_URL;
@@ -8,12 +9,11 @@ const generateS3Url = (fileKey) => {
 };
 
 const createEnrollment = async (req, res) => {
-  const userId = req.user.sub; // while using JWT user's ID is stored as 'sub'
+  const userId = req.user.sub;
   const courseId = req.params.id;
   const createdAt = new Date();
 
   try {
-    // Check if the user exists
     const user = await User.findByPk(userId);
     if (!user) {
       return res.status(404).json({ error: "User not found" });
@@ -36,7 +36,7 @@ const createEnrollment = async (req, res) => {
     }
 
     // Ensure progress is an array of integers
-    let progress = req.body.progress || [0]; 
+    let progress = req.body.progress || [0];
     if (!Array.isArray(progress) || !progress.every(Number.isInteger)) {
       return res
         .status(400)
@@ -47,7 +47,7 @@ const createEnrollment = async (req, res) => {
     const enrollment = await Enrollment.create({
       userId,
       courseId,
-      progress, 
+      progress,
       createdAt,
     });
 
@@ -61,9 +61,37 @@ const createEnrollment = async (req, res) => {
   }
 };
 
+const getNumberOfEnrolledStudents = async (req, res) => {
+  const courseId = req.params.id;
+
+  if (!courseId || isNaN(courseId)) {
+    return res.status(400).json({ message: "Invalid or missing courseId." });
+  }
+
+  try {
+    // Fetch enrolled courses by userId
+    const count = await Enrollment.count({
+      where: { courseId },
+    });
+
+    if (!count || count === 0) {
+      return res
+        .status(404)
+        .json({ error: "No students are enrolled for this course" });
+    }
+
+    res.status(200).json({
+      courseId,
+      enrolledStudents: count,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error fetching enrolled students" });
+  }
+};
 
 const getEnrolledCourses = async (req, res) => {
-  const userId = req.user.sub; // userId from the JWT token
+  const userId = req.user.sub;
 
   try {
     // Fetch enrolled courses by userId
@@ -85,8 +113,8 @@ const getEnrolledCourses = async (req, res) => {
 
     // Generate the course data with image URL
     const coursesWithUrls = courses.map((course) => ({
-      ...course.dataValues, 
-      imageUrl: generateS3Url(course.imageKey), 
+      ...course.dataValues,
+      imageUrl: generateS3Url(course.imageKey),
     }));
 
     // Extract just the courseIds
@@ -102,4 +130,52 @@ const getEnrolledCourses = async (req, res) => {
   }
 };
 
-export { createEnrollment, getEnrolledCourses };
+const getInstructorRevenue = async (req, res) => {
+  const instructorId = req.user.sub;
+  if (!instructorId || isNaN(instructorId)) {
+    return res.status(400).json({ message: "Invalid or missing userId." });
+  }
+
+  try {
+    const revenueData = await Enrollment.findAll({
+      attributes: [
+        "courseId",
+        [Sequelize.fn("COUNT", Sequelize.col("user.id")), "enrollmentCount"],
+        [
+          Sequelize.literal('"course"."price" * COUNT("user"."id")'),
+          "totalRevenue",
+        ],
+      ],
+      include: [
+        {
+          model: Course,
+          as: "course",
+          attributes: ["id", "title", "price"],
+          where: { instructorId },
+        },
+        {
+          model: User,
+          as: "user",
+          attributes: [],
+        },
+      ],
+      group: ["Enrollment.courseId", "course.id", "course.price"],
+    });
+
+    console.log(revenueData);
+
+    res.status(200).json({
+      revenueData,
+    });
+  } catch (error) {
+    console.error("Error fetching revenue data:", error);
+    res.status(500).json({ error: "Error fetching revenue data" });
+  }
+};
+
+export {
+  createEnrollment,
+  getEnrolledCourses,
+  getNumberOfEnrolledStudents,
+  getInstructorRevenue,
+};

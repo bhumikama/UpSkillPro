@@ -14,11 +14,7 @@ const EnrollButton = ({ courseId, setLoading, isEnrolled }) => {
   const enrolledCourses = useSelector(
     (state) => state.courses.enrolledCourses || []
   );
-  // const course = courses.find((course) => course.id === courseId);
-  // if (!course) {
-  //   console.error("Course with this ID is not found");
-  // }
-  // const isUserEnrolled = enrolledCourses.includes(courseId);
+
   const buttonText = isEnrolled ? "Go To Progress" : "Enroll";
 
   const handleEnrollClick = async () => {

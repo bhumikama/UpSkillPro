@@ -1,6 +1,11 @@
 import Enrollment from "../models/enrolment-model.js";
 import Lecture from "../models/lecture-model.js";
+import Course from "../models/course-model.js";
 
+const generateS3Url = (fileKey) => {
+  const baseUrl = process.env.AWS_S3_BASE_URL;
+  return `${baseUrl}/${fileKey}`;
+};
 const getProgress = async (req, res) => {
   try {
     const userId = req.user.sub;
@@ -22,7 +27,6 @@ const getProgress = async (req, res) => {
       return res.status(404).json({ message: "Enrollment not found." });
     }
 
-    // Validate progress field
     if (!Array.isArray(enrollment.progress)) {
       return res
         .status(500)
@@ -64,7 +68,6 @@ const updateProgress = async (req, res) => {
       return res.status(404).json({ message: "Enrollment not found." });
     }
 
-    // Check if the lectureId is already in progress
     if (!enrollment.progress.includes(lectureId)) {
       enrollment.progress.push(lectureId);
 
@@ -91,8 +94,8 @@ const updateProgress = async (req, res) => {
 };
 
 const markAllCompleted = async (req, res) => {
-  const courseId = req.params.id; // Extract courseId from the URL
-  const userId = req.user.sub; // Extract userId from the request body (or session)
+  const courseId = req.params.id;
+  const userId = req.user.sub;
 
   if (!courseId || !userId) {
     return res
@@ -109,7 +112,6 @@ const markAllCompleted = async (req, res) => {
 
     const allLectureIds = lectures.map((lecture) => lecture.id);
 
-    // Find the enrollment for the user and course
     const enrollment = await Enrollment.findOne({
       where: { courseId, userId },
     });
@@ -118,7 +120,6 @@ const markAllCompleted = async (req, res) => {
       return res.status(404).json({ message: "Enrollment not found." });
     }
 
-    // Update progress to include all lecture IDs
     enrollment.progress = [...allLectureIds];
     await enrollment.save();
 
@@ -151,7 +152,6 @@ const removeAllLectureId = async (req, res) => {
       return res.status(404).json({ message: "Enrollment not found." });
     }
 
-    // Update progress to include all lecture IDs
     enrollment.progress = [];
     await enrollment.save();
 
@@ -164,4 +164,64 @@ const removeAllLectureId = async (req, res) => {
     return res.status(500).json({ message: "Server error." });
   }
 };
-export { getProgress, updateProgress, markAllCompleted, removeAllLectureId };
+
+const courseWithProgress = async (req, res) => {
+  const userId = req.user.sub;
+
+  if (!userId || isNaN(userId)) {
+    return res.status(400).json({ message: "Invalid or missing userId." });
+  }
+
+  try {
+    const enrollments = await Enrollment.findAll({
+      where: { userId },
+      include: [
+        {
+          model: Course,
+          as: "course",
+          include: [
+            {
+              model: Lecture,
+              as: "lectures",
+              attributes: ["id"],
+            },
+          ],
+        },
+      ],
+    });
+
+    if (enrollments.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "You do not have any enrolled courses" });
+    }
+
+    const learningProgress = enrollments.map((enrollment) => {
+      const totalLectures = enrollment.course.lectures.length;
+      const completedLectures = enrollment.progress.length;
+      const progressPercentage =
+        totalLectures > 0 ? (completedLectures / totalLectures) * 100 : 0;
+
+      return {
+        courseId: enrollment.course.id,
+        title: enrollment.course.title,
+        imageUrl: generateS3Url(enrollment.course.imageKey),
+        progress: progressPercentage,
+      };
+    });
+
+    return res.status(200).json(learningProgress);
+  } catch (error) {
+    console.error("Error fetching progress for the course:", error);
+    return res
+      .status(500)
+      .json({ message: "Error fetching progress for the course" });
+  }
+};
+export {
+  getProgress,
+  updateProgress,
+  markAllCompleted,
+  removeAllLectureId,
+  courseWithProgress,
+};

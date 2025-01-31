@@ -8,6 +8,8 @@ import { getProgress } from "../../controllers/progressController.js";
 import { updateProgress } from "../../controllers/progressController.js";
 import { markAllCompleted } from "../../controllers/progressController.js";
 import { removeAllLectureId } from "../../controllers/progressController.js";
+import { getInstructorRevenue } from "../../controllers/enrollmentController.js";
+import { courseWithProgress } from "../../controllers/progressController.js";
 const enrollRouter = express.Router();
 
 enrollRouter.post(
@@ -51,4 +53,17 @@ enrollRouter.post(
   removeAllLectureId
 );
 
+enrollRouter.get(
+  "/revenue",
+  authenticateToken,
+  authorizeRole("instructor"),
+  getInstructorRevenue
+);
+
+enrollRouter.get(
+  "/my-learning",
+  authenticateToken,
+  authorizeRole("student"),
+  courseWithProgress
+);
 export default enrollRouter;

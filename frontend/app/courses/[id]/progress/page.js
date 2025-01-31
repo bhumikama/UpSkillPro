@@ -6,6 +6,8 @@ import { Button } from "@mui/material";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useSelector } from "react-redux";
+import ReactConfetti from "react-confetti";
+import { useWindowSize } from "react-use";
 
 const CourseProgress = () => {
   const { id } = useParams();
@@ -14,23 +16,22 @@ const CourseProgress = () => {
   const [completedLectures, setCompletedLectures] = useState({});
   const [error, setError] = useState(null);
   const user = useSelector((state) => state.auth.user);
-  const [selectedCourse, setSelectedCourse] = useState([])
+  const [selectedCourse, setSelectedCourse] = useState([]);
   const { isAuthenticated } = useSelector((state) => state.auth);
+  const { width, height } = useWindowSize();
 
   useEffect(() => {
-    // Fetch the lectures and progress data
     const fetchLectures = async () => {
       if (isAuthenticated) {
         if (!id) {
           setError("Invalid ID accessed");
         }
         try {
-          // Fetching lectures
           const lecturesResponse = await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}/api/courses/${id}/lectures`,
             {
               method: "GET",
-              credentials: "include", // This ensures cookies are sent with the request
+              credentials: "include",
             }
           );
 
@@ -55,7 +56,7 @@ const CourseProgress = () => {
             `${process.env.NEXT_PUBLIC_API_URL}/api/enroll/${id}/progress`,
             {
               method: "GET",
-              credentials: "include", // This ensures cookies are sent with the request
+              credentials: "include",
             }
           );
 
@@ -68,17 +69,15 @@ const CourseProgress = () => {
 
           const completedLecturesSet = new Set(progressData);
 
-          // Merging lectures with their progress status
           const lecturesWithProgress = lecturesData.map((lecture) => {
             return {
               ...lecture,
-              completed: completedLecturesSet.has(lecture.id), // Check if the lecture id is in the completed set
+              completed: completedLecturesSet.has(lecture.id),
             };
           });
 
           setLectures(lecturesWithProgress);
 
-          // Initialize completed lectures state
           const initialCompletedLectures = {};
           lecturesWithProgress.forEach((lecture) => {
             initialCompletedLectures[lecture.id] = lecture.completed || false;
@@ -108,7 +107,6 @@ const CourseProgress = () => {
       const allCompleted = Object.values(completedLectures).every((val) => val);
 
       if (allCompleted) {
-        // Mark all lectures as incomplete
         await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/api/enroll/${id}/remove-all`,
           {
@@ -117,7 +115,6 @@ const CourseProgress = () => {
           }
         );
       } else {
-        // Mark all lectures as complete
         await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/api/enroll/${id}/mark-all-completed`,
           {
@@ -162,71 +159,90 @@ const CourseProgress = () => {
       }
     }
   };
-useEffect(() => {
- const fetchCourseData = async ()=>{
-  try{
-    const courseResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/courses/${id}`,
-     { method: "GET",
-      credentials: "include",
-    }
-       );
-       if(courseResponse.ok){
-        const courseData = await courseResponse.json();
-        setSelectedCourse(courseData);
-       }else{
-        setError("Erro fetching course data")
-       }
-  }catch(error){
-    setError("Error fecthing course data: ", error.message);
-  }
- }
- fetchCourseData();
-}, [id])
-
-const handleGenerateCertificate= async ()=>{
-  try {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"
-    if (!user || !selectedCourse?.title){
-      throw new Error("Invalid user or course data");
-    }
-
-    const certificateData = {
-      name:user.name,
-      course:selectedCourse.title,
-      date:new Date().toLocaleDateString()
+  useEffect(() => {
+    const fetchCourseData = async () => {
+      try {
+        const courseResponse = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/courses/${id}`,
+          { method: "GET", credentials: "include" }
+        );
+        if (courseResponse.ok) {
+          const courseData = await courseResponse.json();
+          setSelectedCourse(courseData);
+        } else {
+          setError("Erro fetching course data");
+        }
+      } catch (error) {
+        setError("Error fecthing course data: ", error.message);
+      }
     };
+    fetchCourseData();
+  }, [id]);
 
-    const response = await fetch(`${API_URL}/api/certificate/generate-certificate`, {
-      method:"POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      credentials: "include",
-      body: JSON.stringify(certificateData)
-    });
-    if(response.ok){
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `${certificateData.name}-${certificateData.course}-certificate.pdf`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      window.URL.revokeObjectURL(url);
-    }else{
-      const errorResponse = await response.json();
-      console.error("Server response:", errorResponse);
-      setError("Failed to generate certificate. Please try again.");
+  const allLecturesCompleted =
+    lectures.length > 0 &&
+    Object.values(completedLectures).length === lectures.length &&
+    Object.values(completedLectures).every((val) => val);
+
+  const handleGenerateCertificate = async () => {
+    try {
+      const API_URL =
+        process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+      if (!user || !selectedCourse?.title) {
+        throw new Error("Invalid user or course data");
+      }
+
+      const certificateData = {
+        name: user.name,
+        course: selectedCourse.title,
+        date: new Date().toLocaleDateString(),
+      };
+
+      const response = await fetch(
+        `${API_URL}/api/certificate/generate-certificate`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify(certificateData),
+        }
+      );
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${certificateData.name}-${certificateData.course}-certificate.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      } else {
+        const errorResponse = await response.json();
+        console.error("Server response:", errorResponse);
+        setError("Failed to generate certificate. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error generating certificate:", error);
+      setError("Error generating certificate: " + error.message);
     }
-    
-  } catch (error) {
-        console.error("Error generating certificate:", error);
-        setError("Error generating certificate: " + error.message);
-  }
-}
+  };
+
   return (
     <div className="bg-white w-full h-full">
+      {allLecturesCompleted && (
+        <ReactConfetti
+          width={width}
+          height={height}
+          numberOfPieces={200}
+          wind={0}
+          gravity={0.5}
+          origin={{ x: 1, y: 1 }}
+          tweenDuration={5000}
+        />
+      )}
       <div className="container mx-auto bg-white p-5">
         <div className="w-full bg-green-100 py-2 px-5 rounded-lg ">
           <Link href="/" className="flex gap-2 text-green-600 font-semibold">
@@ -274,11 +290,7 @@ const handleGenerateCertificate= async ()=>{
                   {selectedLecture?.title}
                 </h2>
                 <Button
-                  disabled={
-                    !Object.values(completedLectures).every(
-                      (val) => val === true
-                    )
-                  }
+                  disabled={!allLecturesCompleted}
                   variant="contained"
                   onClick={handleGenerateCertificate}
                 >

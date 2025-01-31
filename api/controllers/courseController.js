@@ -1,6 +1,7 @@
 import Course from "../models/course-model.js";
 import User from "../models/user-model.js";
 import Lecture from "../models/lecture-model.js";
+import { Op } from "sequelize";
 
 const generateS3Url = (fileKey) => {
   const baseUrl = process.env.AWS_S3_BASE_URL;
@@ -12,7 +13,6 @@ const createCourse = async (req, res) => {
   const { title, description, price, imageKey } = req.body;
   const createdAt = new Date();
   try {
-    // Ensure the instructor exists and is valid
     const instructor = await User.findOne({
       where: { id: instructorId, role: "instructor" },
     });
@@ -29,7 +29,7 @@ const createCourse = async (req, res) => {
       instructorId,
       imageKey,
       price,
-      createdAt
+      createdAt,
     });
 
     res.status(201).json(course);
@@ -41,12 +41,28 @@ const createCourse = async (req, res) => {
 
 const getAllCourses = async (req, res) => {
   try {
+    const { title, sortKey = "price", sortDir = "asc" } = req.query;
+    const where = {};
+
+    if (title) {
+      where.title = { [Op.iLike]: `%${title}%` };
+    }
+
+    const validSortKeys = ["price", "createdAt", "title"];
+    const validSortDir = ["asc", "desc"];
+    const sortKeySafe = validSortKeys.includes(sortKey) ? sortKey : "price";
+    const sortDirSafe = validSortDir.includes(sortDir.toLowerCase())
+      ? sortDir.toUpperCase()
+      : "ASC";
+
     // Fetch all courses along with their instructor details
     const courses = await Course.findAll({
+      where,
+      order: [[sortKeySafe, sortDirSafe]],
       include: {
         model: User,
         as: "instructor",
-        attributes: ["id", "name", "email"], // Select specific fields for the instructor
+        attributes: ["id", "name", "email"], 
       },
       attributes: [
         "id",
@@ -55,7 +71,7 @@ const getAllCourses = async (req, res) => {
         "imageKey",
         "createdAt",
         "price",
-      ], // Select specific fields for the course
+      ], 
     });
 
     if (!courses.length) {
@@ -64,10 +80,11 @@ const getAllCourses = async (req, res) => {
 
     // Add full S3 URL for each course
     const coursesWithUrls = courses.map((course) => ({
-      ...course.dataValues, // using the datValues to get all the fields
+      ...course.dataValues, 
       imageUrl: generateS3Url(course.imageKey),
     }));
     res.status(200).json(coursesWithUrls);
+    console.log("courses : ", coursesWithUrls);
   } catch (error) {
     console.error("Error fetching courses:", error);
     res.status(500).json({ error: "Failed to fetch courses" });
@@ -76,7 +93,7 @@ const getAllCourses = async (req, res) => {
 
 const getCoursesByInstructor = async (req, res) => {
   try {
-    const instructorId = req.user.sub; // Extracted from the token middleware
+    const instructorId = req.user.sub; 
     if (!instructorId) {
       return res
         .status(404)
@@ -97,7 +114,7 @@ const getCoursesByInstructor = async (req, res) => {
 
     // Add full S3 URL for each course
     const coursesWithUrls = courses.map((course) => ({
-      ...course.dataValues, // using the datValues to get all the fields
+      ...course.dataValues, 
       imageUrl: generateS3Url(course.imageKey),
     }));
 

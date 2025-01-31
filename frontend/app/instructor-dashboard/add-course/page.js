@@ -1,5 +1,6 @@
 "use client";
 import Button from "@mui/material/Button";
+import UploadIcon from "@mui/icons-material/Upload";
 import { Card, CardContent } from "@/components/ui/card";
 import React, { useState } from "react";
 import { handleFileUpload } from "@/utils/handleFileUpload";
@@ -18,6 +19,7 @@ import {
   Typography,
 } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
+import BreadCrumbs from "@/app/_components/instructor-dashboard-components/BreadCrumbs";
 
 const CreateCourse = () => {
   const [title, setTitle] = useState("");
@@ -118,22 +120,44 @@ const CreateCourse = () => {
   };
   return (
     <>
-      <Container maxWidth="md" sx={{ mt: 14, mb: 4 }}>
-        <Box sx={{ my: 4 }}>
+      <Container maxWidth="md" sx={{ mt: 10, mb: 8 }}>
+        <Box sx={{ my: 4, textAlign: "center" }}>
           <Typography
             variant="h4"
             component="h2"
-            align="center"
-            sx={{ color: "black" }}
+            sx={{
+              fontFamily: "'Poppins', sans-serif",
+              fontWeight: "800",
+              fontSize: "1.5rem",
+              color: "#1a202c",
+              mb: 3,
+            }}
           >
             Create a new course
           </Typography>
-          <Typography variant="body1" align="center">
-            Add title ,description to create a new course
+          <Typography
+            variant="body1"
+            sx={{
+              fontFamily: "'Poppins', sans-serif",
+              fontWeight: 900,
+              color: "#4a5568",
+              fontSize: "1.2rem",
+              textShadow: "0px 1px 2px rgba(0, 0, 0, 0.2)",
+              mb: 2,
+            }}
+          >
+            Fill in the details below to create your course.
           </Typography>
         </Box>
         <Container maxWidth="sm">
-          <Paper elevation={4} sx={{ p: 3 }}>
+          <Paper
+            elevation={4}
+            sx={{
+              p: 4,
+              borderRadius: "12px",
+              boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+            }}
+          >
             <form onSubmit={handleSubmit}>
               <TextField
                 fullWidth
@@ -142,13 +166,23 @@ const CreateCourse = () => {
                 name="title"
                 value={title}
                 margin="normal"
-                size="small"
-                onChange={(e) => setTitle(e.target.value)}
+                size="medium"
                 required
+                onChange={(e) => setTitle(e.target.value)}
+                error={!!errors.title}
+                helperText={errors.title}
+                sx={{
+                  borderRadius: "8px",
+                  "& .MuiInputBase-root": { borderRadius: "8px" },
+                  "& input": {
+                    fontFamily: "'Poppins', sans-serif",
+                    fontWeight: 800,
+                    fontSize: "1rem",
+                    color: "#000000",
+                  },
+                }}
               />
-              {errors.title && (
-                <span style={{ color: "red" }}>{errors.title}</span>
-              )}
+
               <TextField
                 fullWidth
                 label="Description"
@@ -158,9 +192,20 @@ const CreateCourse = () => {
                 margin="normal"
                 size="small"
                 multiline
+                error={!!errors.description}
+                helperText={errors.description}
                 rows={4}
                 onChange={(e) => setDescription(e.target.value)}
                 required
+                sx={{
+                  borderRadius: "8px",
+                  "& .MuiInputBase-root": { borderRadius: "8px" },
+                  "& textarea": {
+                    fontFamily: "'Poppins', sans-serif",
+                    fontSize: "1rem",
+                    color: "#2d3748",
+                  },
+                }}
               />
               {errors.description && <span>{errors.description}</span>}
               <TextField
@@ -183,6 +228,18 @@ const CreateCourse = () => {
                 }}
                 onChange={(e) => setPrice(e.target.value)}
                 required
+                sx={{
+                  borderRadius: "8px",
+                  "& .MuiInputBase-root": { borderRadius: "8px" },
+                  "& input": {
+                    fontFamily: "'Poppins', sans-serif",
+                    fontSize: "1rem",
+                    fontWeight: "bold",
+                    color: "#2d3748",
+                  },
+                }}
+                error={!!errors.price}
+                helperText={errors.price}
               />
               {errors.price && <span>{errors.price}</span>}
 
@@ -195,6 +252,7 @@ const CreateCourse = () => {
                       maxWidth: "100%",
                       maxHeight: "200px",
                       borderRadius: "8px",
+                      marginBottom: "8px",
                     }}
                   />
                 </Box>
@@ -202,9 +260,22 @@ const CreateCourse = () => {
               {/* <ImagePicker */}
               <label
                 htmlFor="image-upload"
-                className="flex items-center justify-center w-full px-4 py-2 mt-2 text-white bg-black rounded-md cursor-pointer hover:bg-blue-600 focus:ring-2 focus:ring-blue-300 focus:outline-none"
+                style={{
+                  display: "block",
+                  margin: "16px 0",
+                  padding: "10px",
+                  textAlign: "center",
+                  backgroundColor: "#2d3748",
+                  color: "white",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                  fontFamily: "'Poppins', sans-serif",
+                  fontSize: "1.2rem",
+                  fontWeight: "bold",
+                }}
               >
-                Upload an image
+                <UploadIcon sx={{ mr: 1 }} />
+                Upload an Image
               </label>
               <input
                 type="file"
@@ -215,21 +286,34 @@ const CreateCourse = () => {
                 onChange={handleImageChange}
               />
 
-              {errors.image && <span>{errors.image}</span>}
+              {errors.image && (
+                <Typography
+                  variant="caption"
+                  color="error"
+                  sx={{ display: "block", textAlign: "center", mb: 2 }}
+                >
+                  {errors.image}
+                </Typography>
+              )}
               <Button
                 type="submit"
                 variant="contained"
                 fullWidth
-                size="small"
+                size="large"
                 sx={{
-                  mt: 2,
-                  backgroundColor: "black",
+                  mt: 4,
+                  fontWeight: "bold",
+                  textTransform: "capitalize",
+                  fontFamily: "'Poppins', 'sans-serif'",
+                  fontSize: "1rem",
+                  backgroundColor: "#1a202c",
                   color: "#fff", // Text color
                   "&:hover": {
                     backgroundColor: "#374151",
                   },
                 }}
                 disabled={isLoading}
+                startIcon={null}
               >
                 {isLoading ? "Submitting..." : "Add your course"}
               </Button>
