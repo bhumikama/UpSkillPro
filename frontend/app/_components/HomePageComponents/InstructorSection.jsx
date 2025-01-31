@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const InstructorSection = () => {
   return (
-    <div className="container mx-auto flex flex-col md:flex-row items-center justify-center bg-white p-8 md:p-12 gap-4 md:gap-8">
+    <div className="container mx-auto flex flex-col md:flex-row items-center justify-center bg-white p-8 md:p-12 gap-4 md:gap-8 my-16">
       <div className="w-full md:w-1/2 flex justify-center">
         <Image
           src="/instructor.png"
