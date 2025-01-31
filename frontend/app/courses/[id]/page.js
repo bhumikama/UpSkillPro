@@ -90,15 +90,15 @@ const CoursePage = () => {
   return (
     <div className="bg-gray-100 ">
       <div className="width-full bg-gradient-to-r from-black to-gray-500 shadow-lg ">
-        <div className="container mx-auto px-5 py-3 ">
-          <h3 className="text-gray-100 text-5xl font-medium mb-4 lg:text-4xl">
+        <div className="container mx-auto px-5 py-3 shadow-xl ">
+          <h3 className="text-gray-100 text-xl font-bold mb-4 lg:text-4xl">
             {course.title}
           </h3>
           <p className=" flex items-center gap-2">
-            <span className="text-gray-300 font-medium text-3xl flex items-center gap-2">
+            <span className="text-gray-300 font-medium text-xl flex items-center gap-2">
               {" "}
               <FaChalkboardTeacher />
-              Instructor:
+              Course by:
             </span>{" "}
             <span className="text-white text-2xl">
               {course.instructor?.name}

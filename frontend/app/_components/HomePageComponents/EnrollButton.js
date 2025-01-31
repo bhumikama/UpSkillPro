@@ -60,7 +60,7 @@ const EnrollButton = ({ courseId, setLoading, isEnrolled }) => {
       <button
         onClick={handleEnrollClick}
         // disabled={isEnrolled}
-        className={`rounded-md text-xl font-semibold bg-black text-white w-full py-5 ${
+        className={`rounded-md text-xl shadow-lg font-semibold bg-black text-white w-full py-5 ${
           isEnrolled
             ? "bg-gray-500 text-gray-200 "
             : "bg-blue-700 text-white hover:bg-blue-400 transition-all ease-in-out duration-300"
