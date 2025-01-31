@@ -19,7 +19,7 @@ const CourseCard = ({ course }) => {
             className="w-full h-36 object-cover rounded-t-lg"
           />
         </div>
-        <CardContent className="px-5 py-4 space-y-1">
+        <CardContent className="px-5 py-4 space-y-2">
           <h1 className="hover:underline font-bold text-lg truncate">
             {course.title}
           </h1>
@@ -28,8 +28,8 @@ const CourseCard = ({ course }) => {
           </p>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1">
-              <h1 className="font-medium text-sm flex items-center gap-2">
-               <FaChalkboardTeacher className="text-gray-600"/> Instructor: {course.instructor.name}
+              <h1 className="font-medium text-sm flex items-center gap-2 text-gray-600">
+               <FaChalkboardTeacher className="text-gray-600"/> Created by: {course.instructor.name}
               </h1>
             </div>
           </div>
