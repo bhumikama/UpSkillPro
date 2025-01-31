@@ -22,7 +22,7 @@ const CourseCard = ({ course }) => {
           </h1>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <h1 className="font-medium text-sm">{course.instructor.name}</h1>
+              {/* <h1 className="font-medium text-sm">{course.instructor.name}</h1> */}
             </div>
             <Badge
               className={
