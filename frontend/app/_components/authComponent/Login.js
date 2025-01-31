@@ -36,9 +36,9 @@ const Login = () => {
       const { user, token } = userInfo;
 
       // Set cookies
-      Cookies.set("userName", user.name);
-      Cookies.set("userRole", user.role);
-      Cookies.set("userEmail", user.email);
+      // Cookies.set("userName", user.name);
+      // Cookies.set("userRole", user.role);
+      // Cookies.set("userEmail", user.email);
 
       dispatch(loginSuccess({ user, token }));
       toast.success("Logged in successfully! 🎉");
