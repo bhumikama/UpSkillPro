@@ -6,8 +6,6 @@ import Image from "next/image";
 import EnrollButton from "@/app/_components/HomePageComponents/EnrollButton";
 import { useDispatch } from "react-redux";
 import { setUserEnrolledCourses } from "@/features/course/courseSlice";
-import { Avatar } from "@mui/material";
-import { CastForEducation } from "@mui/icons-material";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { DollarSign } from "lucide-react";
 import SocialButtons from "@/app/_components/HomePageComponents/SocialButtons"
