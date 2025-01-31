@@ -6,7 +6,7 @@ import { enrollCourse } from "@/features/course/courseSlice";
 import { useRouter } from "next/navigation";
 import { Button } from "@mui/material";
 
-const EnrollButton = ({ courseId, setLoading, }) => {
+const EnrollButton = ({ courseId, setLoading, isEnrolled }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -14,11 +14,7 @@ const EnrollButton = ({ courseId, setLoading, }) => {
   const enrolledCourses = useSelector(
     (state) => state.courses.enrolledCourses || []
   );
-  // const course = courses.find((course) => course.id === courseId);
-  // if (!course) {
-  //   console.error("Course with this ID is not found");
-  // }
-  const isEnrolled = enrolledCourses.includes(courseId);
+
   const buttonText = isEnrolled ? "Go To Progress" : "Enroll";
 
   const handleEnrollClick = async () => {

@@ -19,19 +19,17 @@ const CourseProgress = () => {
   const { width, height } = useWindowSize();
 
   useEffect(() => {
-    // Fetch the lectures and progress data
     const fetchLectures = async () => {
       if (isAuthenticated) {
         if (!id) {
           setError("Invalid ID accessed");
         }
         try {
-          // Fetching lectures
           const lecturesResponse = await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}/api/courses/${id}/lectures`,
             {
               method: "GET",
-              credentials: "include", // This ensures cookies are sent with the request
+              credentials: "include",
             }
           );
 
@@ -56,7 +54,7 @@ const CourseProgress = () => {
             `${process.env.NEXT_PUBLIC_API_URL}/api/enroll/${id}/progress`,
             {
               method: "GET",
-              credentials: "include", // This ensures cookies are sent with the request
+              credentials: "include",
             }
           );
 
@@ -69,17 +67,15 @@ const CourseProgress = () => {
 
           const completedLecturesSet = new Set(progressData);
 
-          // Merging lectures with their progress status
           const lecturesWithProgress = lecturesData.map((lecture) => {
             return {
               ...lecture,
-              completed: completedLecturesSet.has(lecture.id), // Check if the lecture id is in the completed set
+              completed: completedLecturesSet.has(lecture.id),
             };
           });
 
           setLectures(lecturesWithProgress);
 
-          // Initialize completed lectures state
           const initialCompletedLectures = {};
           lecturesWithProgress.forEach((lecture) => {
             initialCompletedLectures[lecture.id] = lecture.completed || false;
@@ -109,7 +105,6 @@ const CourseProgress = () => {
       const allCompleted = Object.values(completedLectures).every((val) => val);
 
       if (allCompleted) {
-        // Mark all lectures as incomplete
         await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/api/enroll/${id}/remove-all`,
           {
@@ -118,7 +113,6 @@ const CourseProgress = () => {
           }
         );
       } else {
-        // Mark all lectures as complete
         await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/api/enroll/${id}/mark-all-completed`,
           {
@@ -178,7 +172,7 @@ const CourseProgress = () => {
           numberOfPieces={200}
           wind={0}
           gravity={0.5}
-          origin={{ x: 0.5, y: 1 }}
+          origin={{ x: 1, y: 1 }}
           tweenDuration={5000}
         />
       )}

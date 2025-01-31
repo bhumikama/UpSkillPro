@@ -110,40 +110,13 @@ const BarChart = () => {
     ],
   };
 
-  //   const options = {
-  //     responsive: true,
-  //     plugins: {
-  //       legend: {
-  //         position: "top",
-  //       },
-  //       tooltip: {
-  //         enabled: true,
-  //       },
-  //     },
-  //     scales: {
-  //       x: {
-  //         grid: {
-  //           display: false,
-  //         },
-  //       },
-  //       y: {
-  //         beginAtZero: true,
-  //         grid: {
-  //           borderDash: [5, 5],
-  //         },
-  //         ticks: {
-  //           callback: (value) => `$${value}`,
-  //         },
-  //       },
-  //     },
-  //   };
   const options = {
     responsive: true,
     maintainAspectRatio: false,
     scales: {
       x: {
-        categoryPercentage: 0.5, // Makes bars narrower within their category
-        barPercentage: 0.6, // Adjusts bar width
+        categoryPercentage: 0.5,
+        barPercentage: 0.6,
       },
       y: {
         beginAtZero: true,
