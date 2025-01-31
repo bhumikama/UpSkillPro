@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const ClientLogoCarousel = () => {
   return (
-    <div className="max-w-screen-lg mx-auto my-4 text-center">
+    <div className="max-w-screen-lg mx-auto my-5 text-center ">
       <h2 className="text-2xl font-semibold mt-8 mb-6 text-gray-500">
         Brands that trusts us
       </h2>
