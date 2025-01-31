@@ -2,18 +2,26 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import CourseCard from "../_components/HomePageComponents/CourseCard";
+import { useRouter } from "next/navigation";
+import ProgressCard from "../student-dashboard/components/ProgressCard";
+
 const MyLearningPage = () => {
   const [enrolledCourses, setEnrolledCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const router = useRouter();
+
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
   useEffect(() => {
+    if (!isAuthenticated) {
+      router.push("/login");
+    }
     const fetchEnrolledCourses = async () => {
       try {
         setLoading(true);
         const apiResponse = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/enroll/all`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/enroll/my-learning`,
           {
             method: "GET",
             credentials: "include", // This ensures cookies are sent with the request
@@ -25,8 +33,8 @@ const MyLearningPage = () => {
         }
         if (apiResponse.ok) {
           const courses = await apiResponse.json();
-          console.log("API Response Body:", courses.coursesWithUrls);
-          setEnrolledCourses(courses.coursesWithUrls);
+          console.log("API Response Body:", courses);
+          setEnrolledCourses(courses);
         } else {
           const errorText = await apiResponse.json();
           console.error("Error details :", errorText);
@@ -39,7 +47,7 @@ const MyLearningPage = () => {
     };
 
     fetchEnrolledCourses();
-  });
+  }, [isAuthenticated]);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -58,7 +66,7 @@ const MyLearningPage = () => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {enrolledCourses.map((course, index) => (
-              <CourseCard key={index} course={course} />
+              <ProgressCard key={index} course={course} />
             ))}
           </div>
         )}
