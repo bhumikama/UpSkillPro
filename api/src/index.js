@@ -69,7 +69,7 @@ app.post("/upload", upload.single("file"), async (req, res, next) => {
 });
 
 app.get('/', async (req, res) =>{
-  res.send.json ("Welcome to UpSkillPro API Infastructure")
+  res.send.json("Welcome to UpSkillPro API Infastructure")
 })
 
 apiRouter.use("/", authRouter);
