@@ -69,28 +69,31 @@ const CoursesPage = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       dispatch(fetchCoursesStart());
+
       try {
         const params = new URLSearchParams(searchParams);
         const queryString = params.toString();
 
         const response = await fetch(`${API_URL}/api/courses?${queryString}`, {
           method: "GET",
-          credentials: "include", // This ensures cookies are sent with the request
+          credentials: "include",
         });
 
-        if (response.status === 404) {
-          setAllCourses([]);
-        }
         if (!response.ok) {
+          if (response.status === 404) {
+            throw new Error("No courses found");
+          }
           const errorText = await response.json();
           throw new Error(errorText.message);
         }
+
         const data = await response.json();
-        console.log("filtered result :", data);
+        console.log("filtered result:", data);
         setAllCourses(data);
         dispatch(fetchCoursesSuccess(data));
       } catch (error) {
         if (error.message.includes("No courses found")) {
+          setAllCourses([]); 
           dispatch(fetchCoursesFailure("No courses found"));
         } else if (error.message.includes("Forbidden")) {
           dispatch(

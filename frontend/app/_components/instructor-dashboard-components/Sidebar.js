@@ -5,7 +5,6 @@ import { SiGoogleanalytics } from "react-icons/si";
 import { FaBars, FaHome, FaSignOutAlt, FaUserAlt } from "react-icons/fa";
 import { MdOutlineCastForEducation } from "react-icons/md";
 import { IoCloseCircleSharp } from "react-icons/io5";
-import LogOutButton from "../authComponent/LogOutButton";
 import InstructorContent from "./InstructorContent";
 import BarChart from "@/app/student-dashboard/components/Analytics";
 
@@ -19,8 +18,6 @@ const Sidebar = () => {
         return <InstructorContent />;
       case "course":
         return <DashboardContent />;
-      case "logout":
-        return <LogOutButton />;
       case "analytics":
         return <BarChart />;
       default:
@@ -79,15 +76,6 @@ const Sidebar = () => {
               <SiGoogleanalytics size={24} />
               <span className={`ml-4 md:block ${isOpen ? "block" : "hidden"}`}>
                 Analytics
-              </span>
-            </li>
-            <li
-              className="flex items-center p-4 hover:bg-gray-700 cursor-pointer"
-              onClick={() => setActiveTab("logout")}
-            >
-              <FaSignOutAlt size={24} />
-              <span className={`ml-4 md:block ${isOpen ? "block" : "hidden"}`}>
-                Logout
               </span>
             </li>
           </ul>

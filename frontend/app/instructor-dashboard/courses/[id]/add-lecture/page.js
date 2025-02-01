@@ -3,21 +3,17 @@ import Button from "@mui/material/Button";
 import { Card, CardContent } from "@/components/ui/card";
 import React, { useState } from "react";
 import { Upload } from "@mui/icons-material";
-import { Save } from "@mui/icons-material";
 import { toast } from "react-toastify";
 import { handleFileUpload } from "@/utils/handleFileUpload";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useRouter } from "next/navigation";
 import {
-  Alert,
-  AlertTitle,
-  Box,
   Container,
   Paper,
   TextField,
   Typography,
+  Stack,
+  Box,
 } from "@mui/material";
-import InputAdornment from "@mui/material/InputAdornment";
-import { useRouter } from "next/navigation";
 
 const CreateLecture = ({ params }) => {
   const { id } = React.use(params);
@@ -28,48 +24,38 @@ const CreateLecture = ({ params }) => {
   const [videoPreview, setVideoPreview] = useState(null);
   const router = useRouter();
 
-  const MAX_FILE_SIZE_MB = 100; //maximum file size limit
+  const MAX_FILE_SIZE_MB = 100;
 
   const handleVideoChange = (event) => {
     try {
       const selectedVideo = event.target.files[0];
 
       if (!selectedVideo) {
-        setErrors((prevState) => ({
-          ...prevState,
-          video: "No file selected",
-        }));
+        setErrors((prev) => ({ ...prev, video: "No file selected" }));
         return;
       }
 
-      const fileSizeMB = selectedVideo.size / (1024 * 1024); // Converting file size to MB
+      const fileSizeMB = selectedVideo.size / (1024 * 1024);
       if (fileSizeMB > MAX_FILE_SIZE_MB) {
-        setErrors((prevState) => ({
-          ...prevState,
+        setErrors((prev) => ({
+          ...prev,
           video: `File size exceeds ${MAX_FILE_SIZE_MB}MB limit`,
         }));
         setVideoPreview(null);
         setVideo(null);
-        event.target.value = ""; // Clearing input value
+        event.target.value = "";
         return;
       }
 
-      // Revoke any existing video preview URL to avoid memory leaks
-      if (videoPreview) {
-        URL.revokeObjectURL(videoPreview);
-      }
+      if (videoPreview) URL.revokeObjectURL(videoPreview);
 
-      // Set the new video and preview URL
       setVideo(selectedVideo);
       setVideoPreview(URL.createObjectURL(selectedVideo));
-      setErrors((prevState) => ({
-        ...prevState,
-        video: null,
-      }));
+      setErrors((prev) => ({ ...prev, video: null }));
     } catch (error) {
       console.error("Error handling video upload:", error);
-      setErrors((prevState) => ({
-        ...prevState,
+      setErrors((prev) => ({
+        ...prev,
         video: "An unexpected error occurred. Please try again.",
       }));
     }
@@ -77,24 +63,22 @@ const CreateLecture = ({ params }) => {
 
   const checkForErrors = () => {
     const errors = {};
-    if (!title || title.trim() === "") {
-      errors.title = "Please provide valid title";
-    }
-
-    if (!video || video.size === 0) {
-      errors.video = "Please upload a video";
-    }
+    if (!title.trim()) errors.title = "Please provide a valid title";
+    if (!video) errors.video = "Please upload a video";
     return errors;
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+
     const errorFields = checkForErrors();
     if (Object.keys(errorFields).length > 0) {
       setErrors(errorFields);
       setIsLoading(false);
       return;
     }
+
     try {
       const videoUrl = await handleFileUpload(video);
       const response = await fetch(
@@ -108,15 +92,14 @@ const CreateLecture = ({ params }) => {
       );
 
       if (response.ok) {
-        const result = await response.json();
-        toast.success("Created new lecture ! 🎉");
+        toast.success("Lecture created successfully! 🎉");
         setTitle("");
         setVideo(null);
         setVideoPreview(null);
         router.push("/instructor-dashboard");
       } else {
         const { message } = await response.json();
-        console.error(`Error details: ${message}`);
+        console.error("Error:", message);
       }
     } catch (error) {
       console.error("Error creating lecture:", error);
@@ -124,93 +107,128 @@ const CreateLecture = ({ params }) => {
       setIsLoading(false);
     }
   };
-  return (
-    <>
-      <Container maxWidth="md" sx={{ mt: 14, mb: 4 }}>
-        <Box sx={{ my: 4 }}>
-          <Typography
-            variant="h4"
-            component="h2"
-            align="center"
-            sx={{ color: "black" }}
-          >
-            Create a new lecture
-          </Typography>
-          <Typography variant="body1" align="center">
-            Add title , video to add a new lecture to the course
-          </Typography>
-        </Box>
-        <Container maxWidth="sm">
-          <Paper elevation={4} sx={{ p: 3 }}>
-            <form onSubmit={handleSubmit}>
-              <TextField
-                fullWidth
-                type="text"
-                label="Course Title"
-                name="title"
-                value={title}
-                margin="normal"
-                size="small"
-                onChange={(e) => setTitle(e.target.value)}
-                required
-              />
-              {errors.title && (
-                <span style={{ color: "red" }}>{errors.title}</span>
-              )}
 
-              {videoPreview && (
-                <Box sx={{ mt: 2, textAlign: "center" }}>
-                  <video
-                    src={videoPreview}
-                    alt="Uploaded Preview"
-                    controls
-                    style={{
-                      maxWidth: "100%",
-                      maxHeight: "200px",
-                      borderRadius: "8px",
-                    }}
-                  />
-                </Box>
-              )}
-              {/* VideoPicker */}
-              <label
-                htmlFor="video-upload"
-                className="flex items-center justify-center w-full px-4 py-2 mt-2 text-white bg-black rounded-md cursor-pointer hover:bg-gray-700 focus:ring-2 focus:ring-blue-300 focus:outline-none"
-              >
-                Upload a video
+  return (
+    <Container maxWidth="md" sx={{ mt: 10, mb: 8 }}>
+      <Stack spacing={2} alignItems="center" textAlign="center">
+        <Typography
+          variant="h4"
+          sx={{
+            fontFamily: "'Poppins', sans-serif",
+            fontWeight: 800,
+            fontSize: { xs: "1.4rem", sm: "1.8rem" },
+            color: "#1a202c",
+          }}
+        >
+          Create a New Lecture
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{
+            fontFamily: "'Poppins', sans-serif",
+            fontWeight: 600,
+            fontSize: { xs: "1rem", sm: "1.2rem" },
+            color: "#4a5568",
+          }}
+        >
+          Fill in the details below to create your lecture.
+        </Typography>
+      </Stack>
+
+      {/* Form Container */}
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+        <Paper
+          elevation={4}
+          sx={{
+            width: "100%",
+            maxWidth: 600,
+            p: 4,
+            borderRadius: "12px",
+            boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+          }}
+        >
+          <form onSubmit={handleSubmit}>
+            <TextField
+              fullWidth
+              label="Lecture Title"
+              value={title}
+              margin="normal"
+              size="medium"
+              onChange={(e) => setTitle(e.target.value)}
+              required
+              sx={{
+                borderRadius: "8px",
+                "& input": {
+                  fontFamily: "'Poppins', sans-serif",
+                  fontWeight: 700,
+                  fontSize: { xs: "0.9rem", sm: "1rem" },
+                },
+              }}
+            />
+            {errors.title && (
+              <Typography color="error">{errors.title}</Typography>
+            )}
+
+            {/* Video Preview */}
+            {videoPreview && (
+              <Box sx={{ textAlign: "center", mt: 2 }}>
+                <video
+                  src={videoPreview}
+                  controls
+                  style={{
+                    maxWidth: "100%",
+                    maxHeight: "300px",
+                    borderRadius: "8px",
+                  }}
+                />
+              </Box>
+            )}
+
+            {/* Video Upload Button */}
+            <Stack spacing={2} alignItems="center" mt={2}>
+              <label htmlFor="video-upload">
+                <Button
+                  variant="contained"
+                  component="span"
+                  sx={{ bgcolor: "#333", "&:hover": { bgcolor: "#555" } }}
+                >
+                  <Upload sx={{ mr: 1 }} />
+                  Upload Video
+                </Button>
               </label>
               <input
                 type="file"
                 id="video-upload"
-                name="video"
-                accept="video/*"
                 hidden
+                accept="video/*"
                 onChange={handleVideoChange}
               />
+              {errors.video && (
+                <Typography color="error">{errors.video}</Typography>
+              )}
+            </Stack>
 
-              {errors.video && <span>{errors.video}</span>}
-              <Button
-                type="submit"
-                variant="contained"
-                fullWidth
-                size="small"
-                sx={{
-                  mt: 2,
-                  backgroundColor: "black",
-                  color: "#fff", // Text color
-                  "&:hover": {
-                    backgroundColor: "#374151",
-                  },
-                }}
-                disabled={isLoading}
-              >
-                {isLoading ? "Submitting..." : "Add your lecture"}
-              </Button>
-            </form>
-          </Paper>
-        </Container>
-      </Container>
-    </>
+            {/* Submit Button */}
+            <Button
+              type="submit"
+              variant="contained"
+              fullWidth
+              size="large"
+              sx={{
+                mt: 3,
+                bgcolor: "#333",
+                color: "#fff",
+                fontSize: { xs: "0.9rem", sm: "1rem" },
+                "&:hover": { bgcolor: "#555" },
+              }}
+              disabled={isLoading}
+            >
+              {isLoading ? "Submitting..." : "Create Lecture"}
+            </Button>
+          </form>
+        </Paper>
+      </Box>
+    </Container>
   );
 };
 

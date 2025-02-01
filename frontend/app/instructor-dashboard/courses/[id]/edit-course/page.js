@@ -67,7 +67,6 @@ const EditPage = ({ params }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      // Send course details to the backend
       const apiResponse = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/courses/${id}`,
         {
