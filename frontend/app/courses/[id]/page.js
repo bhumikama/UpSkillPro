@@ -8,10 +8,11 @@ import { useDispatch } from "react-redux";
 import { setUserEnrolledCourses } from "@/features/course/courseSlice";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { DollarSign } from "lucide-react";
-import SocialButtons from "@/app/_components/HomePageComponents/SocialButtons"
+import SocialButtons from "@/app/_components/HomePageComponents/SocialButtons";
+
 const CoursePage = () => {
-  const { id } = useParams(); 
-  const [course, setCourse] = useState({}); 
+  const { id } = useParams();
+  const [course, setCourse] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [enrolledCourses, setEnrolledCourses] = useState([]);
@@ -95,10 +96,9 @@ const CoursePage = () => {
           </h3>
           <p className=" flex items-center gap-2">
             <span className="text-gray-300 font-medium text-xl flex items-center gap-2">
-              {" "}
               <FaChalkboardTeacher />
               Course by:
-            </span>{" "}
+            </span>
             <span className="text-white text-2xl">
               {course.instructor?.name}
             </span>
@@ -120,12 +120,11 @@ const CoursePage = () => {
               />
             </div>
             <div className="bg-white p-5 rounded-lg shadow-md mb-5">
-              <p className="text-gray-400 mb-3">{course.description}</p>
+              <p className="text-gray-600 mb-3">{course.description}</p>
             </div>
             <div className="bg-white p-5 rounded-lg shadow-md">
               <h4 className="text-1xl font-semibold mt-4 bg-green-100 text-green-600 w-fit px-5">
                 {course.lectures?.length} Lectures
-                {/* Safely access the length */}
               </h4>
               {course.lectures?.map((lecture, lectureIndex) => (
                 <div key={lectureIndex} className="my-5 p-4 border">
@@ -144,7 +143,7 @@ const CoursePage = () => {
                 className="object-contain"
               />
               <h3 className="text-4xl font-bold text-green-700 my-4 flex items-center">
-                <DollarSign size={30} className="text-gray-600" />{" "}
+                {/* <DollarSign size={30} className="text-gray-600" /> */}
                 {course.price} Dkk
               </h3>
               {/* <button className="rounded-md text-xl font-semibold bg-black text-white w-full py-5">
@@ -157,7 +156,7 @@ const CoursePage = () => {
               />
             </div>
             <div>
-              <SocialButtons/>
+              <SocialButtons />
             </div>
           </div>
         </div>

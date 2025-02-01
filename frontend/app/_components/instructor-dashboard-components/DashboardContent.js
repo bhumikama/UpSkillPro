@@ -11,13 +11,23 @@ import {
 } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import {
+  fetchCoursesStart,
+  fetchCoursesSuccess,
+  fetchCoursesFailure,
+} from "@/features/course/courseSlice";
 
 const DashboardContent = () => {
   const router = useRouter();
-  const [courses, setCourses] = useState([]);
+  const [allCourses, setAllCourses] = useState([]);
+  const dispatch = useDispatch();
+  const { courses, loading, error } = useSelector((state) => state.courses);
 
   useEffect(() => {
     const fetchProjectsByInstructor = async () => {
+      dispatch(fetchCoursesStart());
       try {
         const apiResponse = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/api/courses/all`,
@@ -26,24 +36,34 @@ const DashboardContent = () => {
             credentials: "include", // This ensures cookies are sent with the request
           }
         );
-        if (apiResponse.status === 404) {
-          setCourses([]);
-          return;
-        }
-        if (apiResponse.ok) {
-          const courses = await apiResponse.json();
-          console.log("API Response Body:", courses);
-          setCourses(courses);
-        } else {
+
+        if (!apiResponse.ok) {
+          if (apiResponse.status === 404) {
+            throw new Error("No courses found");
+          }
           const errorText = await apiResponse.json();
-          console.error("Error details :", errorText.message);
+          throw new Error(errorText.message);
         }
+
+        const coursesData = await apiResponse.json();
+        setAllCourses(coursesData);
+        dispatch(fetchCoursesSuccess(coursesData));
       } catch (error) {
-        console.error("Error fetching projects", error.message);
+        if (error.message.includes("No courses found")) {
+          setAllCourses([]);
+          dispatch(fetchCoursesFailure("No courses found"));
+        } else if (error.message.includes("Forbidden")) {
+          dispatch(
+            fetchCoursesFailure("You don't have permission to view courses")
+          );
+        } else {
+          dispatch(fetchCoursesFailure(error.message));
+        }
       }
     };
     fetchProjectsByInstructor();
   }, []);
+
   const handleNavigation = () => {
     router.push("instructor-dashboard/add-course");
   };
@@ -64,8 +84,8 @@ const DashboardContent = () => {
         <CardContent>
           <div className="container my-10 mx-auto">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-10">
-              {courses.length > 0 ? (
-                courses.map((course, index) => (
+              {allCourses.length > 0 ? (
+                allCourses.map((course, index) => (
                   <div
                     key={`course-${index}`}
                     className=" relative border  border-gray-300 rounded-md shadow-md  leading-loose 	"
