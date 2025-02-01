@@ -18,6 +18,8 @@ import {
   fetchCoursesSuccess,
   fetchCoursesFailure,
 } from "@/features/course/courseSlice";
+import InstructorCard from "./InstructorCard";
+import { Skeleton } from "@mui/material";
 
 const DashboardContent = () => {
   const router = useRouter();
@@ -77,43 +79,28 @@ const DashboardContent = () => {
       <Card>
         <CardHeader className="flex justify-between flex-row items-center">
           <CardTitle className="font-extrabold text-3xl">All Courses</CardTitle>
-          <Button className="p-5 hover:bg-[#374151]" onClick={handleNavigation}>
+          <Button
+            className="p-5 hover:bg-[#374151] hover:text-white border border-gray-900"
+            onClick={handleNavigation}
+          >
             Create New Course
           </Button>
         </CardHeader>
         <CardContent>
           <div className="container my-10 mx-auto">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-10">
-              {allCourses.length > 0 ? (
+              {loading ? (
+                Array.from({ length: 4 }).map((_, index) => {
+                  <CourseSkeleton key={index} />;
+                })
+              ) : allCourses.length > 0 ? (
                 allCourses.map((course, index) => (
-                  <div
-                    key={`course-${index}`}
-                    className=" relative border  border-gray-300 rounded-md shadow-md  leading-loose  "
-                  >
-                    <Image
-                      src={course.imageUrl}
-                      alt={`Image of ${course.title}`}
-                      width={500}
-                      height={500}
-                      className="object-contain "
-                    />
-                    <span className="bg-green-700 text-white absolute font-medium top-7 px-2">
-                      BEST SELLER
-                    </span>
-                    <div className="p-3">
-                      <h2 className="text-lg font-semibold ">{course.title}</h2>
-                      <p className="text-gray-400">{course.description}</p>
-                      <button
-                        className="px-2 py-1.5 min-w-20 bg-red-500 text-white text-sm rounded hover:bg-red-600"
-                        onClick={() => handleOnClick(course.id)}
-                      >
-                        Add new lecture
-                      </button>
-                    </div>
-                  </div>
+                  <InstructorCard key={index} course={course} />
                 ))
               ) : (
-                <p>Courses not found</p>
+                <p className="text-lg text-gray-600 mt-4">
+                  No courses available at the moment.
+                </p>
               )}
             </div>
           </div>
@@ -124,3 +111,22 @@ const DashboardContent = () => {
 };
 
 export default DashboardContent;
+
+const CourseSkeleton = () => {
+  return (
+    <div className="bg-white shadow-md hover:shadow-lg transition-shadow rounded-lg overflow-hidden">
+      <Skeleton className="w-full h-36" />
+      <div className="px-5 py-4 space-y-3">
+        <Skeleton className="h-6 w-3/4" />
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Skeleton className="h-6 w-6 rounded-full" />
+            <Skeleton className="h-4 w-20" />
+          </div>
+          <Skeleton className="h-4 w-16" />
+        </div>
+        <Skeleton className="h-4 w-1/4" />
+      </div>
+    </div>
+  );
+};
