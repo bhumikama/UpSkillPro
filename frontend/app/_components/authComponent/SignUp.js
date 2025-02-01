@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import Input from "@/components/ui/input";
 import { Loader, Lock, Mail, User, ArrowBigLeftIcon } from "lucide-react";
 import PasswordStrengthChecker from "../HomePageComponents/PasswordStrengthChecker";
-
+import { useSelector } from "react-redux";
 const SignUp = () => {
   const router = useRouter();
   const [selectedRole, setSelectedRole] = useState("student");
@@ -20,6 +20,14 @@ const SignUp = () => {
   });
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/");
+    }
+  }, [isAuthenticated, router]);
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const role = params.get("role");
