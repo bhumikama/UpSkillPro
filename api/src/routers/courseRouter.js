@@ -20,8 +20,8 @@ courseRouter.post(
   createCourse
 );
 courseRouter.get("/all", authenticateToken, getCoursesByInstructor);
-courseRouter.get("/", authenticateToken, getAllCourses);
-courseRouter.get("/:id", authenticateToken, getCourseById);
+courseRouter.get("/", getAllCourses);
+courseRouter.get("/:id", getCourseById);
 courseRouter.get(
   "/:id/enrolled-count",
   authenticateToken,
@@ -40,6 +40,11 @@ courseRouter.post(
   authorizeRole("instructor"),
   createLecture
 );
-courseRouter.get("/:id/lectures", authenticateToken, getLecturesByCourseId);
+courseRouter.get(
+  "/:id/lectures",
+  authenticateToken,
+  authorizeRole("instructor"),
+  getLecturesByCourseId
+);
 
 export default courseRouter;
