@@ -23,6 +23,9 @@ import {
 } from "@/features/course/courseSlice";
 import { useDispatch } from "react-redux";
 import CourseCard from "../_components/HomePageComponents/CourseCard";
+import { Search, X } from "lucide-react";
+import Skeleton from "@mui/material/Skeleton";
+
 
 const CoursesPage = () => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
@@ -31,6 +34,7 @@ const CoursesPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { courses, loading, error } = useSelector((state) => state.courses);
+  const [search, setSearch] = useState("");
   const [allCourses, setAllCourses] = useState([]);
 
   useEffect(() => {
@@ -123,57 +127,96 @@ const CoursesPage = () => {
   }
 
   return (
-    <div className="flex flex-col items-center my-[85px] px-[160px] gap-[40px]">
-      <h2 className="uppercase font-medium text-[35px] text-[#29ade5]">
-        Our <span className="font-bold">Courses</span>
-      </h2>
-      <div className="flex justify-center gap-5">
-        <TextField
-          size="small"
-          label="Search courses"
-          variant="outlined"
-          value={searchParams.get("title") || ""}
-          onChange={(e) => handleChange("title", e.target.value)}
-          sx={{ mr: 2, width: "250px" }}
-        />
-        <Box sx={{ display: "flex", gap: 2 }}>
-          <FormControl size="small" sx={{ minWidth: 120 }}>
-            <InputLabel>Sort By</InputLabel>
-            <Select
-              value={searchParams.get("sortKey") || ""}
-              label="Sort By"
-              onChange={(e) => handleChange("sortKey", e.target.value)}
+    <div className="mb-10">
+      <div className="w-full bg-gradient-to-r from-gray-500 to-gray-300 py-16">
+        <div className="container mx-auto max-w-3xl	">
+          <form className="relative">
+            <input
+              type="text"
+              placeholder="Search for courses"
+              value={searchParams.get("title") || ""}
+              onChange={(e) => handleChange("title", e.target.value)}
+              className="w-full flex-1 rounded-md py-5 border border-darkColor/20 px-5 shadow-lg"
+            />
+            {search && (
+              <X
+                onClick={() => setSearch("")}
+                className="w-5 h-5 absolute right-11 top-6 hover:text-red-600 hoverEffect"
+              />
+            )}
+            <button
+              type="submit"
+              className="absolute right-0 top-0 h-full w-10 bg-black flex items-center justify-center 
+            rounded-tr-md rounded-br-md text-white hover:bg-gray-500 hover:text-white transition-all ease-in-out duration-300"
             >
-              <MenuItem value="price">Price</MenuItem>
-              <MenuItem value="createdAt">Created At</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl size="small" sx={{ minWidth: 120 }}>
-            <InputLabel>Direction</InputLabel>
-            <Select
-              value={searchParams.get("sortDir") || ""}
-              label="Direction"
-              onChange={(e) => handleChange("sortDir", e.target.value)}
-            >
-              <MenuItem value="asc">Ascending</MenuItem>
-              <MenuItem value="desc">Descending</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
+              <Search className="w-5 h-5 " />
+            </button>
+          </form>
+        </div>
       </div>
+      <div className=" items-center my-[5px] px-[160px] gap-[40px]">
+        <h2 className=" font-medium text-[35px] text-[#00000] text-center">
+          Explore Courses
+        </h2>
+        <div className="flex  gap-5 mb-5">
+          <Box sx={{ display: "flex", gap: 2 }}>
+            <FormControl size="small" sx={{ minWidth: 120 }}>
+              <InputLabel className="text-lg">Sort By</InputLabel>
+              <Select
+                value={searchParams.get("sortKey") || ""}
+                label="Sort By"
+                onChange={(e) => handleChange("sortKey", e.target.value)}
+              >
+                <MenuItem value="price">Price</MenuItem>
+                <MenuItem value="createdAt">Created At</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl size="small" sx={{ minWidth: 120 }}>
+              <InputLabel className="text-lg">Direction</InputLabel>
+              <Select
+                value={searchParams.get("sortDir") || ""}
+                label="Direction"
+                onChange={(e) => handleChange("sortDir", e.target.value)}
+              >
+                <MenuItem value="asc">Ascending</MenuItem>
+                <MenuItem value="desc">Descending</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {allCourses.length === 0 ? (
-          <p>No Courses found</p>
-        ) : (
-          allCourses &&
-          allCourses.map((course, index) => (
-            <CourseCard key={index} course={course} />
-          ))
-        )}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {loading
+            ? Array.from({ length: 8 }).map((_, index) => (
+                <CourseSkeleton key={index} />
+              ))
+            : allCourses &&
+              allCourses.map((course, index) => (
+                <CourseCard key={index} course={course} />
+              ))}
+        </div>
       </div>
     </div>
   );
 };
 
 export default CoursesPage;
+
+const CourseSkeleton = () => {
+  return (
+    <div className="bg-white shadow-md hover:shadow-lg transition-shadow rounded-lg overflow-hidden">
+      <Skeleton className="w-full h-36" />
+      <div className="px-5 py-4 space-y-3">
+        <Skeleton className="h-6 w-3/4" />
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Skeleton className="h-6 w-6 rounded-full" />
+            <Skeleton className="h-4 w-20" />
+          </div>
+          <Skeleton className="h-4 w-16" />
+        </div>
+        <Skeleton className="h-4 w-1/4" />
+      </div>
+    </div>
+  );
+};

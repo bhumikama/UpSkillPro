@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -17,8 +16,8 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="container mx-auto bg-white border-b-2 border-black mt-[47px] mb-[47px]">
-      <div className="flex items-center justify-between px-6 py-4">
+    <nav className="container mx-auto bg-white   border-black my-4 shadow-md py-5">
+      <div className="flex items-center justify-between px-6 ">
         <div className="flex items-center">
           <Link href="/" passHref>
             <Image
@@ -42,7 +41,15 @@ const Navbar = () => {
           </li>
           <li>
             <Link
-              href="#explore"
+              href="about-us"
+              className="text-gray-700 hover:text-blue-500 font-semibold"
+            >
+              About Us
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/courses"
               className="text-gray-700 hover:text-blue-500 font-semibold"
             >
               Explore
@@ -66,7 +73,7 @@ const Navbar = () => {
           </li>
           <li>
             <Link
-              href="#contact"
+              href="contact-us"
               className="text-gray-700 hover:text-blue-500 font-semibold"
             >
               Contact Us

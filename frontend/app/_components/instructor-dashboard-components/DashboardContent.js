@@ -88,7 +88,7 @@ const DashboardContent = () => {
                 allCourses.map((course, index) => (
                   <div
                     key={`course-${index}`}
-                    className=" relative border  border-gray-300 rounded-md shadow-md  leading-loose 	"
+                    className=" relative border  border-gray-300 rounded-md shadow-md  leading-loose  "
                   >
                     <Image
                       src={course.imageUrl}
