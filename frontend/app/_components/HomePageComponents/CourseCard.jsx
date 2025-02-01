@@ -39,13 +39,13 @@ const CourseCard = ({ course }) => {
               <DollarSign size={20} className="text-gray-500" /> {course.price}{" "}
               Dkk
             </span>
-            <Badge
+            {/* <Badge
               className={
                 "bg-blue-600 text-white px-2 py-1 text-xs rounded-full"
               }
             >
               BestSeller
-            </Badge>
+            </Badge> */}
           </div>
         </CardContent>
       </Card>
