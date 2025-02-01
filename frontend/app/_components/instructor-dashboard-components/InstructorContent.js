@@ -8,9 +8,10 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import EditIcon from "@mui/icons-material/Edit";
-import { IconButton } from "@mui/material";
+import { IconButton, useMediaQuery } from "@mui/material";
 import { useRouter } from "next/navigation";
 import dateFormat from "@/utils/DateFormat";
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -18,6 +19,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
+    whiteSpace: "nowrap", 
   },
 }));
 
@@ -25,7 +27,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
   "&:last-child td, &:last-child th": {
     border: 0,
   },
@@ -35,6 +36,7 @@ export default function InstructorContent() {
   const [courses, setCourses] = useState([]);
   const router = useRouter();
   const [enrollments, setEnrollments] = useState({});
+  const isSmallScreen = useMediaQuery("(max-width:600px)");
 
   useEffect(() => {
     const fetchProjectsByInstructor = async () => {
@@ -43,7 +45,7 @@ export default function InstructorContent() {
           `${process.env.NEXT_PUBLIC_API_URL}/api/courses/all`,
           {
             method: "GET",
-            credentials: "include", // This ensures cookies are sent with the request
+            credentials: "include",
           }
         );
         if (apiResponse.status === 404) {
@@ -52,16 +54,14 @@ export default function InstructorContent() {
         }
         if (apiResponse.ok) {
           const courses = await apiResponse.json();
-          console.log("API Response Body:", courses);
           setCourses(courses);
 
-          // Fetch enrollment count for each course
           courses.forEach(async (course) => {
             const response = await fetch(
               `${process.env.NEXT_PUBLIC_API_URL}/api/courses/${course.id}/enrolled-count`,
               {
                 method: "GET",
-                credentials: "include", // This ensures cookies are sent with the request
+                credentials: "include",
               }
             );
             if (response.ok) {
@@ -73,13 +73,12 @@ export default function InstructorContent() {
             } else {
               setEnrollments((prev) => ({
                 ...prev,
-                [course.id]: 0, // Default to 0 if request fails
+                [course.id]: 0,
               }));
             }
           });
         } else {
-          const errorText = await apiResponse.json();
-          console.error("Error details :", errorText.message);
+          console.error("Error fetching projects");
         }
       } catch (error) {
         console.error("Error fetching projects", error.message);
@@ -93,12 +92,14 @@ export default function InstructorContent() {
   };
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{ overflowX: "auto" }}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
             <StyledTableCell>Course Title</StyledTableCell>
-            <StyledTableCell align="right">Published Date</StyledTableCell>
+            {!isSmallScreen && (
+              <StyledTableCell align="right">Published Date</StyledTableCell>
+            )}
             <StyledTableCell align="right">Enrolled</StyledTableCell>
             <StyledTableCell align="right">Settings</StyledTableCell>
           </TableRow>
@@ -106,13 +107,15 @@ export default function InstructorContent() {
         <TableBody>
           {courses.length > 0 ? (
             courses.map((course, index) => (
-              <StyledTableRow key={`${index}-course`}>
+              <StyledTableRow key={index}>
                 <StyledTableCell component="th" scope="row">
                   {course.title}
                 </StyledTableCell>
-                <StyledTableCell align="right">
-                  {dateFormat(course.createdAt)}
-                </StyledTableCell>
+                {!isSmallScreen && (
+                  <StyledTableCell align="right">
+                    {dateFormat(course.createdAt)}
+                  </StyledTableCell>
+                )}
                 <StyledTableCell align="right">
                   {enrollments[course.id] !== undefined
                     ? enrollments[course.id]
@@ -131,7 +134,9 @@ export default function InstructorContent() {
             ))
           ) : (
             <StyledTableRow>
-              <StyledTableCell>There are no courses found</StyledTableCell>
+              <StyledTableCell colSpan={4} align="center">
+                There are no courses found
+              </StyledTableCell>
             </StyledTableRow>
           )}
         </TableBody>
