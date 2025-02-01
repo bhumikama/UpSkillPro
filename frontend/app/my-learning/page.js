@@ -12,6 +12,7 @@ const MyLearningPage = () => {
   const router = useRouter();
 
   const { isAuthenticated } = useSelector((state) => state.auth);
+  const user = useSelector((state)=> state.auth.user)
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -58,13 +59,16 @@ const MyLearningPage = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto my-10 px-4 md:px-0">
+    <div className="container mx-auto my-10 px-4 md:px-0">
+      <h3 className="text-2xl font-bold mb-3">
+        Welcome back! <span className="text-green-600">{user.name}</span>
+      </h3>
       <h1 className="font-bold text-2xl">MY LEARNING</h1>
       <div className="my-5">
         {enrolledCourses.length === 0 ? (
           <p>You are not enrolled in any course.</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             {enrolledCourses.map((course, index) => (
               <ProgressCard key={index} course={course} />
             ))}
