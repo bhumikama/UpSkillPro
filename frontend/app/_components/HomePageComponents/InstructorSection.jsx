@@ -1,5 +1,6 @@
 import { HighQuality } from "@mui/icons-material";
 import Image from "next/image";
+import Link from "next/link";
 
 const InstructorSection = () => {
   return (
@@ -26,9 +27,11 @@ const InstructorSection = () => {
           income—create courses that change lives while building <br />
           your financial freedom!
         </p>
-        <button className="px-9 py-4 border border-black text-lg md:text-xl font-roboto font-bold shadow-md hover:bg-gray-100 transition duration-300">
-          Become An Instructor
-        </button>
+        <Link href={"/signup?role=instructor"}>
+          <button className="px-9 py-4 border border-black text-lg md:text-xl font-roboto font-bold shadow-md hover:bg-gray-100 transition duration-300">
+            Become An Instructor
+          </button>
+        </Link>
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ const AuthNavbar = () => {
   };
 
   return (
-    <nav className="container mx-auto bg-white border-b-2 border-black md:my-10 md:px-4">
+    <nav className="container mx-auto bg-white md:my-3 md:px-2">
       <div className="flex items-center justify-between px-3 md:px-6 py-4">
         <div className="flex items-center">
           <Link href="/" passHref>
