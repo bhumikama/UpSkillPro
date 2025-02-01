@@ -29,6 +29,7 @@ const ProgressCard = ({ course }) => {
             </div>
           </div>
         </div>
+       
       </CardContent>
     </Card>
   );
