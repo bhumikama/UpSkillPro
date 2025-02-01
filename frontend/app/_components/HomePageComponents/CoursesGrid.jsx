@@ -13,6 +13,7 @@ import {
   fetchCoursesFailure,
 } from "@/features/course/courseSlice";
 import Link from "next/link";
+
 const CourseGrid = () => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
   const { courses, loading, error } = useSelector((state) => state.courses);

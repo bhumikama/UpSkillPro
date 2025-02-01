@@ -1,7 +1,7 @@
 "use client";
 
 import { useSelector } from "react-redux";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -9,11 +9,10 @@ const ProtectedRoute = ({ children }) => {
 
   if (!isAuthenticated) {
     // Redirect user to login page if not authenticated
-    router.push("/login");
-    return null;
+    return children;
   }
-
-  return children;
+  router.push("/login");
+  return null;
 };
 
 export default ProtectedRoute;
