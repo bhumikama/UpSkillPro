@@ -10,7 +10,7 @@ import BarChart from "@/app/student-dashboard/components/Analytics";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("Home");
+  const [activeTab, setActiveTab] = useState("dashboard");
 
   const renderContent = () => {
     switch (activeTab) {
@@ -51,7 +51,7 @@ const Sidebar = () => {
           <ul>
             <li
               className={`flex items-center p-4 hover:bg-gray-700 cursor-pointer ${
-                activeTab === "home" ? "bg-gray-700" : ""
+                activeTab === "dashboard" ? "bg-gray-700" : ""
               }`}
               onClick={() => setActiveTab("dashboard")}
             >
@@ -61,7 +61,9 @@ const Sidebar = () => {
               </span>
             </li>
             <li
-              className="flex items-center p-4 hover:bg-gray-700 cursor-pointer"
+              className={`flex items-center p-4 hover:bg-gray-700 cursor-pointer ${
+                activeTab === "course" ? "bg-gray-700" : ""
+              }`}
               onClick={() => setActiveTab("course")}
             >
               <FaUserAlt size={24} />
@@ -70,7 +72,9 @@ const Sidebar = () => {
               </span>
             </li>
             <li
-              className="flex items-center p-4 hover:bg-gray-700 cursor-pointer"
+              className={`flex items-center p-4 hover:bg-gray-700 cursor-pointer ${
+                activeTab === "analytics" ? "bg-gray-700" : ""
+              }`}
               onClick={() => setActiveTab("analytics")}
             >
               <SiGoogleanalytics size={24} />

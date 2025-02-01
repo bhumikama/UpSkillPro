@@ -21,11 +21,14 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+
 import AnalyticsCard from "./AnalyticsCard";
+
 const BarChart = () => {
   const [coursesRevenue, setCoursesRevenue] = useState([]);
   const { isAuthenticated } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);
+  const [chartHeight, setChartHeight] = useState(600);
 
   const router = useRouter();
 
@@ -47,25 +50,22 @@ const BarChart = () => {
         );
 
         if (apiResponse.status === 404) {
-          setCoursesRevenue([]); // ✅ Ensure an empty array is set
+          setCoursesRevenue([]);
           return;
         }
 
         if (apiResponse.ok) {
           const responseData = await apiResponse.json();
-          console.log("API Response:", responseData);
-
           if (responseData && Array.isArray(responseData.revenueData)) {
             setCoursesRevenue(responseData.revenueData);
           } else {
-            setCoursesRevenue([]); // ✅ Fallback to empty array
+            setCoursesRevenue([]);
           }
         } else {
-          const errorText = await apiResponse.json();
-          console.error("Error details:", errorText);
+          console.error("Error fetching revenue data.");
         }
       } catch (error) {
-        console.error("Error fetching revenue data:", error.message);
+        console.error("Error:", error.message);
       } finally {
         setLoading(false);
       }
@@ -74,8 +74,21 @@ const BarChart = () => {
     fetchRevenue();
   }, [isAuthenticated]);
 
+  // Handle responsive chart height
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) setChartHeight(300);
+      else if (window.innerWidth < 1024) setChartHeight(450);
+      else setChartHeight(600);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   if (!Array.isArray(coursesRevenue) || coursesRevenue.length === 0) {
-    return <p>No revenue data available</p>;
+    return <p className="text-center">No revenue data available</p>;
   }
 
   const chartData = {
@@ -88,10 +101,10 @@ const BarChart = () => {
           (_, index) =>
             [
               "rgba(0,0,0)",
-              "rgba(97, 97, 97, 0.6)", // Soft White
+              "rgba(97, 97, 97, 0.6)",
               "rgba(161, 136, 127, 0.8)",
-              "rgba(96, 125, 139)", // Medium Gray
-              "rgba(100, 100, 100, 0.8)", // Dark Gray
+              "rgba(96, 125, 139)",
+              "rgba(100, 100, 100, 0.8)",
             ][index % 6]
         ),
         borderColor: coursesRevenue.map(
@@ -132,16 +145,25 @@ const BarChart = () => {
     .map((course) => Number(course.enrollmentCount))
     .reduce((acc, currentCount) => acc + currentCount, 0);
 
+  const totalCourses = coursesRevenue.map((course) => {
+    course.course.id;
+  });
+
   return (
-    <div className="container mx-auto flex flex-col">
-      <div>
-        <AnalyticsCard
-          totalRevenue={totalRevenue}
-          totalStudents={totalStudents}
-        />
-      </div>
-      <div className="w-full  h-[600px]">
-        <Bar data={chartData} options={options} />
+    <div className="container mx-auto flex flex-col px-4">
+      <AnalyticsCard
+        totalRevenue={totalRevenue}
+        totalStudents={totalStudents}
+        totalCourses={totalCourses.length}
+      />
+
+      <div className="w-full max-w-[90%] mx-auto mt-4">
+        <div
+          className="relative w-full"
+          style={{ height: `${chartHeight}px`, minHeight: "300px" }}
+        >
+          <Bar data={chartData} options={options} />
+        </div>
       </div>
     </div>
   );
