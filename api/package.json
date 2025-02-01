@@ -11,6 +11,7 @@
   "scripts": {
     "dev": "nodemon src/index.mjs",
     "start": "node src/index.mjs",
+    "build": "next build",
     "format": "npx prettier . --write",
     "check": "npx eslint . --fix",
     "test": "jest; npx mocha test/api.test.cjs"
