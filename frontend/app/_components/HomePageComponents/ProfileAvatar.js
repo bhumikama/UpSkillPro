@@ -19,10 +19,10 @@ const ProfileDropdownMenu = () => {
     Cookies.remove("userRole", { path: "/" });
     Cookies.remove("userEmail", { path: "/" });
     dispatch(logout());
-    dispatch(clearEnrolledCourses()); 
+    dispatch(clearEnrolledCourses());
     router.push("/");
     toast.success("You are logged out");
-    setIsOpen(false); 
+    setIsOpen(false);
   };
 
   return (
@@ -33,7 +33,11 @@ const ProfileDropdownMenu = () => {
           className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
         >
           <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-800 text-sm text-white">
-            <Avatar>{user?.name?.charAt(0).toUpperCase()}</Avatar>
+            {user ? (
+              <Avatar>{user.name.charAt(0).toUpperCase()}</Avatar>
+            ) : (
+              <Avatar>{"U"}</Avatar>
+            )}
           </div>
         </MenuButton>
 
