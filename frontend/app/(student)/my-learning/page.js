@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import ProgressCard from "../student-dashboard/components/ProgressCard";
+import ProgressCard from "@/app/student-dashboard/components/ProgressCard";
 
 const MyLearningPage = () => {
   const [enrolledCourses, setEnrolledCourses] = useState([]);
