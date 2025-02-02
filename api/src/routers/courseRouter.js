@@ -43,7 +43,7 @@ courseRouter.post(
 courseRouter.get(
   "/:id/lectures",
   authenticateToken,
-  authorizeRole("instructor"),
+  authorizeRole("student"),
   getLecturesByCourseId
 );
 
