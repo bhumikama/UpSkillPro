@@ -3,7 +3,7 @@ import "../_styles/globals.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import StoreProvider from "@/store/StoreProvider";
-import AuthNavbar from "@/app/_components/authComponent/AuthNavbar";
+import HomePageNavbar from "../_components/HomePageComponents/HomePageNavbar";
 import Footer from "@/app/_components/HomePageComponents/Footer";
 
 const geistSans = localFont({
@@ -25,7 +25,7 @@ export default function StudentLayout({ children }) {
   return (
     <StoreProvider>
       {/* Navbar for authenticated student pages */}
-      <AuthNavbar />
+      <HomePageNavbar />
 
       {/* Toast notifications */}
       <ToastContainer

@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
 
 const redIcon = new L.Icon({
   iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png', 

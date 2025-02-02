@@ -21,6 +21,11 @@ const CourseProgress = () => {
   const { width, height } = useWindowSize();
   const [show, setShow] = useState(true);
 
+  const allLecturesCompleted =
+    lectures.length > 0 &&
+    Object.values(completedLectures).length === lectures.length &&
+    Object.values(completedLectures).every((val) => val);
+
   useEffect(() => {
     if (allLecturesCompleted) {
       setShow(true);
@@ -190,15 +195,9 @@ const CourseProgress = () => {
     fetchCourseData();
   }, [id]);
 
-  const allLecturesCompleted =
-    lectures.length > 0 &&
-    Object.values(completedLectures).length === lectures.length &&
-    Object.values(completedLectures).every((val) => val);
-
   const handleGenerateCertificate = async () => {
     try {
-      const API_URL =
-        process.env.NEXT_PUBLIC_API_URL;
+      const API_URL = process.env.NEXT_PUBLIC_API_URL;
       if (!user || !selectedCourse?.title) {
         throw new Error("Invalid user or course data");
       }
