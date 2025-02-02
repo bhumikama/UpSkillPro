@@ -23,12 +23,6 @@ const SignUp = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      router.push("/");
-    }
-  }, [isAuthenticated, router]);
-
-  useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const role = params.get("role");
     if (role) {

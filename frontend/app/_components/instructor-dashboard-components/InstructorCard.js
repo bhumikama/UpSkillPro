@@ -1,7 +1,9 @@
 import { Card, CardContent } from "@/components/ui/card";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 const InstructorCard = ({ course }) => {
+  const router = useRouter();
   const handleOnClick = (id) => {
     router.push(`instructor-dashboard/courses/${id}/add-lecture`);
   };
