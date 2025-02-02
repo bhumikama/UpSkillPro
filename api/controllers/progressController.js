@@ -198,7 +198,9 @@ const courseWithProgress = async (req, res) => {
 
     const learningProgress = enrollments.map((enrollment) => {
       const totalLectures = enrollment.course.lectures.length;
-      const completedLectures = enrollment.progress.length;
+      const completedLectures = enrollment.progress.filter((lectureId) =>
+        enrollment.course.lectures.some((lecture) => lecture.id === lectureId)
+      ).length;
       const progressPercentage =
         totalLectures > 0 ? (completedLectures / totalLectures) * 100 : 0;
 
@@ -206,7 +208,7 @@ const courseWithProgress = async (req, res) => {
         courseId: enrollment.course.id,
         title: enrollment.course.title,
         imageUrl: generateS3Url(enrollment.course.imageKey),
-        progress: progressPercentage,
+        progress: progressPercentage.toFixed(2),
       };
     });
 
@@ -218,6 +220,7 @@ const courseWithProgress = async (req, res) => {
       .json({ message: "Error fetching progress for the course" });
   }
 };
+
 export {
   getProgress,
   updateProgress,
