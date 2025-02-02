@@ -2,7 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import CourseGrid from "../_components/HomePageComponents/CoursesGrid";
+import CourseGrid from "@/app/_components/HomePageComponents/CoursesGrid";
 import { useEffect, useMemo, useState } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
@@ -22,8 +22,8 @@ import {
   fetchCoursesFailure,
 } from "@/features/course/courseSlice";
 import { useDispatch } from "react-redux";
-import CourseCard from "../_components/HomePageComponents/CourseCard";
 import { Search, X } from "lucide-react";
+import CourseCard from "@/app/_components/HomePageComponents/CourseCard";
 import Skeleton from "@mui/material/Skeleton";
 
 

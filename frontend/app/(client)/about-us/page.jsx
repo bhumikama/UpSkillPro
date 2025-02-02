@@ -2,7 +2,7 @@ import React from "react";
 import { FaLinkedin } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
-import OurTeam from "../_components/HomePageComponents/OurTeam.jsx";
+import OurTeam from "../../_components/HomePageComponents/OurTeam.jsx";
 
 const AboutUs = () => {
   return (
