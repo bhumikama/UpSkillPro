@@ -1,11 +1,8 @@
-"use client";
-import Image from "next/image";
-import React from "react";
-import { MenuItems, MenuItem, Menu, MenuButton } from "@headlessui/react";
+import { useState } from "react";
+import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
 import Link from "next/link";
-import { useSelector } from "react-redux";
 import { Avatar } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/features/auth/authSlice";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
@@ -15,6 +12,7 @@ const ProfileDropdownMenu = () => {
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleLogOut = () => {
     Cookies.remove("userName", { path: "/" });
@@ -23,46 +21,43 @@ const ProfileDropdownMenu = () => {
     dispatch(logout());
     router.push("/");
     toast.success("You are logged out");
+    setIsOpen(false); 
   };
+
   return (
     <Menu as="div" className="relative ml-3 flex justify-end">
       <div>
-        <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+        <MenuButton
+          onClick={() => setIsOpen(!isOpen)}
+          className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+        >
           <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-800 text-sm text-white">
-            <Avatar>{user.name.charAt(0).toUpperCase()}</Avatar>
+            <Avatar>{user?.name?.charAt(0).toUpperCase()}</Avatar>
           </div>
+        </MenuButton>
 
-          <MenuItems
-            transition
-            className="absolute right-2 z-10 top-14 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
-          >
+        {isOpen && (
+          <MenuItems className="absolute right-2 z-10 top-14 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5">
             <MenuItem>
-              <Link
-                href="#"
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none font-normal"
-              >
+              <Link href="#" className="block px-4 py-2 text-sm text-gray-700">
                 Dashboard
               </Link>
             </MenuItem>
             <MenuItem>
-              <Link
-                href="#"
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
-              >
+              <Link href="#" className="block px-4 py-2 text-sm text-gray-700">
                 Settings
               </Link>
             </MenuItem>
             <MenuItem>
-              <Link
-                href="/"
-                className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
+              <button
                 onClick={handleLogOut}
+                className="block w-full text-left px-4 py-2 text-sm text-gray-700"
               >
                 Sign out
-              </Link>
+              </button>
             </MenuItem>
           </MenuItems>
-        </MenuButton>
+        )}
       </div>
     </Menu>
   );
