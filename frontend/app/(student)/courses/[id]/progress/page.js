@@ -275,7 +275,7 @@ const CourseProgress = () => {
             >
               {Object.values(completedLectures).every((val) => val)
                 ? "Reset Progress"
-                : "Mark All As Complete"}
+                : "Mark All As Completed"}
             </button>
           </div>
 
