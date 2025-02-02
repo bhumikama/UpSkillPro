@@ -7,7 +7,7 @@ import { logout } from "@/features/auth/authSlice";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
-
+import { clearEnrolledCourses } from "@/features/course/courseSlice";
 const ProfileDropdownMenu = () => {
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -19,6 +19,7 @@ const ProfileDropdownMenu = () => {
     Cookies.remove("userRole", { path: "/" });
     Cookies.remove("userEmail", { path: "/" });
     dispatch(logout());
+    dispatch(clearEnrolledCourses()); 
     router.push("/");
     toast.success("You are logged out");
     setIsOpen(false); 

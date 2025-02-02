@@ -19,6 +19,7 @@ import { logout } from "@/features/auth/authSlice";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
 import Image from "next/image";
+import { clearEnrolledCourses } from "@/features/course/courseSlice";
 
 function Navbar() {
   const isMobile = useMediaQuery("(max-width:740px)");
@@ -30,6 +31,7 @@ function Navbar() {
     Cookies.remove("userRole", { path: "/" });
     Cookies.remove("userEmail", { path: "/" });
     dispatch(logout());
+    dispatch(clearEnrolledCourses());
     router.push("/");
     toast.success("You're logged out");
   };

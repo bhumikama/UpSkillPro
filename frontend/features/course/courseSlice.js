@@ -35,6 +35,10 @@ const coursesSlice = createSlice({
     setUserEnrolledCourses(state, action) {
       state.enrolledCourses = action.payload;
     },
+    clearEnrolledCourses(state) {
+      state.courses = [];
+      state.enrolledCourses = [];
+    },
   },
 });
 
@@ -45,6 +49,7 @@ export const {
   addCourse,
   enrollCourse,
   setUserEnrolledCourses,
+  clearEnrolledCourses,
 } = coursesSlice.actions;
 
 export default coursesSlice.reducer;

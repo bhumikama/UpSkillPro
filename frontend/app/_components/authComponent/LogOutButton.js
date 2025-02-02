@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { logout } from "@/features/auth/authSlice";
-
+import { clearEnrolledCourses } from "@/features/course/courseSlice";
 const LogOutButton = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -14,6 +14,7 @@ const LogOutButton = () => {
     Cookies.remove("userRole", { path: "/" });
     Cookies.remove("userEmail", { path: "/" });
     dispatch(logout());
+    dispatch(clearEnrolledCourses());
     router.push("/");
     toast.success("You're logged out");
   };
