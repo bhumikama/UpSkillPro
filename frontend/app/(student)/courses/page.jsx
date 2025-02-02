@@ -27,7 +27,7 @@ import CourseCard from "@/app/_components/HomePageComponents/CourseCard";
 import Skeleton from "@mui/material/Skeleton";
 
 const CoursesPage = () => {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const searchParams = useSearchParams();
   const pathName = usePathname();
   const router = useRouter();
