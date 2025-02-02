@@ -10,7 +10,7 @@ import BarChart from "@/app/student-dashboard/components/Analytics";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("dashboard");
+  const [activeTab, setActiveTab] = useState("course");
 
   const renderContent = () => {
     switch (activeTab) {
@@ -51,17 +51,6 @@ const Sidebar = () => {
           <ul>
             <li
               className={`flex items-center p-4 hover:bg-gray-700 cursor-pointer ${
-                activeTab === "dashboard" ? "bg-gray-700" : ""
-              }`}
-              onClick={() => setActiveTab("dashboard")}
-            >
-              <FaHome size={24} />
-              <span className={`ml-4 md:block ${isOpen ? "block" : "hidden"}`}>
-                Dashboard
-              </span>
-            </li>
-            <li
-              className={`flex items-center p-4 hover:bg-gray-700 cursor-pointer ${
                 activeTab === "course" ? "bg-gray-700" : ""
               }`}
               onClick={() => setActiveTab("course")}
@@ -69,6 +58,17 @@ const Sidebar = () => {
               <FaUserAlt size={24} />
               <span className={`ml-4 md:block ${isOpen ? "block" : "hidden"}`}>
                 Course Management
+              </span>
+            </li>
+            <li
+              className={`flex items-center p-4 hover:bg-gray-700 cursor-pointer ${
+                activeTab === "dashboard" ? "bg-gray-700" : ""
+              }`}
+              onClick={() => setActiveTab("dashboard")}
+            >
+              <FaHome size={24} />
+              <span className={`ml-4 md:block ${isOpen ? "block" : "hidden"}`}>
+                Dashboard
               </span>
             </li>
             <li
