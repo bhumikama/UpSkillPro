@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import VideoPlayer from "@/app/student-dashboard/components/VideoPlayer";
@@ -12,7 +13,7 @@ const CoursePage = () => {
   const [course, setCourse] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [enrolledCourses, setEnrolledCourses] = useState([]); 
+  const [enrolledCourses, setEnrolledCourses] = useState([]);
 
   const fetchCourseByID = async () => {
     if (!id) {
@@ -24,7 +25,7 @@ const CoursePage = () => {
       const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/courses/${id}`;
       const apiResponse = await fetch(apiUrl, {
         method: "GET",
-        credentials: "include", 
+        credentials: "include",
       });
 
       if (apiResponse.status === 404) {
@@ -52,12 +53,12 @@ const CoursePage = () => {
       const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/enroll/all`;
       const apiResponse = await fetch(apiUrl, {
         method: "GET",
-        credentials: "include", 
+        credentials: "include",
       });
 
       if (apiResponse.ok) {
         const data = await apiResponse.json();
-        setEnrolledCourses(data.courseIds); 
+        setEnrolledCourses(data.courseIds);
       } else {
         console.error("Failed to fetch enrolled courses");
       }
@@ -70,7 +71,7 @@ const CoursePage = () => {
     setLoading(true);
     fetchCourseByID();
     fetchEnrolledCourses();
-  }, [id]); 
+  }, [id]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -84,7 +85,7 @@ const CoursePage = () => {
     return <div>No course data found.</div>;
   }
 
-  const isEnrolled = enrolledCourses.includes(Number(id)); 
+  const isEnrolled = enrolledCourses.includes(Number(id));
 
   return (
     <div className="bg-gray-100">
