@@ -14,7 +14,7 @@ const createPersistStorage = () => {
 const persistConfig = {
   key: "root",
   storage: createPersistStorage(),
-  whitelist: ["auth", "courses"],
+  whitelist: ["auth"],
 };
 
 // Create persisted reducer only on client side

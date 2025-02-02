@@ -19,7 +19,7 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;
-      // persistStore(store).purge();
+      persistStore(store).purge();
     },
     updateUserInfo: (state, action) => {
       state.user = {
