@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { enrollCourse } from "@/features/course/courseSlice";
@@ -10,12 +10,15 @@ const EnrollButton = ({ courseId, setLoading, isEnrolled }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector((state) => state.auth);
-  const courses = useSelector((state) => state.courses.courses);
-  const enrolledCourses = useSelector(
-    (state) => state.courses.enrolledCourses || []
-  );
+  const [buttonText, setButtonText] = useState("Enroll");
 
-  const buttonText = isEnrolled ? "Go To Progress" : "Enroll";
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setButtonText("Enroll");
+    } else {
+      setButtonText(isEnrolled ? "Go To Progress" : "Enroll");
+    }
+  }, [isAuthenticated, isEnrolled]);
 
   const handleEnrollClick = async () => {
     if (!isAuthenticated) {
@@ -55,10 +58,10 @@ const EnrollButton = ({ courseId, setLoading, isEnrolled }) => {
     <>
       <button
         onClick={handleEnrollClick}
-        // disabled={isEnrolled}
+        // disabled={isEnrolled} 
         className={`rounded-md text-xl shadow-lg font-semibold bg-black text-white w-full py-5 ${
           isEnrolled
-            ? "bg-gray-500 text-gray-200 "
+            ? "bg-gray-500 text-gray-200"
             : "bg-blue-700 text-white hover:bg-blue-400 transition-all ease-in-out duration-300"
         }`}
       >

@@ -1,11 +1,8 @@
-"use client";
 import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import VideoPlayer from "@/app/student-dashboard/components/VideoPlayer";
 import Image from "next/image";
 import EnrollButton from "@/app/_components/HomePageComponents/EnrollButton";
-import { useDispatch } from "react-redux";
-import { setUserEnrolledCourses } from "@/features/course/courseSlice";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { DollarSign } from "lucide-react";
 import SocialButtons from "@/app/_components/HomePageComponents/SocialButtons";
@@ -15,8 +12,8 @@ const CoursePage = () => {
   const [course, setCourse] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [enrolledCourses, setEnrolledCourses] = useState([]);
-  const dispatch = useDispatch();
+  const [enrolledCourses, setEnrolledCourses] = useState([]); 
+
   const fetchCourseByID = async () => {
     if (!id) {
       setError("Invalid Course ID");
@@ -27,39 +24,40 @@ const CoursePage = () => {
       const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/courses/${id}`;
       const apiResponse = await fetch(apiUrl, {
         method: "GET",
-        credentials: "include", // This ensures cookies are sent with the request
+        credentials: "include", 
       });
 
-      console.log("API Response Status:", apiResponse.status);
       if (apiResponse.status === 404) {
         setCourse({});
+        setLoading(false);
         return;
       }
       if (apiResponse.ok) {
         const course = await apiResponse.json();
         setCourse(course);
+        setLoading(false);
       } else {
         const errorText = await apiResponse.json();
-        console.error("Error details :", errorText.message);
+        console.error("Error details:", errorText.message);
+        setLoading(false);
       }
     } catch (error) {
-      console.error("Error fetching projects", error.message);
+      console.error("Error fetching course:", error.message);
+      setLoading(false);
     }
   };
 
-  // Fetch the enrolled courses
   const fetchEnrolledCourses = async () => {
     try {
       const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/enroll/all`;
       const apiResponse = await fetch(apiUrl, {
         method: "GET",
-        credentials: "include", // Include session cookies
+        credentials: "include", 
       });
 
       if (apiResponse.ok) {
         const data = await apiResponse.json();
-        setEnrolledCourses(data.courseIds); // Set the enrolled courses from the backend
-        dispatch(setUserEnrolledCourses(data.courseIds));
+        setEnrolledCourses(data.courseIds); 
       } else {
         console.error("Failed to fetch enrolled courses");
       }
@@ -69,11 +67,10 @@ const CoursePage = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
     fetchCourseByID();
-    if (enrolledCourses.length === 0) {
-      fetchEnrolledCourses();
-    }
-  }, [id]);
+    fetchEnrolledCourses();
+  }, [id]); 
 
   if (loading) {
     return <div>Loading...</div>;
@@ -86,9 +83,11 @@ const CoursePage = () => {
   if (!course) {
     return <div>No course data found.</div>;
   }
-  const isEnrolled = enrolledCourses.includes(Number(id));
+
+  const isEnrolled = enrolledCourses.includes(Number(id)); 
+
   return (
-    <div className="bg-gray-100 ">
+    <div className="bg-gray-100">
       <div className="width-full bg-gradient-to-r from-black to-gray-500 shadow-lg ">
         <div className="container mx-auto px-5 py-3 shadow-xl ">
           <h3 className="text-gray-100 text-xl font-bold mb-4 lg:text-4xl">
