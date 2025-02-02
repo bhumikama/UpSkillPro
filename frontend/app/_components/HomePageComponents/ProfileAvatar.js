@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
 import { clearEnrolledCourses } from "@/features/course/courseSlice";
+
 const ProfileDropdownMenu = () => {
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -25,6 +26,8 @@ const ProfileDropdownMenu = () => {
     setIsOpen(false);
   };
 
+  const userName = user && user.name ? user.name : "Guest";
+
   return (
     <Menu as="div" className="relative ml-3 flex justify-end">
       <div>
@@ -34,9 +37,9 @@ const ProfileDropdownMenu = () => {
         >
           <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-800 text-sm text-white">
             {user ? (
-              <Avatar>{user.name.charAt(0).toUpperCase()}</Avatar>
+              <Avatar>{userName.charAt(0).toUpperCase()}</Avatar> 
             ) : (
-              <Avatar>{"U"}</Avatar>
+              <Avatar>{"U"}</Avatar> 
             )}
           </div>
         </MenuButton>
