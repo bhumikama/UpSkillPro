@@ -41,7 +41,7 @@ export default function OurTeam() {
         <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {teams.map((team, index) => (
           <div
-            key={index}
+            key={team.name}
             className="bg-gray-200 border border-gray-300 rounded-lg shadow-md w-56 h-72 mx-auto flex flex-col" 
           >
             <div className="flex-1">

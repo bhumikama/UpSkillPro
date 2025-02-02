@@ -170,10 +170,10 @@ const CourseProgress = () => {
           const courseData = await courseResponse.json();
           setSelectedCourse(courseData);
         } else {
-          setError("Erro fetching course data");
+          setError("Error fetching course data");
         }
       } catch (error) {
-        setError("Error fecthing course data: ", error.message);
+        setError(`Error fetching course data: ${error.message}`);
       }
     };
     fetchCourseData();

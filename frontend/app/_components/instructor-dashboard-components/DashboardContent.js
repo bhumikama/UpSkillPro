@@ -95,7 +95,7 @@ const DashboardContent = () => {
                 })
               ) : allCourses.length > 0 ? (
                 allCourses.map((course, index) => (
-                  <InstructorCard key={index} course={course} />
+                  <InstructorCard key={course.id} course={course} />
                 ))
               ) : (
                 <p className="text-lg text-gray-600 mt-4">

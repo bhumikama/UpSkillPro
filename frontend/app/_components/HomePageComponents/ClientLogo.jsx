@@ -20,7 +20,7 @@ const ClientLogoCarousel = () => {
             { src: "/Ericsson.png", alt: "Ericsson Logo" },
           ].map((logo, index) => (
             <Image
-              key={index}
+              key={logo.alt}
               src={logo.src}
               alt={logo.alt}
               width={48}

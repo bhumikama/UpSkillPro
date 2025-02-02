@@ -70,11 +70,11 @@ const CourseGrid = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
           {loading
             ? Array.from({ length: 8 }).map((_, index) => (
-                <CourseSkeleton key={index} />
+                <CourseSkeleton key={`skeleton-${index}`} />
               ))
             : courses &&
               courses.map((course, index) => (
-                <CourseCard key={index} course={course} />
+                <CourseCard key={course.id} course={course} />
               ))}
         </div>
         {isHome && (

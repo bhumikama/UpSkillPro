@@ -26,7 +26,6 @@ import { Search, X } from "lucide-react";
 import CourseCard from "@/app/_components/HomePageComponents/CourseCard";
 import Skeleton from "@mui/material/Skeleton";
 
-
 const CoursesPage = () => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
   const searchParams = useSearchParams();
@@ -93,7 +92,7 @@ const CoursesPage = () => {
         dispatch(fetchCoursesSuccess(data));
       } catch (error) {
         if (error.message.includes("No courses found")) {
-          setAllCourses([]); 
+          setAllCourses([]);
           dispatch(fetchCoursesFailure("No courses found"));
         } else if (error.message.includes("Forbidden")) {
           dispatch(
@@ -106,7 +105,7 @@ const CoursesPage = () => {
     };
 
     fetchCourses();
-  }, [dispatch, searchParams, API_URL]); // Ensure stable dependencies (no dynamic queryString)
+  }, [dispatch, searchParams, API_URL]);
 
   const handleChange = (name, value) => {
     const params = new URLSearchParams(searchParams);
@@ -188,11 +187,11 @@ const CoursesPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {loading
             ? Array.from({ length: 8 }).map((_, index) => (
-                <CourseSkeleton key={index} />
+                <CourseSkeleton key={`skeleton-${index}`} />
               ))
             : allCourses &&
               allCourses.map((course, index) => (
-                <CourseCard key={index} course={course} />
+                <CourseCard key={course.id} course={course} />
               ))}
         </div>
       </div>
