@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { makeGetRequest, makePostRequest } from "@/utils/api";
 import { returnPathByRole } from "@/utils/userUtil";
@@ -11,6 +11,7 @@ import Input from "@/components/ui/input";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "@/features/auth/authSlice";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -20,6 +21,14 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/");
+    }
+  }, [isAuthenticated, router]);
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
