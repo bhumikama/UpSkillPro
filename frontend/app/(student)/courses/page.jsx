@@ -49,10 +49,6 @@ const CoursesPage = () => {
       params.set("sortDir", "asc");
       updated = true;
     }
-    if (!params.has("availableReservations")) {
-      params.set("availableReservations", "false");
-      updated = true;
-    }
 
     // Update URL if parameters were added or changed
     if (updated) {
@@ -115,10 +111,6 @@ const CoursesPage = () => {
       params.delete(name);
     }
     router.replace(`${pathName}?${params.toString()}`);
-  };
-
-  const handleCheckBox = (event) => {
-    handleChange("availableReservations", event.target.checked.toString());
   };
 
   if (error) {

@@ -22,11 +22,14 @@ const CourseProgress = () => {
   const [show, setShow] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShow(false);
-    }, 5000);
-    return () => clearTimeout(timer);
-  }, []);
+    if (allLecturesCompleted) {
+      setShow(true);
+      const timer = setTimeout(() => {
+        setShow(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [allLecturesCompleted]);
 
   useEffect(() => {
     const fetchLectures = async () => {
