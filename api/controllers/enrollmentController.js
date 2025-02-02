@@ -36,7 +36,8 @@ const createEnrollment = async (req, res) => {
     }
 
     // Ensure progress is an array of integers
-    let progress = req.body.progress || [0];
+    // let progress = req.body.progress || [0];
+    let progress = req.body.progress ?? [];
     if (!Array.isArray(progress) || !progress.every(Number.isInteger)) {
       return res
         .status(400)
