@@ -19,7 +19,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
-    whiteSpace: "nowrap", 
+    whiteSpace: "nowrap",
   },
 }));
 
@@ -52,38 +52,56 @@ export default function InstructorContent() {
           setCourses([]);
           return;
         }
-        if (apiResponse.ok) {
-          const courses = await apiResponse.json();
-          setCourses(courses);
-
-          courses.forEach(async (course) => {
-            const response = await fetch(
-              `${process.env.NEXT_PUBLIC_API_URL}/api/courses/${course.id}/enrolled-count`,
-              {
-                method: "GET",
-                credentials: "include",
-              }
-            );
-            if (response.ok) {
-              const result = await response.json();
-              setEnrollments((prev) => ({
-                ...prev,
-                [course.id]: result.enrolledStudents,
-              }));
-            } else {
-              setEnrollments((prev) => ({
-                ...prev,
-                [course.id]: 0,
-              }));
-            }
-          });
-        } else {
-          console.error("Error fetching projects");
+        if (!apiResponse.ok) {
+          console.error("Error fetching courses");
+          return;
         }
+
+        const courses = await apiResponse.json();
+        setCourses(courses);
+
+        const enrollmentPromises = courses.map((course) =>
+          fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/api/courses/${course.id}/enrolled-count`,
+            {
+              method: "GET",
+              credentials: "include",
+            }
+          )
+            .then((response) => {
+              if (response.ok) return response.json();
+              if (response.status === 404) return { enrolledStudents: 0 };
+              throw new Error("Failed to fetch enrollments");
+            })
+            .then((data) => ({
+              courseId: course.id,
+              enrolledStudents: data.enrolledStudents,
+            }))
+            .catch((error) => {
+              console.error(
+                `Error fetching enrollment for course ${course.id}:`,
+                error.message
+              );
+              return { courseId: course.id, enrolledStudents: 0 };
+            })
+        );
+
+        const enrollmentsData = await Promise.all(enrollmentPromises);
+
+        const enrollmentsMap = enrollmentsData.reduce(
+          (acc, { courseId, enrolledStudents }) => {
+            acc[courseId] = enrolledStudents;
+            return acc;
+          },
+          {}
+        );
+
+        setEnrollments(enrollmentsMap);
       } catch (error) {
         console.error("Error fetching projects", error.message);
       }
     };
+
     fetchProjectsByInstructor();
   }, []);
 

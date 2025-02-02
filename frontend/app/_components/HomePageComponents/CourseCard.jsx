@@ -35,8 +35,7 @@ const CourseCard = ({ course }) => {
           </div>
           <div className="text-lg font-bold flex justify-between items-center">
             <span className="text-green-700 flex items-center">
-              {" "}
-              <DollarSign size={20} className="text-gray-500" /> {course.price}{" "}
+              {course.price}
               Dkk
             </span>
             <Badge

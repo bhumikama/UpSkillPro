@@ -19,6 +19,14 @@ const CourseProgress = () => {
   const [selectedCourse, setSelectedCourse] = useState([]);
   const { isAuthenticated } = useSelector((state) => state.auth);
   const { width, height } = useWindowSize();
+  const [show, setShow] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShow(false);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const fetchLectures = async () => {
@@ -232,7 +240,7 @@ const CourseProgress = () => {
 
   return (
     <div className="bg-white w-full h-full">
-      {allLecturesCompleted && (
+      {allLecturesCompleted && show && (
         <ReactConfetti
           width={width}
           height={height}
