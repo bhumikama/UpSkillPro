@@ -265,7 +265,7 @@ const CourseProgress = () => {
             <h2 className="font-bold text-3xl text-gray-800 flex items-center gap-2">
               Lectures
             </h2>
-            <Button
+            <button
               onClick={toggleCompleteAllLectures}
               className={`${
                 Object.values(completedLectures).every((val) => val)
@@ -275,8 +275,8 @@ const CourseProgress = () => {
             >
               {Object.values(completedLectures).every((val) => val)
                 ? "Reset Progress"
-                : "Mark All As Complete"}
-            </Button>
+                : "Mark All As Completed"}
+            </button>
           </div>
 
           {/* Error handling UI */}
