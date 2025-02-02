@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { persistStore } from "redux-persist";
-import { store } from "../../store/store";
 
 const initialState = {
   user: null,
@@ -21,7 +20,7 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;
-      persistStore(store).purge();
+      // persistStore(store).purge();
     },
     updateUserInfo: (state, action) => {
       state.user = {
