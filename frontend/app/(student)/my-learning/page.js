@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import LearningLoading from "@/app/_components/HomePageComponents/MyLearningLoading";
 import ProgressCard from "@/app/student-dashboard/components/ProgressCard";
 
 const MyLearningPage = () => {
@@ -51,7 +52,7 @@ const MyLearningPage = () => {
   }, [isAuthenticated]);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <LearningLoading/>;
   }
 
   if (error) {
