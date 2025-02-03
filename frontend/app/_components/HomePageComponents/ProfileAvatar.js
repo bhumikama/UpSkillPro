@@ -26,7 +26,7 @@ const ProfileDropdownMenu = () => {
     setIsOpen(false);
   };
 
-  const userName = user?.name || "Guest";
+  const userName = user && user.name ? user.name : "Guest";
 
   return (
     <Menu as="div" className="relative ml-3 flex justify-end">
@@ -36,11 +36,7 @@ const ProfileDropdownMenu = () => {
           className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
         >
           <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-800 text-sm text-white">
-            {user ? (
-              <Avatar>{userName.charAt(0).toUpperCase()}</Avatar>
-            ) : (
-              <Avatar>{"U"}</Avatar>
-            )}
+            <Avatar>{userName ? userName.charAt(0).toUpperCase() : "U"}</Avatar>
           </div>
         </MenuButton>
 

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { persistStore } from "redux-persist";
 
 const initialState = {
-  user: null,
+  user: {},
   token: null,
   isAuthenticated: false,
 };
