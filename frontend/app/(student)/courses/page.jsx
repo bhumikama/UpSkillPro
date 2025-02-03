@@ -144,8 +144,8 @@ const CoursesPage = () => {
           </form>
         </div>
       </div>
-      <div className=" items-center my-[5px] px-[160px] gap-[40px]">
-        <h2 className=" font-medium text-[35px] text-[#00000] text-center">
+      <div className=" w-full items-center ">
+        <h2 className=" font-medium text-[30px] text-[#00000] text-center my-3">
           Explore Courses
         </h2>
         <div className="flex  gap-5 mb-5">
