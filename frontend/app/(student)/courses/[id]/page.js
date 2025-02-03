@@ -134,7 +134,7 @@ const CoursePage = () => {
             </div>
           </div>
           <div className="lg:col-span-1">
-            <div className="hidden md:inline-block w-full bg-white p-6 rounded-lg border">
+            <div className="md:inline-block w-full bg-white p-6 rounded-lg border">
               <Image
                 src={course.imageUrl || null}
                 alt={`image of ${course.title}`}
