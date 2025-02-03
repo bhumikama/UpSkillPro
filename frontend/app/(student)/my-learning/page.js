@@ -35,7 +35,6 @@ const MyLearningPage = () => {
         }
         if (apiResponse.ok) {
           const courses = await apiResponse.json();
-          console.log("API Response Body:", courses);
           setEnrolledCourses(courses);
         } else {
           const errorText = await apiResponse.json();

@@ -83,7 +83,6 @@ const CoursesPage = () => {
         }
 
         const data = await response.json();
-        console.log("filtered result:", data);
         setAllCourses(data);
         dispatch(fetchCoursesSuccess(data));
       } catch (error) {
