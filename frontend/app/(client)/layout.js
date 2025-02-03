@@ -47,7 +47,7 @@ export default function ClientLayout({ children }) {
       </main>
 
       {/* Footer for all client pages */}
-      <Footer />
+      {/* <Footer /> */}
     </StoreProvider>
   );
 }
