@@ -1,4 +1,4 @@
-# UpSkillPro - e-learning Platform
+# UpSkillPro : e-learning Platform
 
 **UpSkillPro**  is an intuitive e-learning platform designed to help learners and educators connect, track progress, and manage courses efficiently. The platform’s goal is to provide an organized learning experience for students while giving instructors the tools they need to manage courses, view analytics on the number of students enrolled in their courses and track the total revenue generated..
 
@@ -28,7 +28,14 @@ The project includes features such as course enrollment, progress tracking, cour
 
 
 ## Visual Overview
+#### Instructor Dashboard
+![Image](https://github.com/user-attachments/assets/cd90b471-0a45-46bf-9d47-4d514dbecf95)
 
+![Image](https://github.com/user-attachments/assets/fad6eb03-d91a-48c5-ae38-18ceacd42e11)
+
+
+#### Student Dashboard
+![Image](https://github.com/user-attachments/assets/62fb9b11-f609-41f5-b7f8-4617ef052a1e)
 
 
 
@@ -36,7 +43,7 @@ The project includes features such as course enrollment, progress tracking, cour
 
  🔐 **Role-Based Access Control**: Secure authentication with distinct roles for instructors and students. 
  
- 🔗 **Two Separate Dashbaords**: Distinct sites for developers and clients, each with customized dashboards tailored to their specific needs.
+ 🔗 **Two Separate Dashbaords**: Distinct sites for instructors and students, each with customized dashboards.
  
 📚 **Course Enrollment & Management**: Students can enroll in courses, and instructors can create, update, and manage course content.  
 
@@ -45,3 +52,9 @@ The project includes features such as course enrollment, progress tracking, cour
 🧾 **Certificate On Completions**: Students can obtain certificates upon completion.
 
 🎓 **Instructor Analytics**: Instructors can view analytics on the number of students enrolled in their courses and track the total revenue generated.
+
+## Team Structure
+
+- **Mentor**: Kristoffer Tøllbøll
+- **Team Members**: Oyelaja Hussein, Bhumika Mallikarjun, Hanna Vorontsova, Rajesh Kumar Bhatt
+- **Company**: Byte Builders
