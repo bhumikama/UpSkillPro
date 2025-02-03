@@ -17,7 +17,7 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
     },
     logout: (state) => {
-      state.user = null;
+      state.user = {};
       state.token = null;
       state.isAuthenticated = false;
       // persistStore(store).purge();
