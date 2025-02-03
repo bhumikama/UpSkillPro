@@ -30,12 +30,6 @@ The project includes features such as course enrollment, progress tracking, cour
 ## Visual Overview
 
 
-#### Student Dashboard
-<img src="hhttps://www.loom.com/share/9f6901bac2b4427e8b8bdf209faf143a?sid=550917ea-9420-4da3-811a-010eafcb923a" alt="Student Dashboard" width="700"/>
-
-#### Instructor Dashboard
-<img src="https://www.loom.com/share/5c232395bf9141019576b119a5c96513?sid=fe2c214e-726f-4895-808e-22708b8ff154" alt="Instructor Dashboard" width="700"/>
-
 
 ## Key Features
 
