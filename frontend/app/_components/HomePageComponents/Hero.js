@@ -13,9 +13,11 @@ export default function HeroSection() {
             experience <br /> designed to match your rhythm and ambition.
           </p>
           <div className="flex flex-col gap-2   items-center md:flex-row">
-            <button className="bg-white text-black px-6 py-3 text rounded-full font-medium hover:bg-gray-200  transition">
-              Explore Courses
-            </button>
+            <Link href="/courses">
+              <button className="bg-white text-black px-6 py-3 text rounded-full font-medium hover:bg-gray-200  transition">
+                Explore Courses
+              </button>
+            </Link>
             <button className="border border-gray-500 ml-6 text-white px-6 py-3 text rounded-full font-medium hover:bg-gray-200 hover:text-black  transition">
               <Link href="/signup?role=instructor">Become An Instructor</Link>
             </button>
