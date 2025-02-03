@@ -73,7 +73,7 @@ const Navbar = () => {
           </li>
           <li>
             <Link
-              href="contact-us"
+              href="/contact-us"
               className="text-gray-700 hover:text-blue-500 font-semibold"
             >
               Contact Us
@@ -117,35 +117,35 @@ const Navbar = () => {
 
           <div className="flex flex-col items-center gap-6 text-lg">
             <Link
-              href="#home"
+              href="/"
               onClick={closeMenu}
               className="text-gray-700 hover:text-blue-500 font-semibold"
             >
               Home
             </Link>
             <Link
-              href="#explore"
+              href="/course"
               onClick={closeMenu}
               className="text-gray-700 hover:text-blue-500 font-semibold"
             >
               Explore
             </Link>
             <Link
-              href="#courses"
+              href="/courses"
               onClick={closeMenu}
               className="text-gray-700 hover:text-blue-500 font-semibold"
             >
               Courses
             </Link>
             <Link
-              href="#instructor"
+              href="/signup?role=instructor"
               onClick={closeMenu}
               className="text-gray-700 hover:text-blue-500 font-semibold"
             >
               Become an Instructor
             </Link>
             <Link
-              href="#contact"
+              href="/contact-us"
               onClick={closeMenu}
               className="text-gray-700 hover:text-blue-500 font-semibold"
             >
