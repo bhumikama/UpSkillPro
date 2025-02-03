@@ -144,7 +144,7 @@ const CoursesPage = () => {
           </form>
         </div>
       </div>
-      <div className=" w-full items-center ">
+      <div className="container mx-auto items-center px-5 ">
         <h2 className=" font-medium text-[30px] text-[#00000] text-center my-3">
           Explore Courses
         </h2>
