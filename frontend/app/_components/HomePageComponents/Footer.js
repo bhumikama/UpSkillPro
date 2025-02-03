@@ -153,8 +153,8 @@ const Footer = () => {
         </div>
       </div>
       {/* Bottom Section */}
-      <div className="bg-white flex justify-between items-center py-5 px-10">
-        <div className="flex gap-5">
+      <div className="bg-white flex flex-col lg:flex-row gap-3 justify-between items-center py-5 px-10">
+        <div className="hidden lg:flex gap-5">
           <a href="#">
             <FaTwitter className="size-7" />
           </a>
@@ -168,16 +168,16 @@ const Footer = () => {
             <FaInstagram className="size-7" />
           </a>
         </div>
-        <p className="text-black font-medium text-lg">
+        <p className="text-black font-medium text-sm text-center">
           &copy; COPYRIGHT BYTECODERS 2025 - Terms & Conditions | Privacy Policy
         </p>
         {/* UpSkillPro Logo */}
-        <div className="">
+        <div className="hidden lg:flex">
           <Image
             src="/upskillpro_logo.png"
             alt="UpSkillPro Logo"
-            height={100}
-            width={100}
+            height={150}
+            width={150}
             className=""
           />
         </div>
