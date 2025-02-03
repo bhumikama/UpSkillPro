@@ -124,7 +124,7 @@ const Navbar = () => {
               Home
             </Link>
             <Link
-              href="/course"
+              href="/courses"
               onClick={closeMenu}
               className="text-gray-700 hover:text-blue-500 font-semibold"
             >
