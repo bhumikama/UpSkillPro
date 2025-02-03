@@ -53,10 +53,10 @@ const FeaturesSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <section className="py-16 my-5 ">
+    <section className="py-20 my-10  ">
       <div className="max-w-7xl mx-auto px-6 lg:px-8" >
         {/* Heading */}
-        <h1 className="text-3xl font-bold text-center text-gray-600 mb-5">
+        <h1 className="text-3xl font-bold text-center text-gray-600 mb-10">
           Unique Features of <span className="text-black">UpSkillPro</span>
         </h1>
 
