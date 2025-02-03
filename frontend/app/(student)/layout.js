@@ -4,7 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import StoreProvider from "@/store/StoreProvider";
 import HomePageNavbar from "../_components/HomePageComponents/HomePageNavbar";
-import Footer from "@/app/_components/HomePageComponents/Footer";
+// import Footer from "@/app/_components/HomePageComponents/Footer";
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -49,7 +49,7 @@ export default function StudentLayout({ children }) {
       </main>
 
       {/* Footer */}
-      <Footer />
+      {/* <Footer /> */}
     </StoreProvider>
   );
 }
