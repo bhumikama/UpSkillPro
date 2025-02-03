@@ -136,7 +136,7 @@ const Login = () => {
         </div>
       </div>
       <div>
-        <div className="flex justify-center items-center lg:hidden md:hidden ">
+        <div className="flex justify-center items-center lg:hidden md:hidden mt-4 ">
           <ArrowBigLeftIcon className="size-10 text-gray-500" />
           <Link href="/" className="text-gray-500">
             Go Back Home
