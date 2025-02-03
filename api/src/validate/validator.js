@@ -7,7 +7,7 @@ export const signUpSchema = Joi.object({
 
   password: Joi.string().min(8).max(20).required(),
   name: Joi.string()
-    .alphanum() // Only letters and numbers allowed
+    .pattern(/^[a-zA-Z ]+$/)
     .min(3)
     .max(30)
     .required(),
