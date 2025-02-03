@@ -6,7 +6,7 @@ The project includes features such as course enrollment, progress tracking, cour
 
 
 ## Live Demo
-
+[UpSkillPro](https://up-skill-pro.vercel.app/)
 
 ## Technologies
 
@@ -17,17 +17,18 @@ The project includes features such as course enrollment, progress tracking, cour
 [<img alt="Sequelize" src="https://img.shields.io/badge/-Sequelize-52B0E7?style=flat-square&logo=sequelize&logoColor=white" height="25">](https://sequelize.org/) ORM for managing database interactions with PostgreSQL.   
 [<img alt="PostgreSQL" src="https://img.shields.io/badge/-PostgreSQL-336791?style=flat-square&logo=postgresql&logoColor=white" height="25">](https://www.postgresql.org/) Relational database management system for secure and efficient data handling.    
 [<img alt="Vercel" src="https://img.shields.io/badge/-Vercel-000000?style=flat-square&logo=vercel&logoColor=white" height="25">](https://vercel.com/) Deployment platform optimized for Next.js frontend applications.  
-<img alt="Render" src="https://img.shields.io/badge/-Render-1B1F23?style=flat-square&logo=render&logoColor=white" height="25"> Cloud platform for deploying backend services.
+[<img alt="Render" src="https://img.shields.io/badge/-Render-1B1F23?style=flat-square&logo=render&logoColor=white" height="25"> ]((https://vercel.com/)) Cloud platform for deploying backend services. 
 
-[<img alt="AWS" src="https://img.shields.io/badge/-AWS-FF9900?style=flat-square&logo=amazonaws&logoColor=white" height="25">](https://aws.amazon.com/) Cloud services for scalable hosting and database management.  
-[<img alt="Figma" src="https://img.shields.io/badge/-Figma-F24E1E?style=flat-square&logo=figma&logoColor=white" height="25">](https://www.figma.com/) Collaborative design tool for UI/UX mockups and prototypes.  
-<img alt="TailwindCSS" src="https://img.shields.io/badge/-TailwindCSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white" height="25"> Utility-first CSS framework for rapid, custom UI development.
+[<img alt="AWS" src="https://img.shields.io/badge/-AWS-FF9900?style=flat-square&logo=amazonaws&logoColor=white" height="25"> ]((https://aws.amazon.com/)) Cloud services for scalable hosting and database management.  
+[<img alt="Figma" src="https://img.shields.io/badge/-Figma-F24E1E?style=flat-square&logo=figma&logoColor=white" height="25">]((https://www.figma.com/)) Collaborative design tool for UI/UX mockups and prototypes.  
+<img alt="TailwindCSS" src="https://img.shields.io/badge/-TailwindCSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white" height="25"> Utility-first CSS framework for rapid, custom UI development. 
 
 [<img alt="Next.js" src="https://img.shields.io/badge/-Next.js-000000?style=flat-square&logo=next.js&logoColor=white" height="25">](https://nextjs.org/) Framework for building fast, scalable web applications with React.
 
 
 
 ## Visual Overview
+
 
 
 
