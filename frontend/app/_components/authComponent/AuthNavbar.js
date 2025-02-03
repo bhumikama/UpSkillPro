@@ -41,7 +41,7 @@ const AuthNavbar = () => {
           </li>
           <li>
             <Link
-              href="#courses"
+              href="/courses"
               className="text-gray-700 hover:text-blue-500 font-semibold"
             >
               Explore
@@ -109,7 +109,7 @@ const AuthNavbar = () => {
               Home
             </Link>
             <Link
-              href="#explore"
+              href="/courses"
               onClick={closeMenu}
               className="text-gray-700 hover:text-blue-500 font-semibold"
             >
