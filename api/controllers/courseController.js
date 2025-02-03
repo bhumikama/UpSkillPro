@@ -62,7 +62,7 @@ const getAllCourses = async (req, res) => {
       include: {
         model: User,
         as: "instructor",
-        attributes: ["id", "name", "email"], 
+        attributes: ["id", "name", "email"],
       },
       attributes: [
         "id",
@@ -71,7 +71,7 @@ const getAllCourses = async (req, res) => {
         "imageKey",
         "createdAt",
         "price",
-      ], 
+      ],
     });
 
     if (!courses.length) {
@@ -80,11 +80,10 @@ const getAllCourses = async (req, res) => {
 
     // Add full S3 URL for each course
     const coursesWithUrls = courses.map((course) => ({
-      ...course.dataValues, 
+      ...course.dataValues,
       imageUrl: generateS3Url(course.imageKey),
     }));
     res.status(200).json(coursesWithUrls);
-    console.log("courses : ", coursesWithUrls);
   } catch (error) {
     console.error("Error fetching courses:", error);
     res.status(500).json({ error: "Failed to fetch courses" });
@@ -93,7 +92,7 @@ const getAllCourses = async (req, res) => {
 
 const getCoursesByInstructor = async (req, res) => {
   try {
-    const instructorId = req.user.sub; 
+    const instructorId = req.user.sub;
     if (!instructorId) {
       return res
         .status(404)
@@ -114,7 +113,7 @@ const getCoursesByInstructor = async (req, res) => {
 
     // Add full S3 URL for each course
     const coursesWithUrls = courses.map((course) => ({
-      ...course.dataValues, 
+      ...course.dataValues,
       imageUrl: generateS3Url(course.imageKey),
     }));
 

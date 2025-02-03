@@ -163,8 +163,6 @@ const getInstructorRevenue = async (req, res) => {
       group: ["Enrollment.courseId", "course.id", "course.price"],
     });
 
-    console.log(revenueData);
-
     res.status(200).json({
       revenueData,
     });

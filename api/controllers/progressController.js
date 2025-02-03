@@ -48,8 +48,6 @@ const updateProgress = async (req, res) => {
   const courseId = req.params.id;
   const { lectureId } = req.body;
 
-  console.log("info received in backend;", userId, courseId, lectureId);
-
   if (!lectureId || !courseId || !userId) {
     return res
       .status(400)
@@ -81,8 +79,6 @@ const updateProgress = async (req, res) => {
         }
       );
     }
-
-    console.log("updated progress:", enrollment.progress);
 
     return res
       .status(200)
