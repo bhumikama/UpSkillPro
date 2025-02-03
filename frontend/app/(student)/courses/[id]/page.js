@@ -134,7 +134,7 @@ const CoursePage = () => {
             </div>
           </div>
           <div className="lg:col-span-1">
-            <div className="md:inline-block w-full bg-white p-6 rounded-lg border">
+            <div className="hidden md:inline-block w-full bg-white p-6 rounded-lg border">
               <Image
                 src={course.imageUrl || null}
                 alt={`image of ${course.title}`}
@@ -153,6 +153,18 @@ const CoursePage = () => {
             </div>
             <div>
               <SocialButtons />
+            </div>
+          </div>
+          <div className="border border-gray-300 rounded-md leading-loose lg:col-span-1">
+            <div className="md:hidden fixed bottom-0 left-0 w-full bg-white p-2 shadow-md">
+              <h3 className="text-4xl font-bold text-green-700 my-4 flex items-center">
+                {course.price} Kr
+              </h3>
+              <EnrollButton
+                courseId={id}
+                setLoading={setLoading}
+                isEnrolled={isEnrolled}
+              />
             </div>
           </div>
         </div>
