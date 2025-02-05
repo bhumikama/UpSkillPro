@@ -17,7 +17,7 @@ import Link from "next/link";
 const CourseGrid = () => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const { courses, loading, error } = useSelector((state) => state.courses);
-  const pathname = usePathname(); 
+  const pathname = usePathname();
   const isHome = pathname === "/";
   const dispatch = useDispatch();
 
@@ -53,7 +53,6 @@ const CourseGrid = () => {
     }
   }, [dispatch, courses]);
 
- 
   if (error)
     return (
       <p className="text-center text-red-700 bg-red-200 p-2 rounded-md my-8 mx-auto w-fit">
@@ -73,9 +72,11 @@ const CourseGrid = () => {
                 <CourseSkeleton key={`skeleton-${index}`} />
               ))
             : courses &&
-              courses.map((course, index) => (
-                <CourseCard key={course.id} course={course} />
-              ))}
+              courses
+                .slice(0, 8)
+                .map((course, index) => (
+                  <CourseCard key={course.id} course={course} />
+                ))}
         </div>
         {isHome && (
           <div className="flex justify-center my-10">
@@ -110,4 +111,4 @@ const CourseSkeleton = () => {
       </div>
     </div>
   );
-}
+};
